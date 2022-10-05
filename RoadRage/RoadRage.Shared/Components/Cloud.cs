@@ -20,7 +20,7 @@ namespace RoadRage
             RenderTransform = new CompositeTransform()
             {
                 ScaleX = scaleFactor * scaleReverseFactor,
-                ScaleY = scaleFactor * scaleReverseFactor,
+                ScaleY = scaleFactor,
             };
         }
     }

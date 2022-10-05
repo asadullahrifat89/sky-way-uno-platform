@@ -19,7 +19,7 @@
             x:Name="GameViewBorder"
             Background="{StaticResource RoadBackgroundColor}"
             BorderBrush="{StaticResource RoadBordersColor}"
-            BorderThickness="40,0,40,0">
+            BorderThickness="0">
             <GameEnvironment x:Name="GameView" Background="Transparent" />
         </Border>
 

@@ -212,7 +212,7 @@ namespace RoadRage
 
             // TODO: add some clouds underneath
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var cloud = new Cloud()
                 {
@@ -226,40 +226,40 @@ namespace RoadRage
             }
 
             // add 50 road marks left
-            for (int i = -25; i < 25; i++)
-            {
-                var roadMark = new RoadMark()
-                {
-                    Width = Constants.RoadMarkWidth * scale,
-                    Height = Constants.RoadMarkHeight * scale,
-                };
+            //for (int i = -25; i < 25; i++)
+            //{
+            //    var roadMark = new RoadMark()
+            //    {
+            //        Width = Constants.RoadMarkWidth * scale,
+            //        Height = Constants.RoadMarkHeight * scale,
+            //    };
 
-                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 4 - roadMark.Width / 2);
-                GameView.Children.Add(roadMark);
-            }
+            //    roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 4 - roadMark.Width / 2);
+            //    GameView.Children.Add(roadMark);
+            //}
 
             // add 50 road marks right
-            for (int i = -25; i < 25; i++)
-            {
-                var roadMark = new RoadMark()
-                {
-                    Width = Constants.RoadMarkWidth * scale,
-                    Height = Constants.RoadMarkHeight * scale,
-                };
+            //for (int i = -25; i < 25; i++)
+            //{
+            //    var roadMark = new RoadMark()
+            //    {
+            //        Width = Constants.RoadMarkWidth * scale,
+            //        Height = Constants.RoadMarkHeight * scale,
+            //    };
 
-                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 + GameView.Width / 4 - roadMark.Width / 2);
-                GameView.Children.Add(roadMark);
-            }
+            //    roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 + GameView.Width / 4 - roadMark.Width / 2);
+            //    GameView.Children.Add(roadMark);
+            //}
 
             // add road divider
-            var roadDivider = new RoadDivider()
-            {
-                Height = GameView.Height,
-                Width = Constants.RoadDividerWidth * scale,
-            };
+            //var roadDivider = new RoadDivider()
+            //{
+            //    Height = GameView.Height,
+            //    Width = Constants.RoadDividerWidth * scale,
+            //};
 
-            roadDivider.SetPosition(0, GameView.Width / 2 - roadDivider.Width / 2);
-            GameView.Children.Add(roadDivider);
+            //roadDivider.SetPosition(0, GameView.Width / 2 - roadDivider.Width / 2);
+            //GameView.Children.Add(roadDivider);
 
             // add 5 cars
             for (int i = 0; i < 5; i++)
@@ -287,7 +287,7 @@ namespace RoadRage
             GameView.Children.Add(player);
 
             //TODO: add some clouds above
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var cloud = new Cloud()
                 {
@@ -547,21 +547,21 @@ namespace RoadRage
 
             //TODO: this is expensive
             // if vechicle will collide with another vehicle
-            if (GameView.Children.OfType<GameObject>()
-                .Where(x => (string)x.Tag is Constants.CAR_TAG)
-                .LastOrDefault(v => v.GetDistantHitBox(scale)
-                .IntersectsWith(vehicle.GetDistantHitBox(scale))) is GameObject collidingVehicle)
-            {
-                // slower vehicles will slow down faster vehicles
-                if (collidingVehicle.Speed > vehicle.Speed)
-                {
-                    vehicle.Speed = collidingVehicle.Speed;
-                }
-                else
-                {
-                    collidingVehicle.Speed = vehicle.Speed;
-                }
-            }
+            //if (GameView.Children.OfType<GameObject>()
+            //    .Where(x => (string)x.Tag is Constants.CAR_TAG)
+            //    .LastOrDefault(v => v.GetDistantHitBox(scale)
+            //    .IntersectsWith(vehicle.GetDistantHitBox(scale))) is GameObject collidingVehicle)
+            //{
+            //    // slower vehicles will slow down faster vehicles
+            //    if (collidingVehicle.Speed > vehicle.Speed)
+            //    {
+            //        vehicle.Speed = collidingVehicle.Speed;
+            //    }
+            //    else
+            //    {
+            //        collidingVehicle.Speed = vehicle.Speed;
+            //    }
+            //}
         }
 
         private void RecyleCar(GameObject car)
@@ -570,7 +570,7 @@ namespace RoadRage
 
             car.SetContent(Constants.CAR_TEMPLATES[markNum]);
             car.SetSize(Constants.CarWidth * scale, Constants.CarHeight * scale);
-            car.Speed = gameSpeed - rand.Next(0, 6);
+            car.Speed = gameSpeed - rand.Next(0, 4);
 
             // set a random top and left position for the traffic car
             car.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width - 50));
@@ -598,7 +598,7 @@ namespace RoadRage
 
             cloud.SetContent(Constants.CLOUD_TEMPLATES[markNum]);
             cloud.SetSize(Constants.CloudWidth * scale, Constants.CloudHeight * scale);
-            cloud.Speed = gameSpeed - rand.Next(0, 6);
+            cloud.Speed = gameSpeed - rand.Next(1, 9);
 
             // set a random top and left position for the Cloud
             cloud.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width - 50));
@@ -673,25 +673,7 @@ namespace RoadRage
 
         #region Power Up
 
-        private void UpdatePowerUp(GameObject powerUp)
-        {
-            powerUp.SetTop(powerUp.GetTop() + 5);
-
-            // if player gets a power up
-            if (playerHitBox.IntersectsWith(powerUp.GetHitBox(scale)))
-            {
-                GameViewRemovableObjects.Add(powerUp);
-
-                TriggerPowerUp();
-            }
-
-            if (powerUp.GetTop() > GameView.Height)
-            {
-                GameViewRemovableObjects.Add(powerUp);
-            }
-        }
-
-        private void TriggerPowerUp()
+        private void PowerUp()
         {
             powerUpText.Visibility = Visibility.Visible;
             isPowerMode = true;
@@ -700,10 +682,27 @@ namespace RoadRage
             player.Height += 30;
         }
 
+        private void UpdatePowerUp(GameObject powerUp)
+        {
+            powerUp.SetTop(powerUp.GetTop() + 5);
+
+            // if player gets a power up
+            if (playerHitBox.IntersectsWith(powerUp.GetHitBox(scale)))
+            {
+                GameViewRemovableObjects.Add(powerUp);
+                PowerUp();
+            }
+
+            if (powerUp.GetTop() > GameView.Height)
+            {
+                GameViewRemovableObjects.Add(powerUp);
+            }
+        }
+
         private void PowerUpCoolDown()
         {
             powerModeCounter -= 1;
-            GameView.Background = new SolidColorBrush(Colors.Goldenrod);
+            //GameView.Background = new SolidColorBrush(Colors.Goldenrod);
 
             double remainingPow = (double)powerModeCounter / (double)powerModeDelay * 4;
 
@@ -720,7 +719,7 @@ namespace RoadRage
 
             powerUpText.Visibility = Visibility.Collapsed;
             player.SetContent(Constants.PLAYER_TEMPLATE);
-            GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
+            //GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
             player.Height -= 30;
         }
 
