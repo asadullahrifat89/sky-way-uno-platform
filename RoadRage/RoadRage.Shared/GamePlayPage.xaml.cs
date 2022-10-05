@@ -212,7 +212,7 @@ namespace RoadRage
 
             // TODO: add some clouds underneath
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 25; i++)
             {
                 var cloud = new Cloud()
                 {
@@ -287,7 +287,7 @@ namespace RoadRage
             GameView.Children.Add(player);
 
             //TODO: add some clouds above
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 25; i++)
             {
                 var cloud = new Cloud()
                 {
@@ -580,7 +580,7 @@ namespace RoadRage
 
         #region Cloud
 
-        private void UpdateCloud(GameObject cloud) 
+        private void UpdateCloud(GameObject cloud)
         {
             // move down vehicle
             cloud.SetTop(cloud.GetTop() + cloud.Speed);
@@ -673,13 +673,19 @@ namespace RoadRage
 
         #region Power Up
 
-        private void PowerUp()
+        private void SpawnPowerUp()
         {
-            powerUpText.Visibility = Visibility.Visible;
-            isPowerMode = true;
-            powerModeCounter = powerModeDelay;
-            player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
-            player.Height += 30;
+            PowerUp powerUp = new()
+            {
+                Height = Constants.PowerUpHeight * scale,
+                Width = Constants.PowerUpWidth * scale,
+                RenderTransformOrigin = new Point(0.5, 0.5),
+                RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
+            };
+
+            powerUp.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)(GameView.Width - 55)));
+
+            GameView.Children.Add(powerUp);
         }
 
         private void UpdatePowerUp(GameObject powerUp)
@@ -697,6 +703,15 @@ namespace RoadRage
             {
                 GameViewRemovableObjects.Add(powerUp);
             }
+        }
+
+        private void PowerUp()
+        {
+            powerUpText.Visibility = Visibility.Visible;
+            isPowerMode = true;
+            powerModeCounter = powerModeDelay;
+            player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
+            player.Height += 50;
         }
 
         private void PowerUpCoolDown()
@@ -720,23 +735,10 @@ namespace RoadRage
             powerUpText.Visibility = Visibility.Collapsed;
             player.SetContent(Constants.PLAYER_TEMPLATE);
             //GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
-            player.Height -= 30;
+            player.Height -= 50;
         }
 
-        private void SpawnPowerUp()
-        {
-            PowerUp powerUp = new()
-            {
-                Height = Constants.PowerUpHeight * scale,
-                Width = Constants.PowerUpWidth * scale,
-                RenderTransformOrigin = new Point(0.5, 0.5),
-                RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
-            };
 
-            powerUp.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)(GameView.Width - 55)));
-
-            GameView.Children.Add(powerUp);
-        }
 
         #endregion
 

@@ -14,7 +14,7 @@ namespace RoadRage
             var carNum = rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
             SetContent(Constants.CLOUD_TEMPLATES[carNum]);
 
-            var scaleFactor = rand.Next(1, 3);
+            var scaleFactor = rand.Next(1, 4);
             var scaleReverseFactor = rand.Next(-1, 2);
 
             RenderTransform = new CompositeTransform()
