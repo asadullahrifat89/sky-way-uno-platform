@@ -255,6 +255,15 @@ namespace SkyWay
                     Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
+                var scaleFactor = _rand.Next(1, 4);
+                var scaleReverseFactor = _rand.Next(-1, 2);
+
+                cloud.RenderTransform = new CompositeTransform()
+                {
+                    ScaleX = scaleFactor * scaleReverseFactor,
+                    ScaleY = scaleFactor,
+                };
+
                 cloud.SetPosition(left: _rand.Next(0, (int)UnderView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
 
                 UnderView.Children.Add(cloud);
@@ -332,6 +341,15 @@ namespace SkyWay
                     Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
+                var scaleFactor = _rand.Next(1, 4);
+                var scaleReverseFactor = _rand.Next(-1, 2);
+
+                cloud.RenderTransform = new CompositeTransform()
+                {
+                    ScaleX = scaleFactor * scaleReverseFactor,
+                    ScaleY = scaleFactor,
+                };
+
                 cloud.SetPosition(left: _rand.Next(0, (int)OverView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)OverView.Height) * -1);
 
                 OverView.Children.Add(cloud);
@@ -364,7 +382,7 @@ namespace SkyWay
             _gameSpeed = _defaultGameSpeed;
             RunGame();
 
-            _player.Opacity = 1;            
+            _player.Opacity = 1;
 
             _moveLeft = false;
             _moveRight = false;
@@ -889,7 +907,7 @@ namespace SkyWay
 
             powerUpText.Visibility = Visibility.Collapsed;
             _player.SetContent(Constants.PLAYER_TEMPLATE);
-            
+
             _player.Height -= 50;
         }
 
