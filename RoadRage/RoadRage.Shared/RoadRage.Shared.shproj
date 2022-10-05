@@ -11,6 +11,8 @@
   <Import Project="RoadRage.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
+    <_Globbed_Compile Remove="Components\Cloud.cs" />
+    <_Globbed_Compile Remove="Components\RoadDivider.cs" />
     <_Globbed_Compile Remove="Constants.cs" />
     <_Globbed_Compile Remove="GameObjectExtensions.cs" />
   </ItemGroup>

@@ -210,6 +210,21 @@ namespace RoadRage
 
             GameView.Children.Clear();
 
+            // TODO: add some clouds underneath
+
+            for (int i = 0; i < 25; i++)
+            {
+                var cloud = new Cloud()
+                {
+                    Width = Constants.CloudWidth * scale,
+                    Height = Constants.CloudHeight * scale,
+                };
+
+                cloud.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
+
+                GameView.Children.Add(cloud);
+            }
+
             // add 50 road marks left
             for (int i = -25; i < 25; i++)
             {
@@ -270,6 +285,20 @@ namespace RoadRage
             player.SetPosition(GameView.Height - player.Height - (50 * scale), GameView.Width / 2 - player.Width / 2);
 
             GameView.Children.Add(player);
+
+            //TODO: add some clouds above
+            for (int i = 0; i < 25; i++)
+            {
+                var cloud = new Cloud()
+                {
+                    Width = Constants.CloudWidth * scale,
+                    Height = Constants.CloudHeight * scale,
+                };
+
+                cloud.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
+
+                GameView.Children.Add(cloud);
+            }
         }
 
         private double GetGameObjectScale()
@@ -321,6 +350,11 @@ namespace RoadRage
             {
                 switch ((string)x.Tag)
                 {
+                    case Constants.CLOUD_TAG:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
                     case Constants.CAR_TAG:
                         {
                             RecyleCar(x);
@@ -391,6 +425,11 @@ namespace RoadRage
                     case Constants.CAR_TAG:
                         {
                             UpdateCar(x);
+                        }
+                        break;
+                    case Constants.CLOUD_TAG:
+                        {
+                            UpdateCloud(x);
                         }
                         break;
                     case Constants.POWERUP_TAG:
@@ -535,6 +574,34 @@ namespace RoadRage
 
             // set a random top and left position for the traffic car
             car.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width - 50));
+        }
+
+        #endregion
+
+        #region Cloud
+
+        private void UpdateCloud(GameObject cloud) 
+        {
+            // move down vehicle
+            cloud.SetTop(cloud.GetTop() + cloud.Speed);
+
+            // if vechicle goes out of bounds
+            if (cloud.GetTop() > GameView.Height)
+            {
+                RecyleCloud(cloud);
+            }
+        }
+
+        private void RecyleCloud(GameObject cloud)
+        {
+            markNum = rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
+
+            cloud.SetContent(Constants.CLOUD_TEMPLATES[markNum]);
+            cloud.SetSize(Constants.CloudWidth * scale, Constants.CloudHeight * scale);
+            cloud.Speed = gameSpeed - rand.Next(0, 6);
+
+            // set a random top and left position for the Cloud
+            cloud.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width - 50));
         }
 
         #endregion

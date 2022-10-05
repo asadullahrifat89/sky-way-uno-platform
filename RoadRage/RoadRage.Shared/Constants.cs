@@ -15,6 +15,7 @@ namespace RoadRage
 
         public const string ROADMARK_TAG = "roadmark";
         public const string ROADDIVIDER_TAG = "roaddivider";
+        public const string CLOUD_TAG = "cloud";
 
         public const double CarWidth = 60 * 1.5;
         public const double CarHeight = 120 * 1.5;
@@ -31,6 +32,9 @@ namespace RoadRage
         public const double RoadMarkWidth = 30;
         public const double RoadMarkHeight = 80;
 
+        public const double CloudWidth = 100;
+        public const double CloudHeight = 100;
+
         public const double RoadDividerWidth = 30;
 
         public static Uri[] CAR_TEMPLATES = new Uri[]
@@ -40,6 +44,12 @@ namespace RoadRage
             new Uri("ms-appx:///Assets/Images/car3.png"),
             new Uri("ms-appx:///Assets/Images/car4.png"),
             new Uri("ms-appx:///Assets/Images/car5.png"),
+        };
+
+        public static Uri[] CLOUD_TEMPLATES = new Uri[]
+        {
+            new Uri("ms-appx:///Assets/Images/cloud1.png"),
+            new Uri("ms-appx:///Assets/Images/cloud2.png"),
         };
 
         public static Uri PLAYER_TEMPLATE = new Uri("ms-appx:///Assets/Images/player.png");
