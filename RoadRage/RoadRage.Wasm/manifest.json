@@ -1,0 +1,17 @@
+{
+  "background_color": "#070a25",
+  "description": "A classic road racer⚡on WebAssembly.",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "Assets/Icon192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Road Rage",
+  "short_name": "Road Rage",
+  "start_url": "/road-rage-uno-platform/",
+  "theme_color": "#070a25",
+  "scope": "/road-rage-uno-platform/"
+}

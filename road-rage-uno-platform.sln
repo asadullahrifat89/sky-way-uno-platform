@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "RoadRage.Shared", "RoadRage\RoadRage.Shared\RoadRage.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{30981748-70B1-4660-B9D3-F985FFA1E95E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadRage.Wasm", "RoadRage\RoadRage.Wasm\RoadRage.Wasm.csproj", "{08B5590C-B6ED-4142-A667-C6FF05177472}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08B5590C-B6ED-4142-A667-C6FF05177472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B5590C-B6ED-4142-A667-C6FF05177472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B5590C-B6ED-4142-A667-C6FF05177472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B5590C-B6ED-4142-A667-C6FF05177472}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{08B5590C-B6ED-4142-A667-C6FF05177472} = {30981748-70B1-4660-B9D3-F985FFA1E95E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF86CFC5-7634-4998-AD9D-F12C7A075542}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		RoadRage\RoadRage.Shared\RoadRage.Shared.projitems*{08b5590c-b6ed-4142-a667-c6ff05177472}*SharedItemsImports = 5
+		RoadRage\RoadRage.Shared\RoadRage.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
