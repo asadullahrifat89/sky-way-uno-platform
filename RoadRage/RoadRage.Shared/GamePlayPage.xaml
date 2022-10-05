@@ -15,13 +15,7 @@
 
     <Grid x:Name="RootGrid">
 
-        <Border
-            x:Name="GameViewBorder"
-            Background="{StaticResource RoadBackgroundColor}"
-            BorderBrush="{StaticResource RoadBordersColor}"
-            BorderThickness="0">
-            <GameEnvironment x:Name="GameView" Background="Transparent" />
-        </Border>
+        <GameEnvironment x:Name="GameView" Background="{StaticResource RoadBackgroundColor}" />
 
         <!--#region Game Score-->
         <Border

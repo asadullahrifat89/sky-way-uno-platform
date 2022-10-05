@@ -20,8 +20,8 @@ namespace RoadRage
         public const double CarWidth = 60 * 1.5;
         public const double CarHeight = 120 * 1.5;
 
-        public const double PlayerWidth = 70 * 1.5;
-        public const double PlayerHeight = 130 * 1.5;
+        public const double PlayerWidth = 60 * 1.5;
+        public const double PlayerHeight = 120 * 1.5;
 
         public const double PowerUpWidth = 80;
         public const double PowerUpHeight = 80;
