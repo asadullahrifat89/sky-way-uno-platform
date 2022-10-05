@@ -490,7 +490,7 @@ namespace SkyWay
             if (_islandSpawnCounter < 1)
             {
                 SpawnIsland();
-                _islandSpawnCounter = _rand.Next(2500, 3000);
+                _islandSpawnCounter = _rand.Next(1500, 2000);
             }
 
             if (_lives < _maxLives)
@@ -784,13 +784,14 @@ namespace SkyWay
             var island = new Island()
             {
                 Width = Constants.ISLAND_WIDTH * _scale,
-                Height = Constants.ISLAND_HEIGHT * _scale,
-                RenderTransform = new CompositeTransform()
-                {
-                    CenterX = 0.5,
-                    CenterY = 0.5,
-                    Rotation = _rand.Next(0, 20),
-                }
+                Height = Constants.ISLAND_HEIGHT * _scale,                
+            };
+
+            island.RenderTransform = new CompositeTransform()
+            {
+                CenterX = 0.5,
+                CenterY = 0.5,                
+                Rotation = _rand.Next(0, 360),
             };
 
             _markNum = _rand.Next(0, Constants.ISLAND_TEMPLATES.Length);
@@ -804,7 +805,7 @@ namespace SkyWay
 
         private void UpdateIsland(GameObject island)
         {
-            island.SetTop(island.GetTop() + _gameSpeed / 6);            
+            island.SetTop(island.GetTop() + _gameSpeed / 6);
 
             if (island.GetTop() > SeaView.Height)
             {
@@ -816,8 +817,8 @@ namespace SkyWay
         private void RandomizeIslandPosition(GameObject island)
         {
             island.SetPosition(
-                left: GameView.Width / 2,
-                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                left: _rand.Next(0, (int)GameView.Width) - 100 * _scale,
+                top: _rand.Next(0, (int)GameView.Height) * -1);
         }
 
         #endregion
