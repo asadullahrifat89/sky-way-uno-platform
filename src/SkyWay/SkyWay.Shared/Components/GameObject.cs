@@ -63,7 +63,6 @@ namespace SkyWay
 
         public bool IsCollidable { get; set; } = false;
 
-
         #endregion
 
         #region Methods

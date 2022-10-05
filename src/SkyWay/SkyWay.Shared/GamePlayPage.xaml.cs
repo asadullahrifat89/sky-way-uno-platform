@@ -226,8 +226,27 @@ namespace SkyWay
 
             SetViewSize();
 
-            // TODO: add some clouds underneath
+            // TODO: add some cars underneath
+            for (int i = 0; i < 10; i++)
+            {
+                var car = new Car()
+                {
+                    Width = Constants.CAR_WIDTH * _scale,
+                    Height = Constants.CAR_HEIGHT * _scale,
+                    IsCollidable = false,
+                    RenderTransform = new CompositeTransform()
+                    {
+                        ScaleX = 0.5,
+                        ScaleY = 0.5,
+                    }
+                };
 
+                car.SetPosition(left: _rand.Next(0, (int)UnderView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
+
+                UnderView.Children.Add(car);
+            }
+
+            // TODO: add some clouds underneath
             for (int i = 0; i < 25; i++)
             {
                 var cloud = new Cloud()
@@ -240,6 +259,7 @@ namespace SkyWay
 
                 UnderView.Children.Add(cloud);
             }
+
 
             // add 50 road marks left
             //for (int i = -25; i < 25; i++)
@@ -344,9 +364,7 @@ namespace SkyWay
             _gameSpeed = _defaultGameSpeed;
             RunGame();
 
-            _player.Opacity = 1;
-
-            GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
+            _player.Opacity = 1;            
 
             _moveLeft = false;
             _moveRight = false;
@@ -376,7 +394,7 @@ namespace SkyWay
                         {
                             RecyleCar(x);
                         }
-                        break;                 
+                        break;
                     default:
                         break;
                 }
@@ -507,7 +525,7 @@ namespace SkyWay
                         {
                             UpdateCar(x);
                         }
-                        break;                  
+                        break;
                     case Constants.POWERUP_TAG:
                         {
                             UpdatePowerUp(x);
@@ -639,7 +657,7 @@ namespace SkyWay
                                 GameOver();
                         }
                     }
-                } 
+                }
             }
 
             if (_isGameOver)
@@ -723,9 +741,9 @@ namespace SkyWay
         #region Cloud
 
         private void UpdateCloud(GameObject cloud)
-        {            
+        {
             cloud.SetTop(cloud.GetTop() + cloud.Speed);
-            
+
             if (cloud.GetTop() > GameView.Height)
             {
                 RecyleCloud(cloud);
@@ -871,7 +889,7 @@ namespace SkyWay
 
             powerUpText.Visibility = Visibility.Collapsed;
             _player.SetContent(Constants.PLAYER_TEMPLATE);
-            //GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
+            
             _player.Height -= 50;
         }
 
