@@ -50,7 +50,7 @@ namespace SkyWay
 
             #endregion
 
-            Child = _content;            
+            Child = _content;
 
             RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
         }
@@ -59,11 +59,10 @@ namespace SkyWay
 
         #region Properties
 
-        public double Speed { get; set; }
+        public double Speed { get; set; } = 0;
 
-        public bool IsVehicle { get; set; }
+        public bool IsCollidable { get; set; } = false;
 
-        public bool IsRoadMark { get; set; }
 
         #endregion
 

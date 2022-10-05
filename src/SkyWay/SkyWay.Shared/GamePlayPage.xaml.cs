@@ -80,6 +80,8 @@ namespace SkyWay
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
 
+            InitGame();
+
             this.Loaded += GamePlayPage_Loaded;
             this.Unloaded += GamePlayPage_Unloaded;
         }
@@ -105,12 +107,23 @@ namespace SkyWay
             _windowWidth = args.NewSize.Width;
             _windowHeight = args.NewSize.Height;
 
+            SetViewSize();
+
+            Console.WriteLine($"WINDOWS SIZE: {_windowWidth}x{_windowHeight}");
+        }
+
+        private void SetViewSize()
+        {
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+
             GameView.Width = _windowWidth;
             GameView.Height = _windowHeight;
 
-            Console.WriteLine($"WINDOWS SIZE: {_windowWidth}x{_windowHeight}");
+            OverView.Width = _windowWidth;
+            OverView.Height = _windowHeight;
 
-            InitGame();
+            _scale = GetGameObjectScale();
         }
 
         #endregion
@@ -211,9 +224,7 @@ namespace SkyWay
         {
             Console.WriteLine("INITIALIZING GAME");
 
-            _scale = GetGameObjectScale();
-
-            GameView.Children.Clear();
+            SetViewSize();
 
             // TODO: add some clouds underneath
 
@@ -225,9 +236,9 @@ namespace SkyWay
                     Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
-                cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                cloud.SetPosition(left: _rand.Next(0, (int)UnderView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
 
-                GameView.Children.Add(cloud);
+                UnderView.Children.Add(cloud);
             }
 
             // add 50 road marks left
@@ -273,6 +284,7 @@ namespace SkyWay
                 {
                     Width = Constants.CAR_WIDTH * _scale,
                     Height = Constants.CAR_HEIGHT * _scale,
+                    IsCollidable = true,
                 };
 
                 car.SetPosition(left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
@@ -300,9 +312,9 @@ namespace SkyWay
                     Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
-                cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                cloud.SetPosition(left: _rand.Next(0, (int)OverView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)OverView.Height) * -1);
 
-                GameView.Children.Add(cloud);
+                OverView.Children.Add(cloud);
             }
         }
 
@@ -351,6 +363,25 @@ namespace SkyWay
             _collectiblesCollected = 0;
             scoreText.Text = "Score: 0";
 
+            foreach (GameObject x in UnderView.Children.OfType<GameObject>())
+            {
+                switch ((string)x.Tag)
+                {
+                    case Constants.CLOUD_TAG:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    case Constants.CAR_TAG:
+                        {
+                            RecyleCar(x);
+                        }
+                        break;                 
+                    default:
+                        break;
+                }
+            }
+
             // remove health and power ups, recylce cars
             foreach (GameObject x in GameView.Children.OfType<GameObject>())
             {
@@ -371,6 +402,25 @@ namespace SkyWay
                     case Constants.POWERUP_TAG:
                         {
                             _removableObjects.Add(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (GameObject x in OverView.Children.OfType<GameObject>())
+            {
+                switch ((string)x.Tag)
+                {
+                    case Constants.CLOUD_TAG:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    case Constants.CAR_TAG:
+                        {
+                            RecyleCar(x);
                         }
                         break;
                     default:
@@ -430,11 +480,9 @@ namespace SkyWay
                 }
             }
 
-            foreach (GameObject x in GameView.Children.OfType<GameObject>())
+            foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                string tag = (string)x.Tag;
-
-                switch (tag)
+                switch ((string)x.Tag)
                 {
                     case Constants.CAR_TAG:
                         {
@@ -446,6 +494,20 @@ namespace SkyWay
                             UpdateCloud(x);
                         }
                         break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (GameObject x in GameView.Children.OfType<GameObject>())
+            {
+                switch ((string)x.Tag)
+                {
+                    case Constants.CAR_TAG:
+                        {
+                            UpdateCar(x);
+                        }
+                        break;                  
                     case Constants.POWERUP_TAG:
                         {
                             UpdatePowerUp(x);
@@ -472,6 +534,25 @@ namespace SkyWay
                             {
                                 UpdatePlayer();
                             }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (GameObject x in OverView.Children.OfType<GameObject>())
+            {
+                switch ((string)x.Tag)
+                {
+                    case Constants.CAR_TAG:
+                        {
+                            UpdateCar(x);
+                        }
+                        break;
+                    case Constants.CLOUD_TAG:
+                        {
+                            UpdateCloud(x);
                         }
                         break;
                     default:
@@ -518,44 +599,47 @@ namespace SkyWay
 
         #region Car
 
-        private void UpdateCar(GameObject vehicle)
+        private void UpdateCar(GameObject car)
         {
             // move down vehicle
-            vehicle.SetTop(vehicle.GetTop() + vehicle.Speed);
+            car.SetTop(car.GetTop() + car.Speed);
 
             // if vechicle goes out of bounds
-            if (vehicle.GetTop() > GameView.Height)
+            if (car.GetTop() > GameView.Height)
             {
-                RecyleCar(vehicle);
+                RecyleCar(car);
             }
 
-            if (_isRecoveringFromDamage)
+            if (car.IsCollidable)
             {
-                _player.Opacity = 0.66;
-                _damageRecoveryCounter--;
+                if (_isRecoveringFromDamage)
+                {
+                    _player.Opacity = 0.66;
+                    _damageRecoveryCounter--;
 
-                if (_damageRecoveryCounter <= 0)
-                {
-                    _player.Opacity = 1;
-                    _isRecoveringFromDamage = false;
-                }
-            }
-            else
-            {
-                // if vehicle collides with player
-                if (_playerHitBox.IntersectsWith(vehicle.GetHitBox(_scale)))
-                {
-                    if (!_isPowerMode)
+                    if (_damageRecoveryCounter <= 0)
                     {
-                        _lives--;
-                        _damageRecoveryCounter = _damageRecoveryDelay;
-                        _isRecoveringFromDamage = true;
-                        SetLives();
-
-                        if (_lives == 0)
-                            GameOver();
+                        _player.Opacity = 1;
+                        _isRecoveringFromDamage = false;
                     }
                 }
+                else
+                {
+                    // if vehicle collides with player
+                    if (_playerHitBox.IntersectsWith(car.GetHitBox(_scale)))
+                    {
+                        if (!_isPowerMode)
+                        {
+                            _lives--;
+                            _damageRecoveryCounter = _damageRecoveryDelay;
+                            _isRecoveringFromDamage = true;
+                            SetLives();
+
+                            if (_lives == 0)
+                                GameOver();
+                        }
+                    }
+                } 
             }
 
             if (_isGameOver)
@@ -639,11 +723,9 @@ namespace SkyWay
         #region Cloud
 
         private void UpdateCloud(GameObject cloud)
-        {
-            // move down vehicle
+        {            
             cloud.SetTop(cloud.GetTop() + cloud.Speed);
-
-            // if vechicle goes out of bounds
+            
             if (cloud.GetTop() > GameView.Height)
             {
                 RecyleCloud(cloud);
