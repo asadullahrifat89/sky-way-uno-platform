@@ -358,7 +358,7 @@ namespace SkyWay
 
             _score = 0;
             _collectiblesCollected = 0;
-            scoreText.Text = "Score: 0";
+            scoreText.Text = "0";
 
             foreach (GameObject x in SeaView.Children.OfType<GameObject>())
             {
@@ -457,7 +457,7 @@ namespace SkyWay
         private void GameViewLoop()
         {
             _score += .05; // increase the score by .5 each tick of the timer
-            scoreText.Text = "Score: " + _score.ToString("#");
+            scoreText.Text = _score.ToString("#");
 
             _playerHitBox = _player.GetHitBox(_scale);
 
@@ -616,9 +616,7 @@ namespace SkyWay
 
         private void GameOver()
         {
-            StopGame();
-
-            scoreText.Text += " Play Again";
+            StopGame();            
             _isGameOver = true;
         }
 

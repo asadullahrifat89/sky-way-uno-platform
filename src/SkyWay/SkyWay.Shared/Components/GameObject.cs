@@ -15,7 +15,7 @@ namespace SkyWay
     {
         #region Fields
 
-        private Image _content = new Image() { Stretch = Stretch.Uniform, Visibility = Microsoft.UI.Xaml.Visibility.Collapsed };
+        private Image _content = new() { Stretch = Stretch.Uniform, Visibility = Microsoft.UI.Xaml.Visibility.Collapsed };
 
         //private Border _hitBoxborder;
 

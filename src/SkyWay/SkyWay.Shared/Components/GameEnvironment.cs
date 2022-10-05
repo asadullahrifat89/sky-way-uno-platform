@@ -9,7 +9,7 @@ namespace SkyWay
     {
         #region Fields
 
-        private readonly List<GameObject> destroyableGameObjects = new List<GameObject>(); 
+        private readonly List<GameObject> destroyableGameObjects = new(); 
 
         #endregion
 

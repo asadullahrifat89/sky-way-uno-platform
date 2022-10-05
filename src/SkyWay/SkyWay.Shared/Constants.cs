@@ -75,12 +75,12 @@ namespace SkyWay
             new Uri("ms-appx:///Assets/Images/island3.png"),
         };
 
-        public static Uri PLAYER_TEMPLATE = new Uri("ms-appx:///Assets/Images/player.png");
-        public static Uri PLAYER_POWER_MODE_TEMPLATE = new Uri("ms-appx:///Assets/Images/player-power-mode.png");
-        public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.png");
+        public static Uri PLAYER_TEMPLATE = new("ms-appx:///Assets/Images/player.png");
+        public static Uri PLAYER_POWER_MODE_TEMPLATE = new("ms-appx:///Assets/Images/player-power-mode.png");
+        public static Uri POWERUP_TEMPLATE = new("ms-appx:///Assets/Images/powerup.png");
 
-        public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.png");
+        public static Uri HEALTH_TEMPLATE = new("ms-appx:///Assets/Images/health.png");
 
-        public static Uri COLLECTIBLE_TEMPLATE = new Uri("ms-appx:///Assets/Images/collectible.png");
+        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png");
     }
 }
