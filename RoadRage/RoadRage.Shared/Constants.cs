@@ -8,13 +8,24 @@ namespace RoadRage
     {
         public const string PLAYER_TAG = "player";
 
-        public const string CAR_TAG = "car";
-        public const string TRUCK_TAG = "truck";
+        public const string CAR_TAG = "car";        
 
         public const string POWERUP_TAG = "powerup";
         public const string HEALTH_TAG = "health";
 
         public const string ROADMARK_TAG = "roadmark";
+
+        public const double CarWidth = 60;
+        public const double CarHeight = 120;
+
+        public const double PlayerWidth = 70;
+        public const double PlayerHeight = 130;
+
+        public const double PowerUpWidth = 30;
+        public const double PowerUpHeight = 30;
+
+        public const double RoadMarkWidth = 30;
+        public const double RoadMarkHeight = 80;
 
         public static Uri[] CAR_TEMPLATES = new Uri[]
         {
@@ -22,35 +33,12 @@ namespace RoadRage
             new Uri("ms-appx:///Assets/Images/car2.png"),
             new Uri("ms-appx:///Assets/Images/car3.png"),
             new Uri("ms-appx:///Assets/Images/car4.png"),
-            new Uri("ms-appx:///Assets/Images/car5.png"),
-            new Uri("ms-appx:///Assets/Images/car6.png")
+            new Uri("ms-appx:///Assets/Images/car5.png"),            
         };
 
-        public static Uri[] TRUCK_TEMPLATES = new Uri[]
-        {
-            new Uri("ms-appx:///Assets/Images/truck1.png"),
-            new Uri("ms-appx:///Assets/Images/truck2.png"),
-            new Uri("ms-appx:///Assets/Images/truck3.png"),
-            new Uri("ms-appx:///Assets/Images/truck4.png"),
-            new Uri("ms-appx:///Assets/Images/truck5.png"),
-        };
+        public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.png");
+        public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.png");
 
-        public static Uri[] ROADMARK_TEMPLATES = new Uri[]
-        {
-            new Uri("ms-appx:///Assets/Images/road-mark1.png"),
-            new Uri("ms-appx:///Assets/Images/road-mark2.png"),
-            new Uri("ms-appx:///Assets/Images/road-mark3.png"),
-        };
-
-        public static Uri[] TREE_TEMPLATES = new Uri[]
-        {
-            new Uri("ms-appx:///Assets/Images/tree1.png"),
-            new Uri("ms-appx:///Assets/Images/tree2.png"),
-            new Uri("ms-appx:///Assets/Images/tree3.png"),
-            new Uri("ms-appx:///Assets/Images/tree4.png"),
-        };
-
-        public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.gif");
-        public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.gif");
+        public static Uri PLAYER_TEMPLATE = new Uri("ms-appx:///Assets/Images/player.png");
     }
 }

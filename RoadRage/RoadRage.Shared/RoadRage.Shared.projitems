@@ -25,7 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\Player.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\PowerUp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\RoadMark.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Truck.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
@@ -52,6 +51,15 @@
 		 without manipulating the projitem file.
 	-->
     <Content Include="$(MSBuildThisFileDirectory)Assets\Icon192x192.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car4.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car5.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\health.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player-power-mode.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\splash_screen.gif" />
     <_Globbled_Page Include="$(MSBuildThisFileDirectory)**/*.xaml" Exclude="@(Page);@(ApplicationDefinition)">
       <SubType>Designer</SubType>

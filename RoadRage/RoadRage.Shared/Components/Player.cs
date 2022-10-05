@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RoadRage.Models
+namespace RoadRage
 {
     public class Player : GameObject
     {
         public Player()
         {
             Tag = Constants.PLAYER_TAG;
-            SetContent(new Uri("ms-appx:///Assets/Images/player.png"));
+            SetContent(Constants.PLAYER_TEMPLATE);
         }
     }
 }

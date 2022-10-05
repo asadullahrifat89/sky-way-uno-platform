@@ -10,8 +10,12 @@ namespace RoadRage
     {
         public RoadMark()
         {
-            Tag = Constants.ROADMARK_TAG;            
-            SetContent(new Uri("ms-appx:///Assets/Images/road-mark2.png"));
+            Tag = Constants.ROADMARK_TAG;
+
+            Background = new SolidColorBrush(Colors.White);
+            BorderBrush = new SolidColorBrush(Colors.Wheat);
+            BorderThickness = new Microsoft.UI.Xaml.Thickness(5);
+            CornerRadius = new Microsoft.UI.Xaml.CornerRadius(5);
         }
     }
 }

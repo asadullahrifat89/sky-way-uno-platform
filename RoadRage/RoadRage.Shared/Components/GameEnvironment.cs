@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RoadRage.Components
+namespace RoadRage
 {
     public class GameEnvironment : Canvas
     {

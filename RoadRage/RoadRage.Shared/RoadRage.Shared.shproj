@@ -16,6 +16,15 @@
   </ItemGroup>
   <ItemGroup>
     <_Globbed_Content Remove="Assets\Icon192x192.png" />
+    <_Globbed_Content Remove="Assets\Images\car1.png" />
+    <_Globbed_Content Remove="Assets\Images\car2.png" />
+    <_Globbed_Content Remove="Assets\Images\car3.png" />
+    <_Globbed_Content Remove="Assets\Images\car4.png" />
+    <_Globbed_Content Remove="Assets\Images\car5.png" />
+    <_Globbed_Content Remove="Assets\Images\health.png" />
+    <_Globbed_Content Remove="Assets\Images\player-power-mode.png" />
+    <_Globbed_Content Remove="Assets\Images\player.png" />
+    <_Globbed_Content Remove="Assets\Images\powerup.png" />
     <_Globbed_Content Remove="Assets\splash_screen.gif" />
   </ItemGroup>
 </Project>
