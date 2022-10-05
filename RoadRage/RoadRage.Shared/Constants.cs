@@ -15,14 +15,14 @@ namespace RoadRage
 
         public const string ROADMARK_TAG = "roadmark";
 
-        public const double CarWidth = 60;
-        public const double CarHeight = 120;
+        public const double CarWidth = 60 * 1.5;
+        public const double CarHeight = 120 * 1.5;
 
-        public const double PlayerWidth = 70;
-        public const double PlayerHeight = 130;
+        public const double PlayerWidth = 70 * 1.5;
+        public const double PlayerHeight = 130 * 1.5;
 
-        public const double PowerUpWidth = 30;
-        public const double PowerUpHeight = 30;
+        public const double PowerUpWidth = 40 * 1.5;
+        public const double PowerUpHeight = 40 * 1.5;
 
         public const double RoadMarkWidth = 30;
         public const double RoadMarkHeight = 80;

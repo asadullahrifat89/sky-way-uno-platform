@@ -17,7 +17,7 @@
             <!--#endregion-->
 
             <!--#region Colors-->
-            <SolidColorBrush x:Key="RoadBackgroundColor" Color="#644243" />
+            <SolidColorBrush x:Key="RoadBackgroundColor" Color="#4e185f" />
             <!--#endregion-->
 
         </ResourceDictionary>
@@ -25,7 +25,7 @@
 
     <Grid x:Name="RootGrid">
 
-        <GameEnvironment x:Name="GameView" Background="{StaticResource RoadBackgroundColor}" />      
+        <GameEnvironment x:Name="GameView" Background="{StaticResource RoadBackgroundColor}" />
 
         <!--#region Game Score-->
         <Border

@@ -46,13 +46,11 @@ namespace RoadRage
 
             //grid.Children.Add(_hitBoxborder);
             //grid.Children.Add(_content);
-            //Child = grid; 
+            //Child = grid;
 
             #endregion
 
-            Child = _content;
-            //BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-            //BorderBrush = new SolidColorBrush(Colors.Transparent);
+            Child = _content;            
 
             RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
         }
@@ -109,11 +107,11 @@ namespace RoadRage
             _content.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
-        //public void SetHitBoxBorder(Rect rect)
-        //{
-        //    _hitBoxborder.Height = rect.Height;
-        //    _hitBoxborder.Width = rect.Width;
-        //}
+        public void SetHitBoxBorder(Rect rect)
+        {
+            //_hitBoxborder.Height = rect.Height;
+            //_hitBoxborder.Width = rect.Width;
+        }
 
         #endregion
     }

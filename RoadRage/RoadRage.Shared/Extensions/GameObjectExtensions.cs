@@ -48,7 +48,7 @@ namespace RoadRage
                 width: gameObject.Width - (gameObject.Width / 3) * scale,
                 height: gameObject.Height - 15 * scale);
 
-            //gameObject.SetHitBoxBorder(rect);
+            gameObject.SetHitBoxBorder(rect);
 
             return rect;
         }
