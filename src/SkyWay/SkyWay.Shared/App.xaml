@@ -39,8 +39,9 @@
             <!--#endregion-->
 
             <!--#region Road Colors-->
-            <!--<SolidColorBrush x:Key="RoadBackgroundColor" Color="#4e4b72" />-->
-            <SolidColorBrush x:Key="RoadBackgroundColor" Color="LightSkyBlue" />
+            <!--<SolidColorBrush x:Key="SeaBackgroundColor" Color="#4e4b72" />-->
+            <!--<SolidColorBrush x:Key="SeaBackgroundColor" Color="#10ad9a" />-->
+            <SolidColorBrush x:Key="SeaBackgroundColor" Color="LightSkyBlue" />
             <!--<SolidColorBrush x:Key="RoadBordersColor" Color="#8a89a9" />-->
             <SolidColorBrush x:Key="RoadBordersColor" Color="#00acea" />
             <SolidColorBrush x:Key="RoadDividerColor" Color="#dbac3c" />

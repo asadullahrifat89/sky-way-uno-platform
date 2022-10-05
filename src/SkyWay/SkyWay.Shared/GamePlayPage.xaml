@@ -13,7 +13,7 @@
         <ResourceDictionary />
     </Page.Resources>
 
-    <Grid x:Name="RootGrid" Background="{StaticResource RoadBackgroundColor}">
+    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
 
         <!--  This hosts the islands  -->
         <GameEnvironment x:Name="SeaView" Background="Transparent" />
@@ -24,7 +24,7 @@
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
-            Background="{StaticResource RoadBackgroundColor}"
+            Background="{StaticResource SeaBackgroundColor}"
             Opacity="0.5" />
 
         <GameEnvironment x:Name="GameView" Background="Transparent" />
@@ -50,6 +50,7 @@
                 <Image
                     Width="30"
                     Height="30"
+                    Margin="0,2,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Source="ms-appx:///Assets/Images/collectible.png" />
@@ -85,6 +86,7 @@
                 <Image
                     Width="25"
                     Height="25"
+                    Margin="0,-2,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Source="ms-appx:///Assets/Images/health.png" />
