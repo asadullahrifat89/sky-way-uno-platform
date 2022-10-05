@@ -8,7 +8,7 @@ namespace RoadRage
     {
         public const string PLAYER_TAG = "player";
 
-        public const string CAR_TAG = "car";        
+        public const string CAR_TAG = "car";
 
         public const string POWERUP_TAG = "powerup";
         public const string HEALTH_TAG = "health";
@@ -33,12 +33,13 @@ namespace RoadRage
             new Uri("ms-appx:///Assets/Images/car2.png"),
             new Uri("ms-appx:///Assets/Images/car3.png"),
             new Uri("ms-appx:///Assets/Images/car4.png"),
-            new Uri("ms-appx:///Assets/Images/car5.png"),            
+            new Uri("ms-appx:///Assets/Images/car5.png"),
         };
 
-        public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.png");
-        public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.png");
-
         public static Uri PLAYER_TEMPLATE = new Uri("ms-appx:///Assets/Images/player.png");
+        public static Uri PLAYER_POWER_MODE_TEMPLATE = new Uri("ms-appx:///Assets/Images/player-power-mode.png");
+        public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.png");
+
+        public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.png");
     }
 }

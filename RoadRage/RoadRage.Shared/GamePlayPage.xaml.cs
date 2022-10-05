@@ -205,7 +205,20 @@ namespace RoadRage
         {
             scale = GetGameObjectScale();
 
-            GameView.Children.Clear();
+            GameView.Children.Clear();           
+
+            // add 50 road marks
+            for (int i = -25; i < 25; i++)
+            {
+                var roadMark = new RoadMark()
+                {
+                    Width = Constants.RoadMarkWidth * scale,
+                    Height = Constants.RoadMarkHeight * scale,
+                };
+
+                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 - roadMark.Width / 2);
+                GameView.Children.Add(roadMark);
+            }
 
             // add 5 cars
             for (int i = 0; i < 5; i++)
@@ -219,19 +232,6 @@ namespace RoadRage
                 car.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
 
                 GameView.Children.Add(car);
-            }
-
-            // add 50 road marks
-            for (int i = -25; i < 25; i++)
-            {
-                var roadMark = new RoadMark()
-                {
-                    Width = Constants.RoadMarkWidth * scale,
-                    Height = Constants.RoadMarkHeight * scale,
-                };
-
-                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 - roadMark.Width / 2);
-                GameView.Children.Add(roadMark);
             }
 
             // add player
@@ -603,13 +603,13 @@ namespace RoadRage
             powerUpText.Visibility = Visibility.Visible;
             isPowerMode = true;
             powerModeCounter = powerModeDelay;
+            player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
         }
 
         private void PowerUpCoolDown()
         {
             powerModeCounter -= 1;
-            GameView.Background = new SolidColorBrush(Colors.Goldenrod);
-            player.Opacity = 0.77;
+            GameView.Background = new SolidColorBrush(Colors.Goldenrod);           
 
             double remainingPow = (double)powerModeCounter / (double)powerModeDelay * 4;
 
@@ -623,9 +623,9 @@ namespace RoadRage
         private void PowerDown()
         {
             isPowerMode = false;
-            player.Opacity = 1;
+            
             powerUpText.Visibility = Visibility.Collapsed;
-
+            player.SetContent(Constants.PLAYER_TEMPLATE);
             GameView.Background = this.Resources["RoadBackgroundColor"] as SolidColorBrush;
         }
 
