@@ -229,7 +229,7 @@ namespace SkyWay
         {
             Console.WriteLine("INITIALIZING GAME");
 
-            SetViewSize();          
+            SetViewSize();
 
             // TODO: add some cars underneath
             for (int i = 0; i < 10; i++)
@@ -251,7 +251,7 @@ namespace SkyWay
             }
 
             // TODO: add some clouds underneath
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);
                 var scaleReverseFactor = _rand.Next(-1, 2);
@@ -299,7 +299,7 @@ namespace SkyWay
             GameView.Children.Add(_player);
 
             //TODO: add some clouds above
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);
                 var scaleReverseFactor = _rand.Next(-1, 2);
@@ -406,14 +406,14 @@ namespace SkyWay
                         {
                             RecyleCloud(x);
                         }
-                        break;                   
+                        break;
                     default:
                         break;
                 }
             }
 
             RemoveGameObjects();
-        }      
+        }
 
         private double GetGameObjectScale()
         {
@@ -697,7 +697,7 @@ namespace SkyWay
         private void RandomizeCarPosition(GameObject car)
         {
             car.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
+                left: _rand.Next(100, (int)GameView.Width) - (100 * _scale),
                 top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
@@ -765,8 +765,6 @@ namespace SkyWay
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
             cloud.Speed = _gameSpeed - _rand.Next(1, 4);
 
-            // set a random top and left position for the Cloud
-            //cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next(100, (int)GameView.Height) * -1);
             RandomizeCloudPosition(cloud);
         }
 
@@ -795,27 +793,31 @@ namespace SkyWay
                 }
             };
 
+            _markNum = _rand.Next(0, Constants.ISLAND_TEMPLATES.Length);
+            island.SetContent(Constants.ISLAND_TEMPLATES[_markNum]);
+
             RandomizeIslandPosition(island);
             SeaView.Children.Add(island);
 
-            Console.WriteLine("ISLAND SPAWN");
+            Console.WriteLine($"ISLAND SPAWN: X={island.GetLeft()} Y={island.GetTop()}");
         }
 
         private void UpdateIsland(GameObject island)
         {
-            island.SetTop(island.GetTop() + _gameSpeed / 3);
+            island.SetTop(island.GetTop() + _gameSpeed / 6);            
 
             if (island.GetTop() > SeaView.Height)
             {
                 SeaView.AddDestroyableGameObject(island);
+                Console.WriteLine("ISLAND REMOVED");
             }
-        }    
+        }
 
         private void RandomizeIslandPosition(GameObject island)
         {
             island.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
-                top: _rand.Next(0, (int)GameView.Height) * -1);
+                left: GameView.Width / 2,
+                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
         #endregion

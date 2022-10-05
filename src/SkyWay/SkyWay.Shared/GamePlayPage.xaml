@@ -13,9 +13,10 @@
         <ResourceDictionary />
     </Page.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Background="{StaticResource RoadBackgroundColor}">
 
-        <GameEnvironment x:Name="SeaView" Background="{StaticResource RoadBackgroundColor}" />
+        <!--  This hosts the islands  -->
+        <GameEnvironment x:Name="SeaView" Background="Transparent" />
 
         <!--  This hosts clouds and cars that do not collide  -->
         <GameEnvironment x:Name="UnderView" Background="Transparent" />
