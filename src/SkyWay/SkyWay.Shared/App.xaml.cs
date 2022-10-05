@@ -73,9 +73,9 @@ namespace SkyWay
 
         //public static AuthToken AuthToken { get; set; }
 
-        //public static PlayerScore PlayerScore { get; set; }
+        public static PlayerScore PlayerScore { get; set; }
 
-        //public static bool GameScoreSubmissionPending { get; set; }
+        public static bool GameScoreSubmissionPending { get; set; }
 
         //public static PlayerShip Ship { get; set; }
 

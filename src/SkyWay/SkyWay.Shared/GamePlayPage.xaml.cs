@@ -42,6 +42,7 @@ namespace SkyWay
         private int _collectibleSpawnCounter = 200;
 
         private double _score;
+        private double _collectiblesCollected;
 
         private bool _moveLeft;
         private bool _moveRight;
@@ -208,6 +209,8 @@ namespace SkyWay
 
         private void InitGame()
         {
+            Console.WriteLine("INITIALIZING GAME");
+
             _scale = GetGameObjectScale();
 
             GameView.Children.Clear();
@@ -345,6 +348,7 @@ namespace SkyWay
             _damageRecoveryCounter = _damageRecoveryDelay;
 
             _score = 0;
+            _collectiblesCollected = 0;
             scoreText.Text = "Score: 0";
 
             // remove health and power ups, recylce cars
@@ -499,11 +503,9 @@ namespace SkyWay
 
         private void GameOver()
         {
-            //player.SetContent(new Uri("ms-appx:///Assets/Images/player-crashed.png"));
-
             StopGame();
 
-            scoreText.Text += " Press Enter to replay";
+            scoreText.Text += " Play Again";
             _isGameOver = true;
         }
 
@@ -584,9 +586,9 @@ namespace SkyWay
 
             car.SetContent(Constants.CAR_TEMPLATES[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(3, 9);
+            car.Speed = _gameSpeed - _rand.Next(1, 8);
 
-            car.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next(100, (int)GameView.Height) * -1);
+            car.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next((int)car.Height, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -623,6 +625,7 @@ namespace SkyWay
             {
                 _removableObjects.Add(collectible);
                 _score++;
+                _collectiblesCollected++;
             }
 
             if (collectible.GetTop() > GameView.Height)

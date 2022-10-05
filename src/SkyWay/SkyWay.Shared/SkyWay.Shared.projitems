@@ -34,7 +34,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml.cs">
       <DependentUpon>GamePlayPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Models\PlayerScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AttachedUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AuthToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\EntityBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\GameProfile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\GameScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\LeaderboardPlacement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\Session.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerCredentials.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contextual\SkyWayScore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
@@ -87,5 +96,8 @@
     <ApplicationDefinition Update="$(MSBuildThisFileDirectory)**/*.xaml" XamlRuntime="WinUI" />
     <!-- Make sure XAML files force reevaluation of up-to-date checks -->
     <UpToDateCheckInput Include="$(MSBuildThisFileDirectory)**/*.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
   </ItemGroup>
 </Project>
