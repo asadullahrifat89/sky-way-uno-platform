@@ -9,9 +9,7 @@ namespace SkyWay
     {
         public Car()
         {
-            Tag = Constants.CAR_TAG;
-            var carNum = new Random().Next(0, Constants.CAR_TEMPLATES.Length);
-            SetContent(Constants.CAR_TEMPLATES[carNum]);
+            Tag = Constants.CAR_TAG;            
         }
     }
 }
