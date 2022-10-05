@@ -50,6 +50,12 @@ namespace SkyWay
             new Uri("ms-appx:///Assets/Images/car3.png"),
             new Uri("ms-appx:///Assets/Images/car4.png"),
             new Uri("ms-appx:///Assets/Images/car5.png"),
+            new Uri("ms-appx:///Assets/Images/car6.png"),
+            new Uri("ms-appx:///Assets/Images/car7.png"),
+            new Uri("ms-appx:///Assets/Images/car8.png"),
+            new Uri("ms-appx:///Assets/Images/car9.png"),
+            new Uri("ms-appx:///Assets/Images/car10.png"),
+            new Uri("ms-appx:///Assets/Images/car11.png"),
         };
 
         public static Uri[] CLOUD_TEMPLATES = new Uri[]
