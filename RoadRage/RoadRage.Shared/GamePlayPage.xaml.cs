@@ -216,15 +216,22 @@ namespace RoadRage
                     Height = Constants.CarHeight * scale,
                 };
 
-                car.SetPosition(rand.Next(0, (int)GameView.Height ) * -1, rand.Next(0, (int)GameView.Width));
+                car.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
 
                 GameView.Children.Add(car);
             }
 
             // add 50 road marks
-            for (int i = 0; i < 50; i++)
+            for (int i = -25; i < 25; i++)
             {
-                var roadMark = new RoadMark();
+                var roadMark = new RoadMark()
+                {
+                    Width = Constants.RoadMarkWidth * scale,
+                    Height = Constants.RoadMarkHeight * scale,
+                };
+
+                roadMark.SetPosition((int)GameView.Height * i, GameView.Width / 2 - roadMark.Width / 2);
+                GameView.Children.Add(roadMark);
             }
 
             // add player
@@ -234,7 +241,7 @@ namespace RoadRage
                 Height = Constants.PlayerHeight * scale,
             };
 
-            player.SetPosition(GameView.Height - player.Height - 50 * scale, GameView.Width / 2 - player.Width / 2);
+            player.SetPosition(GameView.Height - player.Height - (50 * scale), GameView.Width / 2 - player.Width / 2);
 
             GameView.Children.Add(player);
         }
@@ -368,6 +375,11 @@ namespace RoadRage
                     case Constants.HEALTH_TAG:
                         {
                             UpdateHealth(x);
+                        }
+                        break;
+                    case Constants.ROADMARK_TAG:
+                        {
+                            UpdateRoadMark(x);
                         }
                         break;
                     case Constants.PLAYER_TAG:
@@ -676,6 +688,26 @@ namespace RoadRage
             {
                 GameViewRemovableObjects.Add(health);
             }
+        }
+
+        #endregion
+
+        #region Road Marks
+
+        private void UpdateRoadMark(GameObject roadMark)
+        {
+            roadMark.SetTop(roadMark.GetTop() + gameSpeed);
+
+            if (roadMark.GetTop() > GameView.Height)
+            {
+                RecyleRoadMark(roadMark);
+            }
+        }
+
+        private void RecyleRoadMark(GameObject roadMark)
+        {
+            roadMark.SetSize(Constants.RoadMarkWidth * scale, Constants.RoadMarkHeight * scale);
+            roadMark.SetTop(-25 * GameView.Height);
         }
 
         #endregion
