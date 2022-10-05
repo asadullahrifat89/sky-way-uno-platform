@@ -27,7 +27,7 @@ namespace SkyWay
 
         private int _gameSpeed;
         private readonly int _defaultGameSpeed = 5;
-        private readonly int _playerSpeed = 8;
+        private readonly int _playerSpeed = 9;
         private int _markNum;
 
         private int _powerUpSpawnCounter = 30;
@@ -336,6 +336,8 @@ namespace SkyWay
         private void StartGame()
         {
             Console.WriteLine("GAME STARTED");
+
+            App.EnterFullScreen(true);
 
             _lives = _maxLives;
             SetLives();

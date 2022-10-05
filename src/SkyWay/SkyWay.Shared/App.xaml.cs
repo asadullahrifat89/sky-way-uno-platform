@@ -218,13 +218,8 @@ namespace SkyWay
 
         #region Public
 
-        /// <summary>
-        /// Toggle fullscreen mode.
-        /// </summary>
-        /// <param name="value"></param>
         public static void EnterFullScreen(bool value)
         {
-#if !DEBUG
             var view = ApplicationView.GetForCurrentView();
 
             if (view is not null)
@@ -237,24 +232,15 @@ namespace SkyWay
                 {
                     view.ExitFullScreenMode();
                 }
-            } 
-#endif
+            }
         }
 
-        /// <summary>
-        /// Navigate to provided page.
-        /// </summary>
-        /// <param name="pageType"></param>
-        /// <param name="parameter"></param>
         public static void NavigateToPage(Type pageType, object parameter = null)
         {
             var rootFrame = _window.Content as Frame;
             rootFrame.Navigate(pageType, parameter);
         }
 
-        /// <summary>
-        /// Get base url for the app.
-        /// </summary>
         public static string GetBaseUrl()
         {
             if (_baseUrl.IsNullOrBlank())
