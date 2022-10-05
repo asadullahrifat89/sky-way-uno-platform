@@ -22,8 +22,11 @@ namespace RoadRage
         public const double PlayerWidth = 70 * 1.5;
         public const double PlayerHeight = 130 * 1.5;
 
-        public const double PowerUpWidth = 40 * 1.5;
-        public const double PowerUpHeight = 40 * 1.5;
+        public const double PowerUpWidth = 80;
+        public const double PowerUpHeight = 80;
+
+        public const double HealthWidth = 80;
+        public const double HealthHeight = 80;
 
         public const double RoadMarkWidth = 30;
         public const double RoadMarkHeight = 80;

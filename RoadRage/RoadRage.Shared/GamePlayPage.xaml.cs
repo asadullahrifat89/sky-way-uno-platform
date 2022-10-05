@@ -659,8 +659,8 @@ namespace RoadRage
         {
             PowerUp powerUp = new()
             {
-                Height = 50 * scale,
-                Width = 50 * scale,
+                Height = Constants.PowerUpHeight * scale,
+                Width = Constants.PowerUpWidth * scale,
                 RenderTransformOrigin = new Point(0.5, 0.5),
                 RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
             };
@@ -687,8 +687,8 @@ namespace RoadRage
         {
             Health health = new()
             {
-                Height = 80 * scale,
-                Width = 80 * scale,
+                Height = Constants.HealthHeight * scale,
+                Width = Constants.HealthWidth * scale,
                 RenderTransformOrigin = new Point(0.5, 0.5),
                 RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
             };
