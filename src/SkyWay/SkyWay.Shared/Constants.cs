@@ -17,7 +17,7 @@ namespace SkyWay
         public const string ROADDIVIDER_TAG = "roaddivider";
 
         public const string CLOUD_TAG = "cloud";
-        public const string ISLAND_TAG = "cloud";
+        public const string ISLAND_TAG = "island";
 
         public const string COLLECTIBLE_TAG = "collectible";
 
