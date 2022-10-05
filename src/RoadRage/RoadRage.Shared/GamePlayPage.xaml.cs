@@ -27,7 +27,7 @@ namespace RoadRage
 
         private int _gameSpeed;
         private readonly int _defaultGameSpeed = 4; // TODO: make it 4
-        private readonly int _playerSpeed = 7;
+        private readonly int _playerSpeed = 8;
         private int _markNum;
 
         private int _powerUpSpawnCounter = 30;
@@ -39,7 +39,7 @@ namespace RoadRage
         private readonly int _maxLives = 3;
         private int _healthSpawnCounter = 500;
 
-        private int _collectibleSpawnCounter = 500;
+        private int _collectibleSpawnCounter = 200;
 
         private double _score;
 
@@ -222,7 +222,7 @@ namespace RoadRage
                     Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
-                cloud.SetPosition(_rand.Next(100 * (int)_scale, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width) - (100 * _scale));
+                cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
 
                 GameView.Children.Add(cloud);
             }
@@ -272,7 +272,7 @@ namespace RoadRage
                     Height = Constants.CAR_HEIGHT * _scale,
                 };
 
-                car.SetPosition(_rand.Next(100 * (int)_scale, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width) - (100 * _scale));
+                car.SetPosition(left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
 
                 GameView.Children.Add(car);
             }
@@ -284,7 +284,7 @@ namespace RoadRage
                 Height = Constants.PLAYER_HEIGHT * _scale,
             };
 
-            _player.SetPosition(GameView.Height - _player.Height - (50 * _scale), GameView.Width / 2 - _player.Width / 2);
+            _player.SetPosition(left: GameView.Width / 2 - _player.Width / 2, top: GameView.Height - _player.Height - (50 * _scale));
 
             GameView.Children.Add(_player);
 
@@ -297,7 +297,7 @@ namespace RoadRage
                     Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
-                cloud.SetPosition(_rand.Next(100 * (int)_scale, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width) - (100 * _scale));
+                cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
 
                 GameView.Children.Add(cloud);
             }
@@ -412,7 +412,7 @@ namespace RoadRage
             if (_collectibleSpawnCounter < 1)
             {
                 SpawnCollectible();
-                _collectibleSpawnCounter = _rand.Next(500, 800);
+                _collectibleSpawnCounter = _rand.Next(200, 300);
             }
 
             if (_lives < _maxLives)
@@ -588,7 +588,7 @@ namespace RoadRage
             car.Speed = _gameSpeed - _rand.Next(0, 4);
 
             // set a random top and left position for the traffic car
-            car.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width - 50));
+            car.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next(100, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -597,20 +597,29 @@ namespace RoadRage
 
         private void SpawnCollectible()
         {
-            Collectible Collectible = new()
+            double top = _rand.Next(100, (int)GameView.Height) * -1;
+            double left = _rand.Next(0, (int)(GameView.Width - 55));
+
+            for (int i = -5; i < 5; i++)
             {
-                Height = Constants.COLLECTIBLE_HEIGHT * _scale,
-                Width = Constants.COLLECTIBLE_WIDTH * _scale,
-            };
+                Collectible collectible = new()
+                {
+                    Height = Constants.COLLECTIBLE_HEIGHT * _scale,
+                    Width = Constants.COLLECTIBLE_WIDTH * _scale,
+                    Speed = _gameSpeed,
+                };
 
-            Collectible.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)(GameView.Width - 55)));
+                collectible.SetPosition(left: left, top: top);
 
-            GameView.Children.Add(Collectible);
+                GameView.Children.Add(collectible);
+
+                top += collectible.Height;
+            }
         }
 
         private void UpdateCollectible(GameObject collectible)
         {
-            collectible.SetTop(collectible.GetTop() + 5);
+            collectible.SetTop(collectible.GetTop() + collectible.Speed);
 
             if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
             {
@@ -649,7 +658,7 @@ namespace RoadRage
             cloud.Speed = _gameSpeed - _rand.Next(1, 9);
 
             // set a random top and left position for the Cloud
-            cloud.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width - 50));
+            cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next(100, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -729,7 +738,7 @@ namespace RoadRage
                 Width = Constants.POWERUP_WIDTH * _scale,
             };
 
-            powerUp.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)(GameView.Width - 55)));
+            powerUp.SetPosition(left: _rand.Next(0, (int)(GameView.Width - 55)), top: _rand.Next(100, (int)GameView.Height) * -1);
 
             GameView.Children.Add(powerUp);
         }
@@ -806,7 +815,7 @@ namespace RoadRage
                 RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
             };
 
-            health.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)(GameView.Width - 55)));
+            health.SetPosition(left: _rand.Next(0, (int)(GameView.Width - 55)), top: _rand.Next(100, (int)GameView.Height) * -1);
             GameView.Children.Add(health);
         }
 

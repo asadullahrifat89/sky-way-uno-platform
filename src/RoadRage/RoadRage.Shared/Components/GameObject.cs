@@ -95,7 +95,7 @@ namespace RoadRage
             Canvas.SetLeft(this, left);
         }
 
-        public void SetPosition(double top, double left)
+        public void SetPosition(double left, double top)
         {
             Canvas.SetTop(this, top);
             Canvas.SetLeft(this, left);
