@@ -630,6 +630,7 @@ namespace RoadRage
             isPowerMode = true;
             powerModeCounter = powerModeDelay;
             player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
+            player.Height += 30;
         }
 
         private void PowerUpCoolDown()
@@ -653,6 +654,7 @@ namespace RoadRage
             powerUpText.Visibility = Visibility.Collapsed;
             player.SetContent(Constants.PLAYER_TEMPLATE);
             GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
+            player.Height -= 30;
         }
 
         private void SpawnPowerUp()
