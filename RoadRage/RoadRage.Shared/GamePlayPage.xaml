@@ -10,22 +10,17 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <ResourceDictionary>
-
-            <!--#region Objects Width x Height-->
-            <system:Double x:Key="HighWayDividerWidth">20</system:Double>
-            <!--#endregion-->
-
-            <!--#region Colors-->
-            <SolidColorBrush x:Key="RoadBackgroundColor" Color="#4e185f" />
-            <!--#endregion-->
-
-        </ResourceDictionary>
+        <ResourceDictionary />
     </Page.Resources>
 
     <Grid x:Name="RootGrid">
 
-        <GameEnvironment x:Name="GameView" Background="{StaticResource RoadBackgroundColor}" />
+        <Border
+            Background="{StaticResource RoadBackgroundColor}"
+            BorderBrush="{StaticResource RoadBordersColor}"
+            BorderThickness="40,0,40,0">
+            <GameEnvironment x:Name="GameView" Background="Transparent" />
+        </Border>
 
         <!--#region Game Score-->
         <Border

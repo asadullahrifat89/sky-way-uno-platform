@@ -205,7 +205,7 @@ namespace RoadRage
         {
             scale = GetGameObjectScale();
 
-            GameView.Children.Clear();           
+            GameView.Children.Clear();
 
             // add 50 road marks
             for (int i = -25; i < 25; i++)
@@ -219,6 +219,16 @@ namespace RoadRage
                 roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 - roadMark.Width / 2);
                 GameView.Children.Add(roadMark);
             }
+
+            // add road divider
+            var roadDivider = new RoadDivider()
+            {
+                Height = GameView.Height,
+                Width = Constants.RoadDividerWidth * scale,
+            };
+
+            roadDivider.SetPosition(0, GameView.Width / 2 - roadDivider.Width / 2);
+            GameView.Children.Add(roadDivider);
 
             // add 5 cars
             for (int i = 0; i < 5; i++)
@@ -274,7 +284,7 @@ namespace RoadRage
 
             player.Opacity = 1;
 
-            GameView.Background = this.Resources["RoadBackgroundColor"] as SolidColorBrush;
+            GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
 
             moveLeft = false;
             moveRight = false;
@@ -609,7 +619,7 @@ namespace RoadRage
         private void PowerUpCoolDown()
         {
             powerModeCounter -= 1;
-            GameView.Background = new SolidColorBrush(Colors.Goldenrod);           
+            GameView.Background = new SolidColorBrush(Colors.Goldenrod);
 
             double remainingPow = (double)powerModeCounter / (double)powerModeDelay * 4;
 
@@ -623,10 +633,10 @@ namespace RoadRage
         private void PowerDown()
         {
             isPowerMode = false;
-            
+
             powerUpText.Visibility = Visibility.Collapsed;
             player.SetContent(Constants.PLAYER_TEMPLATE);
-            GameView.Background = this.Resources["RoadBackgroundColor"] as SolidColorBrush;
+            GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
         }
 
         private void SpawnPowerUp()

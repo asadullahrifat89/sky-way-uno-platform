@@ -14,6 +14,7 @@ namespace RoadRage
         public const string HEALTH_TAG = "health";
 
         public const string ROADMARK_TAG = "roadmark";
+        public const string ROADDIVIDER_TAG = "roaddivider";
 
         public const double CarWidth = 60 * 1.5;
         public const double CarHeight = 120 * 1.5;
@@ -26,6 +27,8 @@ namespace RoadRage
 
         public const double RoadMarkWidth = 30;
         public const double RoadMarkHeight = 80;
+
+        public const double RoadDividerWidth = 30;
 
         public static Uri[] CAR_TEMPLATES = new Uri[]
         {
