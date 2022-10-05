@@ -210,7 +210,7 @@ namespace RoadRage
 
             GameView.Children.Clear();
 
-            // add 50 road marks
+            // add 50 road marks left
             for (int i = -25; i < 25; i++)
             {
                 var roadMark = new RoadMark()
@@ -219,7 +219,20 @@ namespace RoadRage
                     Height = Constants.RoadMarkHeight * scale,
                 };
 
-                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 - roadMark.Width / 2);
+                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 4 - roadMark.Width / 2);
+                GameView.Children.Add(roadMark);
+            }
+
+            // add 50 road marks right
+            for (int i = -25; i < 25; i++)
+            {
+                var roadMark = new RoadMark()
+                {
+                    Width = Constants.RoadMarkWidth * scale,
+                    Height = Constants.RoadMarkHeight * scale,
+                };
+
+                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 + GameView.Width / 4 - roadMark.Width / 2);
                 GameView.Children.Add(roadMark);
             }
 
