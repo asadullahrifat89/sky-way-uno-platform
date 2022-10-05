@@ -23,7 +23,7 @@ jobs:
       run: |
         mkdir -p $GITHUB_WORKSPACE/artifacts
         mkdir -p $GITHUB_WORKSPACE/artifacts/wasm
-        cd src/RoadRage/RoadRage.Wasm
+        cd src/SkyWay/SkyWay.Wasm
         dotnet publish -c Release /bl:/artifacts/mbuild.binlog -o $GITHUB_WORKSPACE/artifacts/wasm
     
     - name: Publish Artifacts
