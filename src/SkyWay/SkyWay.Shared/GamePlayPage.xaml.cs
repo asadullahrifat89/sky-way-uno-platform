@@ -616,7 +616,7 @@ namespace SkyWay
 
         private void GameOver()
         {
-            StopGame();            
+            StopGame();
             _isGameOver = true;
         }
 
@@ -721,7 +721,9 @@ namespace SkyWay
             double top = GameView.Height * -1;
             double left = _rand.Next(0, (int)(GameView.Width - 55));
 
-            for (int i = -5; i < 5; i++)
+            double xDir = _rand.Next(-1, 2);
+
+            for (int i = 0; i < 5; i++)
             {
                 Collectible collectible = new()
                 {
@@ -732,6 +734,22 @@ namespace SkyWay
 
                 collectible.SetPosition(left: left, top: top);
                 GameView.Children.Add(collectible);
+
+                switch (xDir)
+                {
+                    case -1:
+                        {
+                            left -= collectible.Width;
+                        }
+                        break;
+                    case 1:
+                        {
+                            left += collectible.Width;
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
                 top += collectible.Height;
             }
