@@ -18,51 +18,53 @@ namespace RoadRage
     {
         #region Fields
 
-        private PeriodicTimer GameViewTimer;
+        private PeriodicTimer _gameViewTimer;
 
-        private readonly List<GameObject> GameViewRemovableObjects = new();
-        private readonly Random rand = new();
+        private readonly List<GameObject> _removableObjects = new();
+        private readonly Random _rand = new();
 
-        private Rect playerHitBox;
+        private Rect _playerHitBox;
 
-        private int gameSpeed;
-        private readonly int defaultGameSpeed = 4; // TODO: make it 4
-        private readonly int playerSpeed = 7;
-        private int markNum;
+        private int _gameSpeed;
+        private readonly int _defaultGameSpeed = 4; // TODO: make it 4
+        private readonly int _playerSpeed = 7;
+        private int _markNum;
 
-        private int powerUpSpawnCounter = 30;
+        private int _powerUpSpawnCounter = 30;
 
-        private int powerModeCounter = 250;
-        private readonly int powerModeDelay = 250;
-        
-        private int lives = 3;
-        private readonly int maxLives = 3;
-        private int healthSpawnCounter = 500;
+        private int _powerModeCounter = 250;
+        private readonly int _powerModeDelay = 250;
 
-        private double score;
+        private int _lives = 3;
+        private readonly int _maxLives = 3;
+        private int _healthSpawnCounter = 500;
 
-        private bool moveLeft;
-        private bool moveRight;
-        private bool moveUp;
-        private bool moveDown;
-        private bool isGameOver;
-        private bool isPowerMode;
-        private bool isGamePaused;
+        private int _collectibleSpawnCounter = 500;
 
-        private bool isRecoveringFromDamage;
-        private bool isPointerActivated;
-        private readonly TimeSpan frameTime = TimeSpan.FromMilliseconds(18);
+        private double _score;
 
-        private int accelerationCounter;
+        private bool _moveLeft;
+        private bool _moveRight;
+        private bool _moveUp;
+        private bool _moveDown;
+        private bool _isGameOver;
+        private bool _isPowerMode;
+        private bool _isGamePaused;
 
-        private int damageRecoveryCounter = 100;
-        private readonly int damageRecoveryDelay = 500;
+        private bool _isRecoveringFromDamage;
+        private bool _isPointerActivated;
+        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(18);
 
-        private double windowHeight, windowWidth;
-        private double scale;
-        private Point pointerPosition;
+        private int _accelerationCounter;
 
-        private Player player;
+        private int _damageRecoveryCounter = 100;
+        private readonly int _damageRecoveryDelay = 500;
+
+        private double _windowHeight, _windowWidth;
+        private double _scale;
+        private Point _pointerPosition;
+
+        private Player _player;
 
         #endregion
 
@@ -72,10 +74,10 @@ namespace RoadRage
         {
             this.InitializeComponent();
 
-            isGameOver = true;
+            _isGameOver = true;
 
-            windowHeight = Window.Current.Bounds.Height;
-            windowWidth = Window.Current.Bounds.Width;
+            _windowHeight = Window.Current.Bounds.Height;
+            _windowWidth = Window.Current.Bounds.Width;
 
             this.Loaded += GamePlayPage_Loaded;
             this.Unloaded += GamePlayPage_Unloaded;
@@ -99,13 +101,13 @@ namespace RoadRage
 
         private void GamePlayPage_SizeChanged(object sender, SizeChangedEventArgs args)
         {
-            windowWidth = args.NewSize.Width;
-            windowHeight = args.NewSize.Height;
+            _windowWidth = args.NewSize.Width;
+            _windowHeight = args.NewSize.Height;
 
-            GameView.Width = windowWidth;
-            GameView.Height = windowHeight;
+            GameView.Width = _windowWidth;
+            GameView.Height = _windowHeight;
 
-            Console.WriteLine($"WINDOWS SIZE: {windowWidth}x{windowHeight}");
+            Console.WriteLine($"WINDOWS SIZE: {_windowWidth}x{_windowHeight}");
 
             InitGame();
         }
@@ -116,53 +118,53 @@ namespace RoadRage
 
         private void InputView_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (isGameOver)
+            if (_isGameOver)
             {
                 InputView.Focus(FocusState.Programmatic);
                 StartGame();
             }
             else
             {
-                isPointerActivated = true;
+                _isPointerActivated = true;
             }
         }
 
         private void InputView_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            if (isPointerActivated)
+            if (_isPointerActivated)
             {
                 PointerPoint point = e.GetCurrentPoint(GameView);
-                pointerPosition = point.Position;
+                _pointerPosition = point.Position;
             }
         }
 
         private void InputView_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            isPointerActivated = false;
-            pointerPosition = null;
+            _isPointerActivated = false;
+            _pointerPosition = null;
         }
 
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Left)
             {
-                moveLeft = true;
-                moveRight = false;
+                _moveLeft = true;
+                _moveRight = false;
             }
             if (e.Key == VirtualKey.Right)
             {
-                moveRight = true;
-                moveLeft = false;
+                _moveRight = true;
+                _moveLeft = false;
             }
             if (e.Key == VirtualKey.Up)
             {
-                moveUp = true;
-                moveDown = false;
+                _moveUp = true;
+                _moveDown = false;
             }
             if (e.Key == VirtualKey.Down)
             {
-                moveDown = true;
-                moveUp = false;
+                _moveDown = true;
+                _moveUp = false;
             }
         }
 
@@ -171,26 +173,26 @@ namespace RoadRage
             // when the player releases the left or right key it will set the designated boolean to false
             if (e.Key == VirtualKey.Left)
             {
-                moveLeft = false;
+                _moveLeft = false;
             }
             if (e.Key == VirtualKey.Right)
             {
-                moveRight = false;
+                _moveRight = false;
             }
             if (e.Key == VirtualKey.Up)
             {
-                moveUp = false;
+                _moveUp = false;
             }
             if (e.Key == VirtualKey.Down)
             {
-                moveDown = false;
+                _moveDown = false;
             }
 
-            if (!moveLeft && !moveRight && !moveUp && !moveDown)
-                accelerationCounter = 0;
+            if (!_moveLeft && !_moveRight && !_moveUp && !_moveDown)
+                _accelerationCounter = 0;
 
             // in this case we will listen for the enter key aswell but for this to execute we will need the game over boolean to be true
-            if (e.Key == VirtualKey.Enter && isGameOver == true)
+            if (e.Key == VirtualKey.Enter && _isGameOver == true)
             {
                 StartGame();
             }
@@ -206,7 +208,7 @@ namespace RoadRage
 
         private void InitGame()
         {
-            scale = GetGameObjectScale();
+            _scale = GetGameObjectScale();
 
             GameView.Children.Clear();
 
@@ -216,11 +218,11 @@ namespace RoadRage
             {
                 var cloud = new Cloud()
                 {
-                    Width = Constants.CLOUD_WIDTH * scale,
-                    Height = Constants.CLOUD_HEIGHT * scale,
+                    Width = Constants.CLOUD_WIDTH * _scale,
+                    Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
-                cloud.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
+                cloud.SetPosition(_rand.Next(100 * (int)_scale, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width) - (100 * _scale));
 
                 GameView.Children.Add(cloud);
             }
@@ -266,36 +268,36 @@ namespace RoadRage
             {
                 var car = new Car()
                 {
-                    Width = Constants.CAR_WIDTH * scale,
-                    Height = Constants.CAR_HEIGHT * scale,
+                    Width = Constants.CAR_WIDTH * _scale,
+                    Height = Constants.CAR_HEIGHT * _scale,
                 };
 
-                car.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
+                car.SetPosition(_rand.Next(100 * (int)_scale, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width) - (100 * _scale));
 
                 GameView.Children.Add(car);
             }
 
             // add player
-            player = new Player()
+            _player = new Player()
             {
-                Width = Constants.PLAYER_WIDTH * scale,
-                Height = Constants.PLAYER_HEIGHT * scale,
+                Width = Constants.PLAYER_WIDTH * _scale,
+                Height = Constants.PLAYER_HEIGHT * _scale,
             };
 
-            player.SetPosition(GameView.Height - player.Height - (50 * scale), GameView.Width / 2 - player.Width / 2);
+            _player.SetPosition(GameView.Height - _player.Height - (50 * _scale), GameView.Width / 2 - _player.Width / 2);
 
-            GameView.Children.Add(player);
+            GameView.Children.Add(_player);
 
             //TODO: add some clouds above
             for (int i = 0; i < 25; i++)
             {
                 var cloud = new Cloud()
                 {
-                    Width = Constants.CLOUD_WIDTH * scale,
-                    Height = Constants.CLOUD_HEIGHT * scale,
+                    Width = Constants.CLOUD_WIDTH * _scale,
+                    Height = Constants.CLOUD_HEIGHT * _scale,
                 };
 
-                cloud.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
+                cloud.SetPosition(_rand.Next(100 * (int)_scale, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width) - (100 * _scale));
 
                 GameView.Children.Add(cloud);
             }
@@ -303,7 +305,7 @@ namespace RoadRage
 
         private double GetGameObjectScale()
         {
-            return windowWidth switch
+            return _windowWidth switch
             {
                 <= 300 => 0.60,
                 <= 400 => 0.65,
@@ -321,28 +323,28 @@ namespace RoadRage
         {
             Console.WriteLine("GAME STARTED");
 
-            lives = maxLives;
+            _lives = _maxLives;
             SetLives();
 
-            gameSpeed = defaultGameSpeed;
+            _gameSpeed = _defaultGameSpeed;
             RunGame();
 
-            player.Opacity = 1;
+            _player.Opacity = 1;
 
             GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
 
-            moveLeft = false;
-            moveRight = false;
-            moveUp = false;
-            moveDown = false;
+            _moveLeft = false;
+            _moveRight = false;
+            _moveUp = false;
+            _moveDown = false;
 
-            isGameOver = false;
-            isPowerMode = false;
-            powerModeCounter = powerModeDelay;
-            isRecoveringFromDamage = false;
-            damageRecoveryCounter = damageRecoveryDelay;
+            _isGameOver = false;
+            _isPowerMode = false;
+            _powerModeCounter = _powerModeDelay;
+            _isRecoveringFromDamage = false;
+            _damageRecoveryCounter = _damageRecoveryDelay;
 
-            score = 0;
+            _score = 0;
             scoreText.Text = "Score: 0";
 
             // remove health and power ups, recylce cars
@@ -360,10 +362,11 @@ namespace RoadRage
                             RecyleCar(x);
                         }
                         break;
+                    case Constants.COLLECTIBLE_TAG:
                     case Constants.HEALTH_TAG:
                     case Constants.POWERUP_TAG:
                         {
-                            GameViewRemovableObjects.Add(x);
+                            _removableObjects.Add(x);
                         }
                         break;
                     default:
@@ -371,19 +374,19 @@ namespace RoadRage
                 }
             }
 
-            foreach (GameObject y in GameViewRemovableObjects)
+            foreach (GameObject y in _removableObjects)
             {
                 GameView.Children.Remove(y);
             }
 
-            GameViewRemovableObjects.Clear();
+            _removableObjects.Clear();
         }
 
         private async void RunGame()
         {
-            GameViewTimer = new PeriodicTimer(frameTime);
+            _gameViewTimer = new PeriodicTimer(_frameTime);
 
-            while (await GameViewTimer.WaitForNextTickAsync())
+            while (await _gameViewTimer.WaitForNextTickAsync())
             {
                 GameViewLoop();
             }
@@ -391,28 +394,35 @@ namespace RoadRage
 
         private void GameViewLoop()
         {
-            score += .05; // increase the score by .5 each tick of the timer
+            //score += .05; // increase the score by .5 each tick of the timer
 
-            powerUpSpawnCounter -= 1;
+            _powerUpSpawnCounter--;
+            _collectibleSpawnCounter--;
 
-            scoreText.Text = "Score: " + score.ToString("#");
+            scoreText.Text = "Score: " + _score.ToString("#");
 
-            playerHitBox = player.GetHitBox(scale);
+            _playerHitBox = _player.GetHitBox(_scale);
 
-            if (powerUpSpawnCounter < 0)
+            if (_powerUpSpawnCounter < 1)
             {
                 SpawnPowerUp();
-                powerUpSpawnCounter = rand.Next(500, 800);
+                _powerUpSpawnCounter = _rand.Next(500, 800);
             }
 
-            if (lives < maxLives)
+            if (_collectibleSpawnCounter < 1)
             {
-                healthSpawnCounter--;
+                SpawnCollectible();
+                _collectibleSpawnCounter = _rand.Next(500, 800);
+            }
 
-                if (healthSpawnCounter < 0)
+            if (_lives < _maxLives)
+            {
+                _healthSpawnCounter--;
+
+                if (_healthSpawnCounter < 0)
                 {
                     SpawnHealth();
-                    healthSpawnCounter = rand.Next(500, 800);
+                    _healthSpawnCounter = _rand.Next(500, 800);
                 }
             }
 
@@ -437,6 +447,11 @@ namespace RoadRage
                             UpdatePowerUp(x);
                         }
                         break;
+                    case Constants.COLLECTIBLE_TAG:
+                        {
+                            UpdateCollectible(x);
+                        }
+                        break;
                     case Constants.HEALTH_TAG:
                         {
                             UpdateHealth(x);
@@ -449,7 +464,7 @@ namespace RoadRage
                         break;
                     case Constants.PLAYER_TAG:
                         {
-                            if (moveLeft || moveRight || moveUp || moveDown || isPointerActivated)
+                            if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
                             {
                                 UpdatePlayer();
                             }
@@ -460,20 +475,20 @@ namespace RoadRage
                 }
             }
 
-            if (isGameOver)
+            if (_isGameOver)
                 return;
 
-            if (isPowerMode)
+            if (_isPowerMode)
             {
                 PowerUpCoolDown();
 
-                if (powerModeCounter <= 0)
+                if (_powerModeCounter <= 0)
                 {
                     PowerDown();
                 }
             }
 
-            foreach (GameObject y in GameViewRemovableObjects)
+            foreach (GameObject y in _removableObjects)
             {
                 GameView.Children.Remove(y);
             }
@@ -490,12 +505,12 @@ namespace RoadRage
             StopGame();
 
             scoreText.Text += " Press Enter to replay";
-            isGameOver = true;
+            _isGameOver = true;
         }
 
         private void StopGame()
         {
-            GameViewTimer.Dispose();
+            _gameViewTimer.Dispose();
         }
 
         #endregion
@@ -513,36 +528,36 @@ namespace RoadRage
                 RecyleCar(vehicle);
             }
 
-            if (isRecoveringFromDamage)
+            if (_isRecoveringFromDamage)
             {
-                player.Opacity = 0.66;
-                damageRecoveryCounter--;
+                _player.Opacity = 0.66;
+                _damageRecoveryCounter--;
 
-                if (damageRecoveryCounter <= 0)
+                if (_damageRecoveryCounter <= 0)
                 {
-                    player.Opacity = 1;
-                    isRecoveringFromDamage = false;
+                    _player.Opacity = 1;
+                    _isRecoveringFromDamage = false;
                 }
             }
             else
             {
                 // if vehicle collides with player
-                if (playerHitBox.IntersectsWith(vehicle.GetHitBox(scale)))
+                if (_playerHitBox.IntersectsWith(vehicle.GetHitBox(_scale)))
                 {
-                    if (!isPowerMode)
+                    if (!_isPowerMode)
                     {
-                        lives--;
-                        damageRecoveryCounter = damageRecoveryDelay;
-                        isRecoveringFromDamage = true;
+                        _lives--;
+                        _damageRecoveryCounter = _damageRecoveryDelay;
+                        _isRecoveringFromDamage = true;
                         SetLives();
 
-                        if (lives == 0)
+                        if (_lives == 0)
                             GameOver();
                     }
                 }
             }
 
-            if (isGameOver)
+            if (_isGameOver)
                 return;
 
             //TODO: this is expensive
@@ -566,14 +581,47 @@ namespace RoadRage
 
         private void RecyleCar(GameObject car)
         {
-            markNum = rand.Next(0, Constants.CAR_TEMPLATES.Length);
+            _markNum = _rand.Next(0, Constants.CAR_TEMPLATES.Length);
 
-            car.SetContent(Constants.CAR_TEMPLATES[markNum]);
-            car.SetSize(Constants.CAR_WIDTH * scale, Constants.CAR_HEIGHT * scale);
-            car.Speed = gameSpeed - rand.Next(0, 4);
+            car.SetContent(Constants.CAR_TEMPLATES[_markNum]);
+            car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
+            car.Speed = _gameSpeed - _rand.Next(0, 4);
 
             // set a random top and left position for the traffic car
-            car.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width - 50));
+            car.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width - 50));
+        }
+
+        #endregion
+
+        #region Collectible
+
+        private void SpawnCollectible()
+        {
+            Collectible Collectible = new()
+            {
+                Height = Constants.COLLECTIBLE_HEIGHT * _scale,
+                Width = Constants.COLLECTIBLE_WIDTH * _scale,
+            };
+
+            Collectible.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)(GameView.Width - 55)));
+
+            GameView.Children.Add(Collectible);
+        }
+
+        private void UpdateCollectible(GameObject collectible)
+        {
+            collectible.SetTop(collectible.GetTop() + 5);
+
+            if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
+            {
+                _removableObjects.Add(collectible);
+                _score++;
+            }
+
+            if (collectible.GetTop() > GameView.Height)
+            {
+                _removableObjects.Add(collectible);
+            }
         }
 
         #endregion
@@ -594,14 +642,14 @@ namespace RoadRage
 
         private void RecyleCloud(GameObject cloud)
         {
-            markNum = rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
+            _markNum = _rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
 
-            cloud.SetContent(Constants.CLOUD_TEMPLATES[markNum]);
-            cloud.SetSize(Constants.CLOUD_WIDTH * scale, Constants.CLOUD_HEIGHT * scale);
-            cloud.Speed = gameSpeed - rand.Next(1, 9);
+            cloud.SetContent(Constants.CLOUD_TEMPLATES[_markNum]);
+            cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
+            cloud.Speed = _gameSpeed - _rand.Next(1, 9);
 
             // set a random top and left position for the Cloud
-            cloud.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width - 50));
+            cloud.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)GameView.Width - 50));
         }
 
         #endregion
@@ -610,61 +658,61 @@ namespace RoadRage
 
         private void UpdatePlayer()
         {
-            double effectiveSpeed = accelerationCounter >= playerSpeed ? playerSpeed : accelerationCounter / 1.3;
+            double effectiveSpeed = _accelerationCounter >= _playerSpeed ? _playerSpeed : _accelerationCounter / 1.3;
 
             // increase acceleration and stop when player speed is reached
-            if (accelerationCounter <= playerSpeed)
-                accelerationCounter++;
+            if (_accelerationCounter <= _playerSpeed)
+                _accelerationCounter++;
 
             //Console.WriteLine("ACC:" + _accelerationCounter);            
 
-            double left = player.GetLeft();
-            double top = player.GetTop();
+            double left = _player.GetLeft();
+            double top = _player.GetTop();
 
-            double playerMiddleX = left + player.Width / 2;
-            double playerMiddleY = top + player.Height / 2;
+            double playerMiddleX = left + _player.Width / 2;
+            double playerMiddleY = top + _player.Height / 2;
 
-            if (isPointerActivated)
+            if (_isPointerActivated)
             {
                 // move up
-                if (pointerPosition.Y < playerMiddleY - playerSpeed)
+                if (_pointerPosition.Y < playerMiddleY - _playerSpeed)
                 {
-                    player.SetTop(top - effectiveSpeed);
+                    _player.SetTop(top - effectiveSpeed);
                 }
                 // move left
-                if (pointerPosition.X < playerMiddleX - playerSpeed && left > 0)
+                if (_pointerPosition.X < playerMiddleX - _playerSpeed && left > 0)
                 {
-                    player.SetLeft(left - effectiveSpeed);
+                    _player.SetLeft(left - effectiveSpeed);
                 }
 
                 // move down
-                if (pointerPosition.Y > playerMiddleY + playerSpeed)
+                if (_pointerPosition.Y > playerMiddleY + _playerSpeed)
                 {
-                    player.SetTop(top + effectiveSpeed);
+                    _player.SetTop(top + effectiveSpeed);
                 }
                 // move right
-                if (pointerPosition.X > playerMiddleX + playerSpeed && left + player.Width < GameView.Width)
+                if (_pointerPosition.X > playerMiddleX + _playerSpeed && left + _player.Width < GameView.Width)
                 {
-                    player.SetLeft(left + effectiveSpeed);
+                    _player.SetLeft(left + effectiveSpeed);
                 }
             }
             else
             {
-                if (moveLeft && left > 0)
+                if (_moveLeft && left > 0)
                 {
-                    player.SetLeft(left - effectiveSpeed);
+                    _player.SetLeft(left - effectiveSpeed);
                 }
-                if (moveRight && left + player.Width < GameView.Width)
+                if (_moveRight && left + _player.Width < GameView.Width)
                 {
-                    player.SetLeft(left + effectiveSpeed);
+                    _player.SetLeft(left + effectiveSpeed);
                 }
-                if (moveUp && top > 0 + (50 * scale))
+                if (_moveUp && top > 0 + (50 * _scale))
                 {
-                    player.SetTop(top - effectiveSpeed);
+                    _player.SetTop(top - effectiveSpeed);
                 }
-                if (moveDown && top < GameView.Height - (100 * scale))
+                if (_moveDown && top < GameView.Height - (100 * _scale))
                 {
-                    player.SetTop(top + effectiveSpeed);
+                    _player.SetTop(top + effectiveSpeed);
                 }
             }
         }
@@ -677,13 +725,11 @@ namespace RoadRage
         {
             PowerUp powerUp = new()
             {
-                Height = Constants.POWERUP_HEIGHT * scale,
-                Width = Constants.POWERUP_WIDTH * scale,
-                RenderTransformOrigin = new Point(0.5, 0.5),
-                RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
+                Height = Constants.POWERUP_HEIGHT * _scale,
+                Width = Constants.POWERUP_WIDTH * _scale,
             };
 
-            powerUp.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)(GameView.Width - 55)));
+            powerUp.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)(GameView.Width - 55)));
 
             GameView.Children.Add(powerUp);
         }
@@ -692,34 +738,33 @@ namespace RoadRage
         {
             powerUp.SetTop(powerUp.GetTop() + 5);
 
-            // if player gets a power up
-            if (playerHitBox.IntersectsWith(powerUp.GetHitBox(scale)))
+            if (_playerHitBox.IntersectsWith(powerUp.GetHitBox(_scale)))
             {
-                GameViewRemovableObjects.Add(powerUp);
+                _removableObjects.Add(powerUp);
                 PowerUp();
             }
 
             if (powerUp.GetTop() > GameView.Height)
             {
-                GameViewRemovableObjects.Add(powerUp);
+                _removableObjects.Add(powerUp);
             }
         }
 
         private void PowerUp()
         {
             powerUpText.Visibility = Visibility.Visible;
-            isPowerMode = true;
-            powerModeCounter = powerModeDelay;
-            player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
-            player.Height += 50;
+            _isPowerMode = true;
+            _powerModeCounter = _powerModeDelay;
+            _player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
+            _player.Height += 50;
         }
 
         private void PowerUpCoolDown()
         {
-            powerModeCounter -= 1;
+            _powerModeCounter -= 1;
             //GameView.Background = new SolidColorBrush(Colors.Goldenrod);
 
-            double remainingPow = (double)powerModeCounter / (double)powerModeDelay * 4;
+            double remainingPow = (double)_powerModeCounter / (double)_powerModeDelay * 4;
 
             powerUpText.Text = "";
             for (int i = 0; i < remainingPow; i++)
@@ -730,15 +775,13 @@ namespace RoadRage
 
         private void PowerDown()
         {
-            isPowerMode = false;
+            _isPowerMode = false;
 
             powerUpText.Visibility = Visibility.Collapsed;
-            player.SetContent(Constants.PLAYER_TEMPLATE);
+            _player.SetContent(Constants.PLAYER_TEMPLATE);
             //GameView.Background = Application.Current.Resources["RoadBackgroundColor"] as SolidColorBrush;
-            player.Height -= 50;
+            _player.Height -= 50;
         }
-
-
 
         #endregion
 
@@ -747,7 +790,7 @@ namespace RoadRage
         private void SetLives()
         {
             livesText.Text = "";
-            for (int i = 0; i < lives; i++)
+            for (int i = 0; i < _lives; i++)
             {
                 livesText.Text += "❤️";
             }
@@ -757,13 +800,13 @@ namespace RoadRage
         {
             Health health = new()
             {
-                Height = Constants.HEALTH_HEIGHT * scale,
-                Width = Constants.HEALTH_WIDTH * scale,
+                Height = Constants.HEALTH_HEIGHT * _scale,
+                Width = Constants.HEALTH_WIDTH * _scale,
                 RenderTransformOrigin = new Point(0.5, 0.5),
                 RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
             };
 
-            health.SetPosition(rand.Next(100, (int)GameView.Height) * -1, rand.Next(0, (int)(GameView.Width - 55)));
+            health.SetPosition(_rand.Next(100, (int)GameView.Height) * -1, _rand.Next(0, (int)(GameView.Width - 55)));
             GameView.Children.Add(health);
         }
 
@@ -772,17 +815,17 @@ namespace RoadRage
             health.SetTop(health.GetTop() + 5);
 
             // if player gets a health
-            if (playerHitBox.IntersectsWith(health.GetHitBox(scale)))
+            if (_playerHitBox.IntersectsWith(health.GetHitBox(_scale)))
             {
-                GameViewRemovableObjects.Add(health);
+                _removableObjects.Add(health);
 
-                lives++;
+                _lives++;
                 SetLives();
             }
 
             if (health.GetTop() > GameView.Height)
             {
-                GameViewRemovableObjects.Add(health);
+                _removableObjects.Add(health);
             }
         }
 
@@ -792,7 +835,7 @@ namespace RoadRage
 
         private void UpdateRoadMark(GameObject roadMark)
         {
-            roadMark.SetTop(roadMark.GetTop() + gameSpeed);
+            roadMark.SetTop(roadMark.GetTop() + _gameSpeed);
 
             if (roadMark.GetTop() > GameView.Height)
             {
@@ -802,7 +845,7 @@ namespace RoadRage
 
         private void RecyleRoadMark(GameObject roadMark)
         {
-            roadMark.SetSize(Constants.ROADMARK_WIDTH * scale, Constants.ROADMARK_HEIGHT * scale);
+            roadMark.SetSize(Constants.ROADMARK_WIDTH * _scale, Constants.ROADMARK_HEIGHT * _scale);
             roadMark.SetTop((int)roadMark.Height * 2 * -25);
         }
 
@@ -812,46 +855,46 @@ namespace RoadRage
 
         private void ScaleDifficulty()
         {
-            if (score >= 10 && score < 20)
+            if (_score >= 10 && _score < 20)
             {
-                gameSpeed = defaultGameSpeed + 2;
+                _gameSpeed = _defaultGameSpeed + 2;
             }
 
-            if (score >= 20 && score < 30)
+            if (_score >= 20 && _score < 30)
             {
-                gameSpeed = defaultGameSpeed + 4;
+                _gameSpeed = _defaultGameSpeed + 4;
             }
-            if (score >= 30 && score < 40)
+            if (_score >= 30 && _score < 40)
             {
-                gameSpeed = defaultGameSpeed + 6;
+                _gameSpeed = _defaultGameSpeed + 6;
             }
-            if (score >= 40 && score < 50)
+            if (_score >= 40 && _score < 50)
             {
-                gameSpeed = defaultGameSpeed + 8;
+                _gameSpeed = _defaultGameSpeed + 8;
             }
-            if (score >= 50 && score < 80)
+            if (_score >= 50 && _score < 80)
             {
-                gameSpeed = defaultGameSpeed + 10;
+                _gameSpeed = _defaultGameSpeed + 10;
             }
-            if (score >= 80 && score < 100)
+            if (_score >= 80 && _score < 100)
             {
-                gameSpeed = defaultGameSpeed + 12;
+                _gameSpeed = _defaultGameSpeed + 12;
             }
-            if (score >= 100 && score < 130)
+            if (_score >= 100 && _score < 130)
             {
-                gameSpeed = defaultGameSpeed + 14;
+                _gameSpeed = _defaultGameSpeed + 14;
             }
-            if (score >= 130 && score < 150)
+            if (_score >= 130 && _score < 150)
             {
-                gameSpeed = defaultGameSpeed + 16;
+                _gameSpeed = _defaultGameSpeed + 16;
             }
-            if (score >= 150 && score < 180)
+            if (_score >= 150 && _score < 180)
             {
-                gameSpeed = defaultGameSpeed + 18;
+                _gameSpeed = _defaultGameSpeed + 18;
             }
-            if (score >= 180 && score < 200)
+            if (_score >= 180 && _score < 200)
             {
-                gameSpeed = defaultGameSpeed + 20;
+                _gameSpeed = _defaultGameSpeed + 20;
             }
         }
 
