@@ -60,6 +60,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car5.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\cloud1.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\cloud2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\collectible.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\health.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player-power-mode.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
