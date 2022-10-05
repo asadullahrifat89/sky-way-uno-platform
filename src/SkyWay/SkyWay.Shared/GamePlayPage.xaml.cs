@@ -337,8 +337,6 @@ namespace SkyWay
         {
             Console.WriteLine("GAME STARTED");
 
-            App.EnterFullScreen(true);
-
             _lives = _maxLives;
             SetLives();
 
@@ -428,6 +426,8 @@ namespace SkyWay
             }
 
             RemoveGameObjects();
+
+            App.EnterFullScreen(true);
         }
 
         private double GetGameObjectScale()
