@@ -15,27 +15,33 @@ namespace RoadRage
 
         public const string ROADMARK_TAG = "roadmark";
         public const string ROADDIVIDER_TAG = "roaddivider";
+
         public const string CLOUD_TAG = "cloud";
 
-        public const double CarWidth = 60 * 1.5;
-        public const double CarHeight = 120 * 1.5;
+        public const string COLLECTIBLE_TAG = "collectible";
 
-        public const double PlayerWidth = 60 * 1.5;
-        public const double PlayerHeight = 120 * 1.5;
+        public const double CAR_WIDTH = 60 * 1.5;
+        public const double CAR_HEIGHT = 120 * 1.5;
 
-        public const double PowerUpWidth = 80;
-        public const double PowerUpHeight = 80;
+        public const double PLAYER_WIDTH = 60 * 1.5;
+        public const double PLAYER_HEIGHT = 120 * 1.5;
 
-        public const double HealthWidth = 80;
-        public const double HealthHeight = 80;
+        public const double POWERUP_WIDTH = 80;
+        public const double POWERUP_HEIGHT = 80;
 
-        public const double RoadMarkWidth = 30;
-        public const double RoadMarkHeight = 80;
+        public const double COLLECTIBLE_WIDTH = 80;
+        public const double COLLECTIBLE_HEIGHT = 80;
 
-        public const double CloudWidth = 100;
-        public const double CloudHeight = 100;
+        public const double HEALTH_WIDTH = 80;
+        public const double HEALTH_HEIGHT = 80;
 
-        public const double RoadDividerWidth = 30;
+        public const double ROADMARK_WIDTH = 30;
+        public const double ROADMARK_HEIGHT = 80;
+
+        public const double CLOUD_WIDTH = 100;
+        public const double CLOUD_HEIGHT = 100;
+
+        public const double ROADDIVIDER_WIDTH = 30;
 
         public static Uri[] CAR_TEMPLATES = new Uri[]
         {
@@ -57,5 +63,7 @@ namespace RoadRage
         public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.png");
 
         public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.png");
+
+        public static Uri COLLECTIBLE_TEMPLATE = new Uri("ms-appx:///Assets/Images/collectible.png");
     }
 }

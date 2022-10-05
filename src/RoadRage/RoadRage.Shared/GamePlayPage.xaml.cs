@@ -27,15 +27,17 @@ namespace RoadRage
 
         private int gameSpeed;
         private readonly int defaultGameSpeed = 4; // TODO: make it 4
-        private readonly int playerSpeed = 6;
+        private readonly int playerSpeed = 7;
         private int markNum;
-        private int powerUpCounter = 30;
+
+        private int powerUpSpawnCounter = 30;
+
         private int powerModeCounter = 250;
         private readonly int powerModeDelay = 250;
-
-        private int healthCounter = 500;
+        
         private int lives = 3;
         private readonly int maxLives = 3;
+        private int healthSpawnCounter = 500;
 
         private double score;
 
@@ -61,6 +63,7 @@ namespace RoadRage
         private Point pointerPosition;
 
         private Player player;
+
         #endregion
 
         #region Ctor
@@ -213,8 +216,8 @@ namespace RoadRage
             {
                 var cloud = new Cloud()
                 {
-                    Width = Constants.CloudWidth * scale,
-                    Height = Constants.CloudHeight * scale,
+                    Width = Constants.CLOUD_WIDTH * scale,
+                    Height = Constants.CLOUD_HEIGHT * scale,
                 };
 
                 cloud.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
@@ -263,8 +266,8 @@ namespace RoadRage
             {
                 var car = new Car()
                 {
-                    Width = Constants.CarWidth * scale,
-                    Height = Constants.CarHeight * scale,
+                    Width = Constants.CAR_WIDTH * scale,
+                    Height = Constants.CAR_HEIGHT * scale,
                 };
 
                 car.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
@@ -275,8 +278,8 @@ namespace RoadRage
             // add player
             player = new Player()
             {
-                Width = Constants.PlayerWidth * scale,
-                Height = Constants.PlayerHeight * scale,
+                Width = Constants.PLAYER_WIDTH * scale,
+                Height = Constants.PLAYER_HEIGHT * scale,
             };
 
             player.SetPosition(GameView.Height - player.Height - (50 * scale), GameView.Width / 2 - player.Width / 2);
@@ -288,8 +291,8 @@ namespace RoadRage
             {
                 var cloud = new Cloud()
                 {
-                    Width = Constants.CloudWidth * scale,
-                    Height = Constants.CloudHeight * scale,
+                    Width = Constants.CLOUD_WIDTH * scale,
+                    Height = Constants.CLOUD_HEIGHT * scale,
                 };
 
                 cloud.SetPosition(rand.Next(100 * (int)scale, (int)GameView.Height) * -1, rand.Next(0, (int)GameView.Width) - (100 * scale));
@@ -390,26 +393,26 @@ namespace RoadRage
         {
             score += .05; // increase the score by .5 each tick of the timer
 
-            powerUpCounter -= 1;
+            powerUpSpawnCounter -= 1;
 
             scoreText.Text = "Score: " + score.ToString("#");
 
             playerHitBox = player.GetHitBox(scale);
 
-            if (powerUpCounter < 0)
+            if (powerUpSpawnCounter < 0)
             {
                 SpawnPowerUp();
-                powerUpCounter = rand.Next(500, 800);
+                powerUpSpawnCounter = rand.Next(500, 800);
             }
 
             if (lives < maxLives)
             {
-                healthCounter--;
+                healthSpawnCounter--;
 
-                if (healthCounter < 0)
+                if (healthSpawnCounter < 0)
                 {
                     SpawnHealth();
-                    healthCounter = rand.Next(500, 800);
+                    healthSpawnCounter = rand.Next(500, 800);
                 }
             }
 
@@ -566,7 +569,7 @@ namespace RoadRage
             markNum = rand.Next(0, Constants.CAR_TEMPLATES.Length);
 
             car.SetContent(Constants.CAR_TEMPLATES[markNum]);
-            car.SetSize(Constants.CarWidth * scale, Constants.CarHeight * scale);
+            car.SetSize(Constants.CAR_WIDTH * scale, Constants.CAR_HEIGHT * scale);
             car.Speed = gameSpeed - rand.Next(0, 4);
 
             // set a random top and left position for the traffic car
@@ -594,7 +597,7 @@ namespace RoadRage
             markNum = rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
 
             cloud.SetContent(Constants.CLOUD_TEMPLATES[markNum]);
-            cloud.SetSize(Constants.CloudWidth * scale, Constants.CloudHeight * scale);
+            cloud.SetSize(Constants.CLOUD_WIDTH * scale, Constants.CLOUD_HEIGHT * scale);
             cloud.Speed = gameSpeed - rand.Next(1, 9);
 
             // set a random top and left position for the Cloud
@@ -674,8 +677,8 @@ namespace RoadRage
         {
             PowerUp powerUp = new()
             {
-                Height = Constants.PowerUpHeight * scale,
-                Width = Constants.PowerUpWidth * scale,
+                Height = Constants.POWERUP_HEIGHT * scale,
+                Width = Constants.POWERUP_WIDTH * scale,
                 RenderTransformOrigin = new Point(0.5, 0.5),
                 RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
             };
@@ -754,8 +757,8 @@ namespace RoadRage
         {
             Health health = new()
             {
-                Height = Constants.HealthHeight * scale,
-                Width = Constants.HealthWidth * scale,
+                Height = Constants.HEALTH_HEIGHT * scale,
+                Width = Constants.HEALTH_WIDTH * scale,
                 RenderTransformOrigin = new Point(0.5, 0.5),
                 RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
             };
@@ -799,7 +802,7 @@ namespace RoadRage
 
         private void RecyleRoadMark(GameObject roadMark)
         {
-            roadMark.SetSize(Constants.RoadMarkWidth * scale, Constants.RoadMarkHeight * scale);
+            roadMark.SetSize(Constants.ROADMARK_WIDTH * scale, Constants.ROADMARK_HEIGHT * scale);
             roadMark.SetTop((int)roadMark.Height * 2 * -25);
         }
 

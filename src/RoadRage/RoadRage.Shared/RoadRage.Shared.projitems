@@ -20,6 +20,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Components\Car.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\Cloud.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\Collectible.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\GameEnvironment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\GameObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\Health.cs" />
