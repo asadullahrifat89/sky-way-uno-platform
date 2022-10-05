@@ -15,8 +15,10 @@
 
     <Grid x:Name="RootGrid">
 
+        <GameEnvironment x:Name="SeaView" Background="{StaticResource RoadBackgroundColor}" />
+
         <!--  This hosts clouds and cars that do not collide  -->
-        <GameEnvironment x:Name="UnderView" Background="{StaticResource RoadBackgroundColor}" />
+        <GameEnvironment x:Name="UnderView" Background="Transparent" />
 
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"

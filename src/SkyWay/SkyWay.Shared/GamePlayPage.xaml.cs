@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Windows.Foundation;
 using Windows.System;
@@ -20,13 +21,12 @@ namespace SkyWay
 
         private PeriodicTimer _gameViewTimer;
 
-        private readonly List<GameObject> _removableObjects = new();
         private readonly Random _rand = new();
 
         private Rect _playerHitBox;
 
         private int _gameSpeed;
-        private readonly int _defaultGameSpeed = 4; // TODO: make it 4
+        private readonly int _defaultGameSpeed = 5;
         private readonly int _playerSpeed = 8;
         private int _markNum;
 
@@ -43,6 +43,8 @@ namespace SkyWay
 
         private double _score;
         private double _collectiblesCollected;
+
+        private int _islandSpawnCounter;
 
         private bool _moveLeft;
         private bool _moveRight;
@@ -114,6 +116,11 @@ namespace SkyWay
 
         private void SetViewSize()
         {
+            _scale = GetGameObjectScale();
+
+            SeaView.Width = _windowWidth;
+            SeaView.Height = _windowHeight;
+
             UnderView.Width = _windowWidth;
             UnderView.Height = _windowHeight;
 
@@ -122,8 +129,6 @@ namespace SkyWay
 
             OverView.Width = _windowWidth;
             OverView.Height = _windowHeight;
-
-            _scale = GetGameObjectScale();
         }
 
         #endregion
@@ -224,29 +229,7 @@ namespace SkyWay
         {
             Console.WriteLine("INITIALIZING GAME");
 
-            SetViewSize();
-
-            // TODO: add some islands underneath
-            for (int i = 0; i < 3; i++)
-            {
-                var scaleFactor = _rand.Next(3, 10);
-                var scaleReverseFactor = _rand.Next(-1, 2);
-
-                var island = new Island()
-                {
-                    Width = Constants.ISLAND_WIDTH * _scale,
-                    Height = Constants.ISLAND_HEIGHT * _scale,
-                    RenderTransform = new CompositeTransform()
-                    {
-                        CenterX = 0.5,
-                        CenterY = 0.5,
-                        Rotation = _rand.Next(0, 20),
-                    }
-                };
-
-                RandomizeIslandPosition(island);
-                UnderView.Children.Add(island);
-            }
+            SetViewSize();          
 
             // TODO: add some cars underneath
             for (int i = 0; i < 10; i++)
@@ -288,42 +271,6 @@ namespace SkyWay
                 UnderView.Children.Add(cloud);
             }
 
-            // add 50 road marks left
-            //for (int i = -25; i < 25; i++)
-            //{
-            //    var roadMark = new RoadMark()
-            //    {
-            //        Width = Constants.RoadMarkWidth * scale,
-            //        Height = Constants.RoadMarkHeight * scale,
-            //    };
-
-            //    roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 4 - roadMark.Width / 2);
-            //    GameView.Children.Add(roadMark);
-            //}
-
-            // add 50 road marks right
-            //for (int i = -25; i < 25; i++)
-            //{
-            //    var roadMark = new RoadMark()
-            //    {
-            //        Width = Constants.RoadMarkWidth * scale,
-            //        Height = Constants.RoadMarkHeight * scale,
-            //    };
-
-            //    roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 + GameView.Width / 4 - roadMark.Width / 2);
-            //    GameView.Children.Add(roadMark);
-            //}
-
-            // add road divider
-            //var roadDivider = new RoadDivider()
-            //{
-            //    Height = GameView.Height,
-            //    Width = Constants.RoadDividerWidth * scale,
-            //};
-
-            //roadDivider.SetPosition(0, GameView.Width / 2 - roadDivider.Width / 2);
-            //GameView.Children.Add(roadDivider);
-
             // add 5 cars
             for (int i = 0; i < 5; i++)
             {
@@ -346,7 +293,7 @@ namespace SkyWay
             };
 
             _player.SetPosition(
-                left: GameView.Width / 2 - _player.Width / 2, 
+                left: GameView.Width / 2 - _player.Width / 2,
                 top: GameView.Height - _player.Height - (50 * _scale));
 
             GameView.Children.Add(_player);
@@ -400,15 +347,15 @@ namespace SkyWay
             _collectiblesCollected = 0;
             scoreText.Text = "Score: 0";
 
+            foreach (GameObject x in SeaView.Children.OfType<GameObject>())
+            {
+                SeaView.AddDestroyableGameObject(x);
+            }
+
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
                 switch ((string)x.Tag)
                 {
-                    case Constants.ISLAND_TAG:
-                        {
-                            RecyleIsland(x);
-                        }
-                        break;
                     case Constants.CLOUD_TAG:
                         {
                             RecyleCloud(x);
@@ -443,7 +390,7 @@ namespace SkyWay
                     case Constants.HEALTH_TAG:
                     case Constants.POWERUP_TAG:
                         {
-                            _removableObjects.Add(x);
+                            GameView.AddDestroyableGameObject(x);
                         }
                         break;
                     default:
@@ -459,24 +406,14 @@ namespace SkyWay
                         {
                             RecyleCloud(x);
                         }
-                        break;
-                    case Constants.CAR_TAG:
-                        {
-                            RecyleCar(x);
-                        }
-                        break;
+                        break;                   
                     default:
                         break;
                 }
             }
 
-            foreach (GameObject y in _removableObjects)
-            {
-                GameView.Children.Remove(y);
-            }
-
-            _removableObjects.Clear();
-        }
+            RemoveGameObjects();
+        }      
 
         private double GetGameObjectScale()
         {
@@ -507,13 +444,36 @@ namespace SkyWay
         private void GameViewLoop()
         {
             _score += .05; // increase the score by .5 each tick of the timer
-
-            _powerUpSpawnCounter--;
-            _collectibleSpawnCounter--;
-
             scoreText.Text = "Score: " + _score.ToString("#");
 
             _playerHitBox = _player.GetHitBox(_scale);
+
+            SpawnGameObjects();
+            UpdateGameObjects();
+            RemoveGameObjects();
+
+            if (_isGameOver)
+                return;
+
+            if (_isPowerMode)
+            {
+                PowerUpCoolDown();
+
+                if (_powerModeCounter <= 0)
+                {
+                    PowerDown();
+                }
+            }
+
+            // as you progress in the game you will score higher and game speed will go up
+            ScaleDifficulty();
+        }
+
+        private void SpawnGameObjects()
+        {
+            _powerUpSpawnCounter--;
+            _collectibleSpawnCounter--;
+            _islandSpawnCounter--;
 
             if (_powerUpSpawnCounter < 1)
             {
@@ -527,6 +487,12 @@ namespace SkyWay
                 _collectibleSpawnCounter = _rand.Next(200, 300);
             }
 
+            if (_islandSpawnCounter < 1)
+            {
+                SpawnIsland();
+                _islandSpawnCounter = _rand.Next(2500, 3000);
+            }
+
             if (_lives < _maxLives)
             {
                 _healthSpawnCounter--;
@@ -536,6 +502,14 @@ namespace SkyWay
                     SpawnHealth();
                     _healthSpawnCounter = _rand.Next(500, 800);
                 }
+            }
+        }
+
+        private void UpdateGameObjects()
+        {
+            foreach (GameObject x in SeaView.Children.OfType<GameObject>())
+            {
+                UpdateIsland(x);
             }
 
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
@@ -550,11 +524,6 @@ namespace SkyWay
                     case Constants.CLOUD_TAG:
                         {
                             UpdateCloud(x);
-                        }
-                        break;
-                    case Constants.ISLAND_TAG:
-                        {
-                            UpdateIsland(x);
                         }
                         break;
                     default:
@@ -622,27 +591,14 @@ namespace SkyWay
                         break;
                 }
             }
+        }
 
-            if (_isGameOver)
-                return;
-
-            if (_isPowerMode)
-            {
-                PowerUpCoolDown();
-
-                if (_powerModeCounter <= 0)
-                {
-                    PowerDown();
-                }
-            }
-
-            foreach (GameObject y in _removableObjects)
-            {
-                GameView.Children.Remove(y);
-            }
-
-            // as you progress in the game you will score higher and game speed will go up
-            ScaleDifficulty();
+        private void RemoveGameObjects()
+        {
+            SeaView.RemoveDestroyableGameObjects();
+            UnderView.RemoveDestroyableGameObjects();
+            GameView.RemoveDestroyableGameObjects();
+            OverView.RemoveDestroyableGameObjects();
         }
 
         private void GameOver()
@@ -733,7 +689,7 @@ namespace SkyWay
 
             car.SetContent(Constants.CAR_TEMPLATES[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(1, 8);
+            car.Speed = _gameSpeed - _rand.Next(1, 4);
 
             RandomizeCarPosition(car);
         }
@@ -741,7 +697,7 @@ namespace SkyWay
         private void RandomizeCarPosition(GameObject car)
         {
             car.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), 
+                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
                 top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
@@ -776,14 +732,14 @@ namespace SkyWay
 
             if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
             {
-                _removableObjects.Add(collectible);
+                GameView.AddDestroyableGameObject(collectible);
                 _score++;
                 _collectiblesCollected++;
             }
 
             if (collectible.GetTop() > GameView.Height)
             {
-                _removableObjects.Add(collectible);
+                GameView.AddDestroyableGameObject(collectible);
             }
         }
 
@@ -807,7 +763,7 @@ namespace SkyWay
 
             cloud.SetContent(Constants.CLOUD_TEMPLATES[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
-            cloud.Speed = _gameSpeed - _rand.Next(1, 9);
+            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
 
             // set a random top and left position for the Cloud
             //cloud.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next(100, (int)GameView.Height) * -1);
@@ -825,32 +781,41 @@ namespace SkyWay
 
         #region Island
 
-        private void UpdateIsland(GameObject island)
+        private void SpawnIsland()
         {
-            island.SetTop(island.GetTop() + _gameSpeed / 6);
-
-            if (island.GetTop() > GameView.Height)
+            var island = new Island()
             {
-                RecyleIsland(island);
-            }
-        }
-
-        private void RecyleIsland(GameObject island)
-        {
-            _markNum = _rand.Next(0, Constants.ISLAND_TEMPLATES.Length);
-
-            island.SetContent(Constants.ISLAND_TEMPLATES[_markNum]);
-            island.SetSize(Constants.ISLAND_WIDTH * _scale, Constants.ISLAND_HEIGHT * _scale);
+                Width = Constants.ISLAND_WIDTH * _scale,
+                Height = Constants.ISLAND_HEIGHT * _scale,
+                RenderTransform = new CompositeTransform()
+                {
+                    CenterX = 0.5,
+                    CenterY = 0.5,
+                    Rotation = _rand.Next(0, 20),
+                }
+            };
 
             RandomizeIslandPosition(island);
+            SeaView.Children.Add(island);
+
+            Console.WriteLine("ISLAND SPAWN");
         }
+
+        private void UpdateIsland(GameObject island)
+        {
+            island.SetTop(island.GetTop() + _gameSpeed / 3);
+
+            if (island.GetTop() > SeaView.Height)
+            {
+                SeaView.AddDestroyableGameObject(island);
+            }
+        }    
 
         private void RandomizeIslandPosition(GameObject island)
         {
-            // set a random top and left position for the Island
             island.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale), 
-                top: _rand.Next(10 * (int)_scale, (int)GameView.Height) * -1);
+                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
+                top: _rand.Next(0, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -943,13 +908,13 @@ namespace SkyWay
 
             if (_playerHitBox.IntersectsWith(powerUp.GetHitBox(_scale)))
             {
-                _removableObjects.Add(powerUp);
+                GameView.AddDestroyableGameObject(powerUp);
                 PowerUp();
             }
 
             if (powerUp.GetTop() > GameView.Height)
             {
-                _removableObjects.Add(powerUp);
+                GameView.AddDestroyableGameObject(powerUp);
             }
         }
 
@@ -1023,7 +988,7 @@ namespace SkyWay
             // if player gets a health
             if (_playerHitBox.IntersectsWith(health.GetHitBox(_scale)))
             {
-                _removableObjects.Add(health);
+                GameView.AddDestroyableGameObject(health);
 
                 _lives++;
                 SetLives();
@@ -1031,7 +996,7 @@ namespace SkyWay
 
             if (health.GetTop() > GameView.Height)
             {
-                _removableObjects.Add(health);
+                GameView.AddDestroyableGameObject(health);
             }
         }
 
