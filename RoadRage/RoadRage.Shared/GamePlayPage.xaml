@@ -16,6 +16,7 @@
     <Grid x:Name="RootGrid">
 
         <Border
+            x:Name="GameViewBorder"
             Background="{StaticResource RoadBackgroundColor}"
             BorderBrush="{StaticResource RoadBordersColor}"
             BorderThickness="40,0,40,0">

@@ -99,7 +99,10 @@ namespace RoadRage
             windowWidth = args.NewSize.Width;
             windowHeight = args.NewSize.Height;
 
-            GameView.Width = windowWidth;
+            GameViewBorder.Width = windowWidth;
+            GameViewBorder.Height = windowHeight;
+
+            GameView.Width = windowWidth - 80;
             GameView.Height = windowHeight;
 
             Console.WriteLine($"WINDOWS SIZE: {windowWidth}x{windowHeight}");
