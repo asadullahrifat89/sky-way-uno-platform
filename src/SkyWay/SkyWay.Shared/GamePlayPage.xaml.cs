@@ -231,6 +231,13 @@ namespace SkyWay
 
             SetViewSize();
 
+            InitUnderView();
+            InitGameView();
+            InitOverView();
+        }
+
+        private void InitUnderView()
+        {
             // TODO: add some cars underneath
             for (int i = 0; i < 10; i++)
             {
@@ -270,7 +277,10 @@ namespace SkyWay
                 RandomizeCloudPosition(cloud);
                 UnderView.Children.Add(cloud);
             }
+        }
 
+        private void InitGameView()
+        {
             // add 5 cars
             for (int i = 0; i < 5; i++)
             {
@@ -297,7 +307,10 @@ namespace SkyWay
                 top: GameView.Height - _player.Height - (50 * _scale));
 
             GameView.Children.Add(_player);
+        }
 
+        private void InitOverView()
+        {
             //TODO: add some clouds above
             for (int i = 0; i < 20; i++)
             {
@@ -555,11 +568,11 @@ namespace SkyWay
                             UpdateHealth(x);
                         }
                         break;
-                    case Constants.ROADMARK_TAG:
-                        {
-                            UpdateRoadMark(x);
-                        }
-                        break;
+                    //case Constants.ROADMARK_TAG:
+                    //    {
+                    //        UpdateRoadMark(x);
+                    //    }
+                    //    break;
                     case Constants.PLAYER_TAG:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
@@ -784,13 +797,13 @@ namespace SkyWay
             var island = new Island()
             {
                 Width = Constants.ISLAND_WIDTH * _scale,
-                Height = Constants.ISLAND_HEIGHT * _scale,                
+                Height = Constants.ISLAND_HEIGHT * _scale,
             };
 
             island.RenderTransform = new CompositeTransform()
             {
                 CenterX = 0.5,
-                CenterY = 0.5,                
+                CenterY = 0.5,
                 Rotation = _rand.Next(0, 360),
             };
 
