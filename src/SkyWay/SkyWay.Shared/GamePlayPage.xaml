@@ -13,9 +13,24 @@
         <ResourceDictionary />
     </Page.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
 
-        <GameEnvironment x:Name="GameView" Background="{StaticResource RoadBackgroundColor}" />
+        <!--  This hosts the islands  -->
+        <GameEnvironment x:Name="SeaView" Background="Transparent" />
+
+        <!--  This hosts clouds and cars that do not collide  -->
+        <GameEnvironment x:Name="UnderView" Background="Transparent" />
+
+        <Border
+            Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
+            Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
+            Background="{StaticResource SeaBackgroundColor}"
+            Opacity="0.5" />
+
+        <GameEnvironment x:Name="GameView" Background="Transparent" />
+
+        <!--  This hosts clouds and cars that do not collide  -->
+        <GameEnvironment x:Name="OverView" Background="Transparent" />
 
         <!--#region Game Score-->
         <Border
@@ -24,20 +39,32 @@
             Margin="5"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Background="Goldenrod"
+            Background="#ec6c63"
             BorderBrush="White"
             BorderThickness="3"
-            CornerRadius="50,0,0,50">
-            <TextBlock
-                Name="scoreText"
-                Margin="10,0"
-                HorizontalAlignment="Right"
+            CornerRadius="50">
+            <StackPanel
+                Margin="3,0,5,0"
                 VerticalAlignment="Center"
-                FontSize="20"
-                FontWeight="Bold"
-                Foreground="White"
-                Text="Score: 0"
-                TextAlignment="Right" />
+                Orientation="Horizontal">
+                <Image
+                    Width="30"
+                    Height="30"
+                    Margin="0,2,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Source="ms-appx:///Assets/Images/collectible.png" />
+                <TextBlock
+                    Name="scoreText"
+                    Margin="5,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="0"
+                    TextAlignment="Left" />
+            </StackPanel>
         </Border>
         <!--#endregion-->
 
@@ -48,11 +75,21 @@
             Margin="5"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            Background="Goldenrod"
+            Background="#ec6c63"
             BorderBrush="White"
             BorderThickness="3"
-            CornerRadius="0,50,50,0">
-            <StackPanel Margin="10,0" Orientation="Horizontal">
+            CornerRadius="50">
+            <StackPanel
+                Margin="5,0,5,0"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Image
+                    Width="25"
+                    Height="25"
+                    Margin="0,-2,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Source="ms-appx:///Assets/Images/health.png" />
                 <TextBlock
                     Name="livesText"
                     HorizontalAlignment="Left"

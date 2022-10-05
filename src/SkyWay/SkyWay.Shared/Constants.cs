@@ -17,6 +17,7 @@ namespace SkyWay
         public const string ROADDIVIDER_TAG = "roaddivider";
 
         public const string CLOUD_TAG = "cloud";
+        public const string ISLAND_TAG = "island";
 
         public const string COLLECTIBLE_TAG = "collectible";
 
@@ -41,6 +42,9 @@ namespace SkyWay
         public const double CLOUD_WIDTH = 100;
         public const double CLOUD_HEIGHT = 100;
 
+        public const double ISLAND_WIDTH = 600;
+        public const double ISLAND_HEIGHT = 600;
+
         public const double ROADDIVIDER_WIDTH = 30;
 
         public static Uri[] CAR_TEMPLATES = new Uri[]
@@ -64,12 +68,19 @@ namespace SkyWay
             new Uri("ms-appx:///Assets/Images/cloud2.png"),
         };
 
-        public static Uri PLAYER_TEMPLATE = new Uri("ms-appx:///Assets/Images/player.png");
-        public static Uri PLAYER_POWER_MODE_TEMPLATE = new Uri("ms-appx:///Assets/Images/player-power-mode.png");
-        public static Uri POWERUP_TEMPLATE = new Uri("ms-appx:///Assets/Images/powerup.png");
+        public static Uri[] ISLAND_TEMPLATES = new Uri[]
+        {
+            new Uri("ms-appx:///Assets/Images/island1.png"),
+            new Uri("ms-appx:///Assets/Images/island2.png"),
+            new Uri("ms-appx:///Assets/Images/island3.png"),
+        };
 
-        public static Uri HEALTH_TEMPLATE = new Uri("ms-appx:///Assets/Images/health.png");
+        public static Uri PLAYER_TEMPLATE = new("ms-appx:///Assets/Images/player.png");
+        public static Uri PLAYER_POWER_MODE_TEMPLATE = new("ms-appx:///Assets/Images/player-power-mode.png");
+        public static Uri POWERUP_TEMPLATE = new("ms-appx:///Assets/Images/powerup.png");
 
-        public static Uri COLLECTIBLE_TEMPLATE = new Uri("ms-appx:///Assets/Images/collectible.png");
+        public static Uri HEALTH_TEMPLATE = new("ms-appx:///Assets/Images/health.png");
+
+        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png");
     }
 }

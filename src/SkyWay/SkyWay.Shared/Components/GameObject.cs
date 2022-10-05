@@ -15,7 +15,7 @@ namespace SkyWay
     {
         #region Fields
 
-        private Image _content = new Image() { Stretch = Stretch.Uniform, Visibility = Microsoft.UI.Xaml.Visibility.Collapsed };
+        private Image _content = new() { Stretch = Stretch.Uniform, Visibility = Microsoft.UI.Xaml.Visibility.Collapsed };
 
         //private Border _hitBoxborder;
 
@@ -50,7 +50,7 @@ namespace SkyWay
 
             #endregion
 
-            Child = _content;            
+            Child = _content;
 
             RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
         }
@@ -59,11 +59,9 @@ namespace SkyWay
 
         #region Properties
 
-        public double Speed { get; set; }
+        public double Speed { get; set; } = 0;
 
-        public bool IsVehicle { get; set; }
-
-        public bool IsRoadMark { get; set; }
+        public bool IsCollidable { get; set; } = false;
 
         #endregion
 
