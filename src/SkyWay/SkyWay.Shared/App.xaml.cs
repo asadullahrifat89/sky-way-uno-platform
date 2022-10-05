@@ -16,9 +16,6 @@ using Microsoft.Extensions.Logging;
 
 namespace SkyWay
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
     public sealed partial class App : Application
     {
         #region Fields
@@ -32,11 +29,7 @@ namespace SkyWay
         #endregion
 
         #region Ctor
-
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+       
         public App()
         {
             InitializeLogging();
@@ -96,12 +89,7 @@ namespace SkyWay
 #endif
             e.Handled = true;
         }
-
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
+      
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
 #if DEBUG
@@ -159,12 +147,7 @@ namespace SkyWay
             _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             _systemNavigationManager.BackRequested += OnBackRequested;
         }
-
-        /// <summary>
-        /// Invoked when a going back navigation is requested.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+      
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
             var rootFrame = _window.Content as Frame;
@@ -187,24 +170,12 @@ namespace SkyWay
                 rootFrame.GoBack();
             }
         }
-
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
+       
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
         }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
+      
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
@@ -218,13 +189,8 @@ namespace SkyWay
 
         #region Public
 
-        /// <summary>
-        /// Toggle fullscreen mode.
-        /// </summary>
-        /// <param name="value"></param>
         public static void EnterFullScreen(bool value)
         {
-#if !DEBUG
             var view = ApplicationView.GetForCurrentView();
 
             if (view is not null)
@@ -237,24 +203,15 @@ namespace SkyWay
                 {
                     view.ExitFullScreenMode();
                 }
-            } 
-#endif
+            }
         }
 
-        /// <summary>
-        /// Navigate to provided page.
-        /// </summary>
-        /// <param name="pageType"></param>
-        /// <param name="parameter"></param>
         public static void NavigateToPage(Type pageType, object parameter = null)
         {
             var rootFrame = _window.Content as Frame;
             rootFrame.Navigate(pageType, parameter);
         }
 
-        /// <summary>
-        /// Get base url for the app.
-        /// </summary>
         public static string GetBaseUrl()
         {
             if (_baseUrl.IsNullOrBlank())
@@ -274,9 +231,6 @@ namespace SkyWay
 
         #region Private
 
-        /// <summary>
-        /// Configures global Uno Platform logging
-        /// </summary>
         private static void InitializeLogging()
         {
 #if DEBUG
@@ -343,10 +297,7 @@ namespace SkyWay
 #endif
         }
 
-        /// <summary>
-        /// Configures service container and registration of services.
-        /// </summary>
-        /// <returns></returns>
+      
         private IServiceProvider ConfigureDependencyInjection()
         {
             // Create new service collection which generates the IServiceProvider
