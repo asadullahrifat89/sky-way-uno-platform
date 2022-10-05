@@ -15,7 +15,7 @@ namespace RoadRage
     {
         #region Fields
 
-        private Image _content = new Image() { Stretch = Stretch.Uniform };
+        private Image _content = new Image() { Stretch = Stretch.Uniform, Visibility = Microsoft.UI.Xaml.Visibility.Collapsed };
 
         //private Border _hitBoxborder;
 
@@ -106,6 +106,7 @@ namespace RoadRage
         public void SetContent(Uri uri)
         {
             _content.Source = new BitmapImage(uri);
+            _content.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
         //public void SetHitBoxBorder(Rect rect)

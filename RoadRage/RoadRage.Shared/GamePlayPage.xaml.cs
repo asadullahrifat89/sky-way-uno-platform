@@ -230,7 +230,7 @@ namespace RoadRage
                     Height = Constants.RoadMarkHeight * scale,
                 };
 
-                roadMark.SetPosition((int)GameView.Height * i, GameView.Width / 2 - roadMark.Width / 2);
+                roadMark.SetPosition((int)roadMark.Height * 2 * i, GameView.Width / 2 - roadMark.Width / 2);
                 GameView.Children.Add(roadMark);
             }
 
@@ -707,7 +707,7 @@ namespace RoadRage
         private void RecyleRoadMark(GameObject roadMark)
         {
             roadMark.SetSize(Constants.RoadMarkWidth * scale, Constants.RoadMarkHeight * scale);
-            roadMark.SetTop(-25 * GameView.Height);
+            roadMark.SetTop((int)roadMark.Height * 2 * -25);
         }
 
         #endregion
