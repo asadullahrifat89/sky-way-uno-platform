@@ -29,8 +29,8 @@ namespace RoadRage
         public const double POWERUP_WIDTH = 80;
         public const double POWERUP_HEIGHT = 80;
 
-        public const double COLLECTIBLE_WIDTH = 70;
-        public const double COLLECTIBLE_HEIGHT = 70;
+        public const double COLLECTIBLE_WIDTH = 60;
+        public const double COLLECTIBLE_HEIGHT = 60;
 
         public const double HEALTH_WIDTH = 80;
         public const double HEALTH_HEIGHT = 80;

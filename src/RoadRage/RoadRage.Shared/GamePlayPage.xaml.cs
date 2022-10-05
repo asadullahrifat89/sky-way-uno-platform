@@ -394,7 +394,7 @@ namespace RoadRage
 
         private void GameViewLoop()
         {
-            //score += .05; // increase the score by .5 each tick of the timer
+            _score += .05; // increase the score by .5 each tick of the timer
 
             _powerUpSpawnCounter--;
             _collectibleSpawnCounter--;
@@ -495,7 +495,6 @@ namespace RoadRage
 
             // as you progress in the game you will score higher and game speed will go up
             ScaleDifficulty();
-
         }
 
         private void GameOver()
@@ -585,7 +584,7 @@ namespace RoadRage
 
             car.SetContent(Constants.CAR_TEMPLATES[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(0, 4);
+            car.Speed = _gameSpeed - _rand.Next(1, 7);
 
             // set a random top and left position for the traffic car
             car.SetPosition(left: _rand.Next(0, (int)GameView.Width - 50), top: _rand.Next(100, (int)GameView.Height) * -1);
@@ -597,7 +596,7 @@ namespace RoadRage
 
         private void SpawnCollectible()
         {
-            double top = _rand.Next(100, (int)GameView.Height) * -1;
+            double top = GameView.Height * -1;
             double left = _rand.Next(0, (int)(GameView.Width - 55));
 
             for (int i = -5; i < 5; i++)
@@ -606,7 +605,7 @@ namespace RoadRage
                 {
                     Height = Constants.COLLECTIBLE_HEIGHT * _scale,
                     Width = Constants.COLLECTIBLE_WIDTH * _scale,
-                    Speed = _gameSpeed,
+                    Speed = _gameSpeed - _gameSpeed / 2,
                 };
 
                 collectible.SetPosition(left: left, top: top);
@@ -866,44 +865,44 @@ namespace RoadRage
         {
             if (_score >= 10 && _score < 20)
             {
-                _gameSpeed = _defaultGameSpeed + 2;
+                _gameSpeed = _defaultGameSpeed + 1 * 1;
             }
 
             if (_score >= 20 && _score < 30)
             {
-                _gameSpeed = _defaultGameSpeed + 4;
+                _gameSpeed = _defaultGameSpeed + 1 * 2;
             }
             if (_score >= 30 && _score < 40)
             {
-                _gameSpeed = _defaultGameSpeed + 6;
+                _gameSpeed = _defaultGameSpeed + 1 * 3;
             }
             if (_score >= 40 && _score < 50)
             {
-                _gameSpeed = _defaultGameSpeed + 8;
+                _gameSpeed = _defaultGameSpeed + 1 * 4;
             }
             if (_score >= 50 && _score < 80)
             {
-                _gameSpeed = _defaultGameSpeed + 10;
+                _gameSpeed = _defaultGameSpeed + 1 * 5;
             }
             if (_score >= 80 && _score < 100)
             {
-                _gameSpeed = _defaultGameSpeed + 12;
+                _gameSpeed = _defaultGameSpeed + 1 * 6;
             }
             if (_score >= 100 && _score < 130)
             {
-                _gameSpeed = _defaultGameSpeed + 14;
+                _gameSpeed = _defaultGameSpeed + 1 * 7;
             }
             if (_score >= 130 && _score < 150)
             {
-                _gameSpeed = _defaultGameSpeed + 16;
+                _gameSpeed = _defaultGameSpeed + 1 * 8;
             }
             if (_score >= 150 && _score < 180)
             {
-                _gameSpeed = _defaultGameSpeed + 18;
+                _gameSpeed = _defaultGameSpeed + 1 * 9;
             }
             if (_score >= 180 && _score < 200)
             {
-                _gameSpeed = _defaultGameSpeed + 20;
+                _gameSpeed = _defaultGameSpeed + 1 * 10;
             }
         }
 
