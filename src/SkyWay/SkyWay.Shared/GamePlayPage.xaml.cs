@@ -322,7 +322,7 @@ namespace SkyWay
         private void InitOverView()
         {
             //TODO: add some clouds above
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);
                 var scaleReverseFactor = _rand.Next(-1, 2);
@@ -850,7 +850,7 @@ namespace SkyWay
             if (island.GetTop() > SeaView.Height)
             {
                 SeaView.AddDestroyableGameObject(island);
-                Console.WriteLine("ISLAND REMOVED");
+
             }
         }
 
