@@ -92,7 +92,8 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-loss.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\menu-select.mp3" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\powerup.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\power-down.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\power-up.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background1.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background2.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background3.mp3" />

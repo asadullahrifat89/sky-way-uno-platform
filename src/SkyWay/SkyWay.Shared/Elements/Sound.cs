@@ -38,12 +38,7 @@ namespace SkyWay
                                 loop: true);
                         }
                     }
-                    break;
-                case SoundType.MENU_SELECT:
-                    {
-
-                    }
-                    break;
+                    break;               
                 case SoundType.BACKGROUND:
                     {
                         if (Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).Select(x => x.Value).ToArray() is string[] tracks)
@@ -109,12 +104,12 @@ namespace SkyWay
         MENU_SELECT,
         INTRO,
         BACKGROUND,
-        POWER_UP,
-        POWER_DOWN,
-        HEALTH_GAIN,
-        HEALTH_LOSS,
-        COLLECTIBLE_COLLECTED,
         GAME_START,
         GAME_OVER,
+        POWER_UP,
+        POWER_DOWN,      
+        HEALTH_GAIN,
+        HEALTH_LOSS,
+        COLLECTIBLE_COLLECTED,       
     }
 }
