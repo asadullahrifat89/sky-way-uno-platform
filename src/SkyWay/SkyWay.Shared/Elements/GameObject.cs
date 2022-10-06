@@ -113,5 +113,20 @@ namespace SkyWay
 
         #endregion
     }
+
+    public enum ElementType
+    {
+        NONE,
+        PLAYER,
+        PLAYER_POWER_MODE,
+        CAR,
+        POWERUP,
+        HEALTH,
+        ROADMARK,
+        ROADDIVIDER,
+        CLOUD,
+        ISLAND,
+        COLLECTIBLE,
+    }
 }
 

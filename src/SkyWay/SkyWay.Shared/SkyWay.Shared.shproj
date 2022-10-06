@@ -9,21 +9,5 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.Common.props" />
   <PropertyGroup />
   <Import Project="SkyWay.Shared.projitems" Label="Shared" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
-  <ItemGroup>
-    <_Globbed_Compile Remove="Components\Island.cs" />
-    <_Globbed_Compile Remove="Elements\Sound.cs" />
-    <_Globbed_Compile Remove="Models\Global\PlayerCredentials.cs" />
-    <_Globbed_Compile Remove="Models\PlayerScore.cs" />
-    <_Globbed_Compile Remove="Models\SkyWayScore.cs" />
-    <_Globbed_Compile Remove="Peripherals\AudioPlayer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <_Globbed_Content Remove="Assets\Images\car10.png" />
-    <_Globbed_Content Remove="Assets\Images\car11.png" />
-    <_Globbed_Content Remove="Assets\Images\car6.png" />
-    <_Globbed_Content Remove="Assets\Images\car7.png" />
-    <_Globbed_Content Remove="Assets\Images\car8.png" />
-    <_Globbed_Content Remove="Assets\Images\car9.png" />
-  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />  
 </Project>
