@@ -124,5 +124,40 @@
             PointerMoved="InputView_PointerMoved"
             PointerPressed="InputView_PointerPressed"
             PointerReleased="InputView_PointerReleased" />
+
+        <!--#region Pause & quit game-->
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+
+            <!--  Pause game  -->
+            <Button
+                x:Name="PauseGameButton"
+                Width="50"
+                Height="50"
+                Margin="5"
+                Click="PauseGameButton_Click"
+                CornerRadius="100"
+                IsFocusEngagementEnabled="False"
+                IsTabStop="False"
+                Style="{StaticResource DefaultButton}">
+                <SymbolIcon Symbol="Pause" />
+            </Button>
+
+            <!--  Quits game  -->
+            <Button
+                x:Name="QuitGameButton"
+                Width="50"
+                Height="50"
+                Margin="5"
+                Click="QuitGameButton_Click"
+                CornerRadius="100"
+                IsFocusEngagementEnabled="False"
+                IsTabStop="False"
+                Style="{StaticResource DefaultButton}">
+                <SymbolIcon Symbol="Undo" />
+            </Button>
+
+        </StackPanel>
+        <!--#endregion-->
+
     </Grid>
 </Page>
