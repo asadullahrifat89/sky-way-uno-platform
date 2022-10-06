@@ -73,6 +73,7 @@ namespace SkyWay
         private Uri[] _islands;
         private Uri[] _clouds;
 
+        private Sound[] _sounds;
         #endregion
 
         #region Ctor
@@ -86,7 +87,14 @@ namespace SkyWay
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
 
+            _cars = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CAR).Select(x => x.Value).ToArray();
+            _islands = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.ISLAND).Select(x => x.Value).ToArray();
+            _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CLOUD).Select(x => x.Value).ToArray();
+
+            //_sounds = Constants.SOUND_TEMPLATES.Select(x => new Sound(x.Key)).ToArray();
+
             InitGame();
+
 
             this.Loaded += GamePlayPage_Loaded;
             this.Unloaded += GamePlayPage_Unloaded;
@@ -121,10 +129,6 @@ namespace SkyWay
         private void SetViewSize()
         {
             _scale = GetGameObjectScale();
-
-            _cars = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CAR).Select(x => x.Value).ToArray();
-            _islands = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.ISLAND).Select(x => x.Value).ToArray();
-            _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CLOUD).Select(x => x.Value).ToArray();
 
             SeaView.Width = _windowWidth;
             SeaView.Height = _windowHeight;
@@ -238,8 +242,6 @@ namespace SkyWay
             Console.WriteLine("INITIALIZING GAME");
 
             SetViewSize();
-
-
 
             InitUnderView();
             InitGameView();
