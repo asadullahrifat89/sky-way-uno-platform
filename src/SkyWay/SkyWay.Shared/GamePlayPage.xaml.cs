@@ -383,6 +383,7 @@ namespace SkyWay
 
             RandomizeBackgroundSound();
             PlaySound(SoundType.BACKGROUND);
+            PlaySound(SoundType.GAME_START);
 
             _lives = _maxLives;
             SetLives();
@@ -746,6 +747,7 @@ namespace SkyWay
                             _damageRecoveryCounter = _damageRecoveryDelay;
                             _isRecoveringFromDamage = true;
                             SetLives();
+                            PlaySound(SoundType.HEALTH_LOSS);
 
                             if (_lives == 0)
                                 GameOver();
@@ -756,24 +758,6 @@ namespace SkyWay
 
             if (_isGameOver)
                 return;
-
-            //TODO: this is expensive
-            // if vechicle will collide with another vehicle
-            //if (GameView.Children.OfType<GameObject>()
-            //    .Where(x => (string)x.Tag is Constants.CAR)
-            //    .LastOrDefault(v => v.GetDistantHitBox(scale)
-            //    .IntersectsWith(vehicle.GetDistantHitBox(scale))) is GameObject collidingVehicle)
-            //{
-            //    // slower vehicles will slow down faster vehicles
-            //    if (collidingVehicle.Speed > vehicle.Speed)
-            //    {
-            //        vehicle.Speed = collidingVehicle.Speed;
-            //    }
-            //    else
-            //    {
-            //        collidingVehicle.Speed = vehicle.Speed;
-            //    }
-            //}
         }
 
         private void RecyleCar(GameObject car)
@@ -843,14 +827,20 @@ namespace SkyWay
             if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
             {
                 GameView.AddDestroyableGameObject(collectible);
-                _score++;
-                _collectiblesCollected++;
+                Collectible();
             }
 
             if (collectible.GetTop() > GameView.Height)
             {
                 GameView.AddDestroyableGameObject(collectible);
             }
+        }
+
+        private void Collectible()
+        {
+            _score++;
+            _collectiblesCollected++;
+            PlaySound(SoundType.COLLECTIBLE_COLLECTED);
         }
 
         #endregion
@@ -1034,16 +1024,20 @@ namespace SkyWay
         private void PowerUp()
         {
             powerUpText.Visibility = Visibility.Visible;
+
             _isPowerMode = true;
+
             _powerModeCounter = _powerModeDelay;
+
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
             _player.Height += 50;
+
+            PlaySound(SoundType.POWER_UP);
         }
 
         private void PowerUpCoolDown()
         {
             _powerModeCounter -= 1;
-            //GameView.Background = new SolidColorBrush(Colors.Goldenrod);
 
             double remainingPow = (double)_powerModeCounter / (double)_powerModeDelay * 4;
 
@@ -1062,6 +1056,7 @@ namespace SkyWay
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
 
             _player.Height -= 50;
+            PlaySound(SoundType.POWER_DOWN);
         }
 
         #endregion
@@ -1102,15 +1097,20 @@ namespace SkyWay
             if (_playerHitBox.IntersectsWith(health.GetHitBox(_scale)))
             {
                 GameView.AddDestroyableGameObject(health);
-
-                _lives++;
-                SetLives();
+                Health();
             }
 
             if (health.GetTop() > GameView.Height)
             {
                 GameView.AddDestroyableGameObject(health);
             }
+        }
+
+        private void Health()
+        {
+            _lives++;
+            SetLives();
+            PlaySound(SoundType.HEALTH_GAIN);
         }
 
         #endregion
@@ -1211,7 +1211,9 @@ namespace SkyWay
             }).ToArray();
 
             _playingSounds = new List<Sound>();
-            _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and SoundType.INTRO));
+            _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and not SoundType.INTRO));
+
+            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count);
         }
 
         private void RandomizeBackgroundSound()
