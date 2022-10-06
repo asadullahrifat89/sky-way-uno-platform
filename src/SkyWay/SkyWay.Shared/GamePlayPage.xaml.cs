@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
 
@@ -381,10 +382,7 @@ namespace SkyWay
         {
             Console.WriteLine("GAME STARTED");
 
-            RandomizeBackgroundSound();
-            PlaySound(SoundType.BACKGROUND);
-            PlaySound(SoundType.GAME_START);
-            PlaySound(SoundType.CAR_CRUISING);
+            PlayStartGameSounds();
 
             _lives = _maxLives;
             SetLives();
@@ -474,6 +472,18 @@ namespace SkyWay
             RemoveGameObjects();
 
             App.EnterFullScreen(true);
+        }
+
+        private async void PlayStartGameSounds()
+        {
+            PlaySound(SoundType.CAR_START);
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            PlaySound(SoundType.CAR_ENGINE);
+
+            RandomizeBackgroundSound();
+            PlaySound(SoundType.BACKGROUND);
         }
 
         private void ResetControls()
@@ -676,6 +686,7 @@ namespace SkyWay
             StopGame();
             _isGameOver = true;
             StopSound(SoundType.BACKGROUND);
+            StopSound(SoundType.CAR_ENGINE);
             PlaySound(SoundType.GAME_OVER);
         }
 
@@ -688,7 +699,7 @@ namespace SkyWay
 
             PlaySound(SoundType.MENU_SELECT);
             PauseSound(SoundType.BACKGROUND);
-            PauseSound(SoundType.CAR_CRUISING);
+            PauseSound(SoundType.CAR_ENGINE);
 
             InputView.Focus(FocusState.Programmatic);
         }
@@ -701,7 +712,7 @@ namespace SkyWay
 
             PlaySound(SoundType.MENU_SELECT);
             ResumeSound(SoundType.BACKGROUND);
-            ResumeSound(SoundType.CAR_CRUISING);
+            ResumeSound(SoundType.CAR_ENGINE);
 
             RunGame();
         }
@@ -1197,14 +1208,14 @@ namespace SkyWay
 
                 switch (x.Key)
                 {
-                    case SoundType.BACKGROUND:                    
+                    case SoundType.BACKGROUND:
                         {
                             sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
                         }
                         break;
-                    case SoundType.CAR_CRUISING:
+                    case SoundType.CAR_ENGINE:
                         {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.1, loop: true);
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.2, loop: true);
                         }
                         break;
                     case SoundType.COLLECTIBLE_COLLECTED:

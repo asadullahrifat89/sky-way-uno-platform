@@ -86,7 +86,6 @@
                 <Image
                     Width="25"
                     Height="25"
-                    Margin="0,-2,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Source="ms-appx:///Assets/Images/health.png" />
@@ -113,7 +112,7 @@
         </Border>
         <!--#endregion-->
 
-        <!--  Input border  -->
+        <!--#region Input border-->
         <Border
             x:Name="InputView"
             HorizontalAlignment="Stretch"
@@ -124,6 +123,7 @@
             PointerMoved="InputView_PointerMoved"
             PointerPressed="InputView_PointerPressed"
             PointerReleased="InputView_PointerReleased" />
+        <!--#endregion-->
 
         <!--#region Pause & quit game-->
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
