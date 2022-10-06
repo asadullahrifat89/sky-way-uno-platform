@@ -78,7 +78,7 @@ namespace SkyWay
             new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background2.mp3"),
             new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background3.mp3"),
 
-            new KeyValuePair<SoundType, string>(SoundType.GAME_START, "Assets/Sounds/spaceship-start.mp3"),            
+                       
             new KeyValuePair<SoundType, string>(SoundType.GAME_OVER, "Assets/Sounds/game-over.mp3"),
 
             new KeyValuePair<SoundType, string>(SoundType.POWER_UP, "Assets/Sounds/power-up.mp3"),
@@ -88,7 +88,9 @@ namespace SkyWay
             new KeyValuePair<SoundType, string>(SoundType.HEALTH_LOSS, "Assets/Sounds/health-loss.mp3"),
 
             new KeyValuePair<SoundType, string>(SoundType.COLLECTIBLE_COLLECTED, "Assets/Sounds/coin-pickup.mp3"),
-            new KeyValuePair<SoundType, string>(SoundType.CAR_CRUISING, "Assets/Sounds/car-cruising.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.CAR_START, "Assets/Sounds/car-start.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.CAR_ENGINE, "Assets/Sounds/car-engine.mp3"),
         };
 
         #endregion
