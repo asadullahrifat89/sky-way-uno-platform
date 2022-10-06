@@ -8,15 +8,15 @@ namespace SkyWay
     public class Sound
     {
         #region Fields
-        
+
         private readonly AudioPlayer _audioPlayer;
-        private readonly Random random; 
+        private readonly Random random;
 
         #endregion
 
         public Sound(SoundType soundType)
         {
-            this.SoundType = soundType;
+            SoundType = soundType;
 
             random = new Random();
             var baseUrl = App.GetBaseUrl();
@@ -25,16 +25,18 @@ namespace SkyWay
             {
                 case SoundType.INTRO:
                     {
-                        var tracks = Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).ToArray();
-                        var trackNum = random.Next(0, tracks.Length);
-                        var track = tracks[trackNum];
+                        if (Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).Select(x => x.Value).ToArray() is string[] tracks)
+                        {
+                            var trackNum = random.Next(0, tracks.Length);
+                            var track = tracks[trackNum];
 
-                        var source = string.Concat(baseUrl, "/", track);
+                            var source = string.Concat(baseUrl, "/", track);
 
-                        _audioPlayer = new AudioPlayer(
-                            source: source,
-                            volume: 0.5,
-                            loop: true);
+                            _audioPlayer = new AudioPlayer(
+                                source: source,
+                                volume: 0.5,
+                                loop: true);
+                        }
                     }
                     break;
                 case SoundType.MENU_SELECT:
@@ -44,23 +46,28 @@ namespace SkyWay
                     break;
                 case SoundType.BACKGROUND:
                     {
-                        var tracks = Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).ToArray();
-                        var trackNum = random.Next(0, tracks.Length);
-                        var track = tracks[trackNum];
+                        if (Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).Select(x => x.Value).ToArray() is string[] tracks)
+                        {
+                            var trackNum = random.Next(0, tracks.Length);
+                            var track = tracks[trackNum];
 
-                        var source = string.Concat(baseUrl, "/", track);
+                            var source = string.Concat(baseUrl, "/", track);
 
-                        _audioPlayer = new AudioPlayer(
-                            source: source,
-                            volume: 0.4,
-                            loop: true);
+                            _audioPlayer = new AudioPlayer(
+                                source: source,
+                                volume: 0.4,
+                                loop: true);
+                        }
                     }
                     break;
                 default:
                     {
-                        var track = Constants.SOUND_TEMPLATES.FirstOrDefault(x => x.Key == soundType).Value;
-                        var source = string.Concat(baseUrl, "/", track);
-                        _audioPlayer = new AudioPlayer(source: source);
+                        if (Constants.SOUND_TEMPLATES.FirstOrDefault(x => x.Key == soundType) is KeyValuePair<SoundType, string> record)
+                        {
+                            var track = record.Value;
+                            var source = string.Concat(baseUrl, "/", track);
+                            _audioPlayer = new AudioPlayer(source: source);
+                        }
                     }
                     break;
             }
@@ -92,7 +99,7 @@ namespace SkyWay
         public void Resume()
         {
             _audioPlayer.Resume();
-        } 
+        }
 
         #endregion
     }
