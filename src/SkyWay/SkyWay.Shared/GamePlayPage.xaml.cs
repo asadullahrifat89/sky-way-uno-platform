@@ -122,9 +122,9 @@ namespace SkyWay
         {
             _scale = GetGameObjectScale();
 
-            _cars = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == Constants.CAR_TAG).Select(x => x.Value).ToArray();
-            _islands = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == Constants.ISLAND_TAG).Select(x => x.Value).ToArray();
-            _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == Constants.CLOUD_TAG).Select(x => x.Value).ToArray();
+            _cars = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CAR).Select(x => x.Value).ToArray();
+            _islands = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.ISLAND).Select(x => x.Value).ToArray();
+            _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CLOUD).Select(x => x.Value).ToArray();
 
             SeaView.Width = _windowWidth;
             SeaView.Height = _windowHeight;
@@ -377,14 +377,14 @@ namespace SkyWay
 
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             RecyleCloud(x);
                         }
                         break;
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             RecyleCar(x);
                         }
@@ -397,21 +397,21 @@ namespace SkyWay
             // remove health and power ups, recylce cars
             foreach (GameObject x in GameView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             RecyleCloud(x);
                         }
                         break;
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             RecyleCar(x);
                         }
                         break;
-                    case Constants.COLLECTIBLE_TAG:
-                    case Constants.HEALTH_TAG:
-                    case Constants.POWERUP_TAG:
+                    case ElementType.COLLECTIBLE:
+                    case ElementType.HEALTH:
+                    case ElementType.POWERUP:
                         {
                             GameView.AddDestroyableGameObject(x);
                         }
@@ -423,9 +423,9 @@ namespace SkyWay
 
             foreach (GameObject x in OverView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             RecyleCloud(x);
                         }
@@ -539,14 +539,14 @@ namespace SkyWay
 
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             UpdateCar(x);
                         }
                         break;
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             UpdateCloud(x);
                         }
@@ -558,34 +558,34 @@ namespace SkyWay
 
             foreach (GameObject x in GameView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             UpdateCar(x);
                         }
                         break;
-                    case Constants.POWERUP_TAG:
+                    case ElementType.POWERUP:
                         {
                             UpdatePowerUp(x);
                         }
                         break;
-                    case Constants.COLLECTIBLE_TAG:
+                    case ElementType.COLLECTIBLE:
                         {
                             UpdateCollectible(x);
                         }
                         break;
-                    case Constants.HEALTH_TAG:
+                    case ElementType.HEALTH:
                         {
                             UpdateHealth(x);
                         }
                         break;
-                    //case Constants.ROADMARK_TAG:
+                    //case Constants.ROADMARK:
                     //    {
                     //        UpdateRoadMark(x);
                     //    }
                     //    break;
-                    case Constants.PLAYER_TAG:
+                    case ElementType.PLAYER:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
                             {
@@ -600,14 +600,14 @@ namespace SkyWay
 
             foreach (GameObject x in OverView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             UpdateCar(x);
                         }
                         break;
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             UpdateCloud(x);
                         }
@@ -690,7 +690,7 @@ namespace SkyWay
             //TODO: this is expensive
             // if vechicle will collide with another vehicle
             //if (GameView.Children.OfType<GameObject>()
-            //    .Where(x => (string)x.Tag is Constants.CAR_TAG)
+            //    .Where(x => (string)x.Tag is Constants.CAR)
             //    .LastOrDefault(v => v.GetDistantHitBox(scale)
             //    .IntersectsWith(vehicle.GetDistantHitBox(scale))) is GameObject collidingVehicle)
             //{
@@ -966,7 +966,7 @@ namespace SkyWay
             powerUpText.Visibility = Visibility.Visible;
             _isPowerMode = true;
             _powerModeCounter = _powerModeDelay;
-            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == Constants.PLAYER_POWER_MODE_TAG).Value);
+            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
             _player.Height += 50;
         }
 
@@ -989,7 +989,7 @@ namespace SkyWay
             _isPowerMode = false;
 
             powerUpText.Visibility = Visibility.Collapsed;
-            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is Constants.PLAYER_TAG).Value);
+            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
 
             _player.Height -= 50;
         }

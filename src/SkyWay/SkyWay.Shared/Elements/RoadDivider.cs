@@ -8,7 +8,7 @@ namespace SkyWay
     {
         public RoadDivider()
         {
-            Tag = Constants.ROADDIVIDER_TAG;
+            Tag = ElementType.ROADDIVIDER;            
 
             Background = Application.Current.Resources["RoadDividerColor"] as SolidColorBrush;
             BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);

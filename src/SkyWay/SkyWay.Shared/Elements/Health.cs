@@ -6,8 +6,8 @@ namespace SkyWay
     {
         public Health()
         {
-            Tag = Constants.HEALTH_TAG;
-            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is Constants.HEALTH_TAG).Value);
+            Tag = ElementType.HEALTH;
+            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.HEALTH).Value);
         }
     }
 }

@@ -8,29 +8,29 @@ namespace SkyWay
     {
         private readonly AudioPlayer _audioPlayer;
 
-        public Sound(SoundTypes soundType)
+        public Sound(SoundType soundType)
         {
             switch (soundType)
             {
-                case SoundTypes.GAME_INTRO:
+                case SoundType.GAME_INTRO:
                     break;
-                case SoundTypes.MENU_SELECT:
+                case SoundType.MENU_SELECT:
                     break;
-                case SoundTypes.BACKGROUND_MUSIC:
+                case SoundType.BACKGROUND_MUSIC:
                     break;
-                case SoundTypes.POWER_UP:
+                case SoundType.POWER_UP:
                     break;
-                case SoundTypes.POWER_DOWN:
+                case SoundType.POWER_DOWN:
                     break;
-                case SoundTypes.HEALTH_GAIN:
+                case SoundType.HEALTH_GAIN:
                     break;
-                case SoundTypes.HEALTH_LOSS:
+                case SoundType.HEALTH_LOSS:
                     break;
-                case SoundTypes.COLLECTIBLE_COLLECTED:
+                case SoundType.COLLECTIBLE_COLLECTED:
                     break;
-                case SoundTypes.CAR_START:
+                case SoundType.CAR_START:
                     break;
-                case SoundTypes.GAME_OVER:
+                case SoundType.GAME_OVER:
                     break;
                 default:
                     break;

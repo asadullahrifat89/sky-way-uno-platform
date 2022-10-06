@@ -10,8 +10,8 @@ namespace SkyWay
     {
         public Player()
         {
-            Tag = Constants.PLAYER_TAG;
-            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is Constants.PLAYER_TAG).Value);
+            Tag = ElementType.PLAYER;
+            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
         }
     }
 }

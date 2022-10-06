@@ -9,7 +9,7 @@ namespace SkyWay
     {
         public Car()
         {
-            Tag = Constants.CAR_TAG;            
+            Tag = ElementType.CAR;  
         }
     }
 }

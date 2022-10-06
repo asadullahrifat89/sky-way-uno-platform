@@ -6,8 +6,8 @@ namespace SkyWay
     {
         public PowerUp()
         {
-            Tag = Constants.POWERUP_TAG;
-            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is Constants.POWERUP_TAG).Value);
+            Tag = ElementType.POWERUP;
+            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.POWERUP).Value);
         }
     }
 }

@@ -6,8 +6,8 @@ namespace SkyWay
     {
         public Collectible()
         {
-            Tag = Constants.COLLECTIBLE_TAG;
-            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is Constants.COLLECTIBLE_TAG).Value);
+            Tag = ElementType.COLLECTIBLE;
+            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.COLLECTIBLE).Value);
         }
     }
 }
