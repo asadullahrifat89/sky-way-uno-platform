@@ -69,6 +69,7 @@ namespace SkyWay
         INTRO,
         BACKGROUND,
         GAME_START,
+        CAR_CRUISING,
         GAME_OVER,
         POWER_UP,
         POWER_DOWN,

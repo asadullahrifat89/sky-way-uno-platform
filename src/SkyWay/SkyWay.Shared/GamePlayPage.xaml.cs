@@ -384,6 +384,7 @@ namespace SkyWay
             RandomizeBackgroundSound();
             PlaySound(SoundType.BACKGROUND);
             PlaySound(SoundType.GAME_START);
+            PlaySound(SoundType.CAR_CRUISING);
 
             _lives = _maxLives;
             SetLives();
@@ -687,6 +688,7 @@ namespace SkyWay
 
             PlaySound(SoundType.MENU_SELECT);
             PauseSound(SoundType.BACKGROUND);
+            PauseSound(SoundType.CAR_CRUISING);
 
             InputView.Focus(FocusState.Programmatic);
         }
@@ -699,6 +701,7 @@ namespace SkyWay
 
             PlaySound(SoundType.MENU_SELECT);
             ResumeSound(SoundType.BACKGROUND);
+            ResumeSound(SoundType.CAR_CRUISING);
 
             RunGame();
         }
@@ -1194,9 +1197,19 @@ namespace SkyWay
 
                 switch (x.Key)
                 {
-                    case SoundType.BACKGROUND:
+                    case SoundType.BACKGROUND:                    
                         {
                             sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
+                        }
+                        break;
+                    case SoundType.CAR_CRUISING:
+                        {
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.1, loop: true);
+                        }
+                        break;
+                    case SoundType.COLLECTIBLE_COLLECTED:
+                        {
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.6);
                         }
                         break;
                     default:
