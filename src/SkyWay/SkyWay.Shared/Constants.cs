@@ -6,6 +6,8 @@ namespace SkyWay
 {
     public static class Constants
     {
+        #region Tags
+
         public const string PLAYER_TAG = "player";
 
         public const string CAR_TAG = "car";
@@ -20,6 +22,12 @@ namespace SkyWay
         public const string ISLAND_TAG = "island";
 
         public const string COLLECTIBLE_TAG = "collectible";
+
+        public const string PLAYER_POWER_MODE_TAG = "player-power-mode";
+
+        #endregion
+
+        #region Measurements
 
         public const double CAR_WIDTH = 60 * 1.5;
         public const double CAR_HEIGHT = 120 * 1.5;
@@ -47,7 +55,38 @@ namespace SkyWay
 
         public const double ROADDIVIDER_WIDTH = 30;
 
+        #endregion
+
         #region Images
+
+        public static (Uri Uri, string Tag)[] IMAGE_TEMPLATES = new (Uri Uri, string Tag)[]
+        {
+            new (new Uri("ms-appx:///Assets/Images/car1.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car2.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car3.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car4.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car5.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car6.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car7.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car8.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car9.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car10.png"), CAR_TAG),
+            new (new Uri("ms-appx:///Assets/Images/car11.png"), CAR_TAG),
+
+            new ( new Uri("ms-appx:///Assets/Images/cloud1.png"), CLOUD_TAG),
+            new ( new Uri("ms-appx:///Assets/Images/cloud2.png"), CLOUD_TAG),
+
+            new ( new Uri("ms-appx:///Assets/Images/island1.png"), ISLAND_TAG),
+            new ( new Uri("ms-appx:///Assets/Images/island2.png"), ISLAND_TAG),
+            new ( new Uri("ms-appx:///Assets/Images/island3.png"), ISLAND_TAG),
+
+            new ( new Uri("ms-appx:///Assets/Images/player.png"), PLAYER_TAG),
+            new ( new Uri("ms-appx:///Assets/Images/player-power-mode.png"), PLAYER_POWER_MODE_TAG),
+
+            new ( new Uri("ms-appx:///Assets/Images/powerup.png"), POWERUP_TAG),
+            new ( new Uri("ms-appx:///Assets/Images/health.png"), HEALTH_TAG),
+            new ( new Uri("ms-appx:///Assets/Images/collectible.png"), COLLECTIBLE_TAG),
+        };
 
         public static Uri[] CAR_TEMPLATES = new Uri[]
         {
@@ -80,10 +119,17 @@ namespace SkyWay
         public static Uri PLAYER_TEMPLATE = new("ms-appx:///Assets/Images/player.png");
         public static Uri PLAYER_POWER_MODE_TEMPLATE = new("ms-appx:///Assets/Images/player-power-mode.png");
         public static Uri POWERUP_TEMPLATE = new("ms-appx:///Assets/Images/powerup.png");
-
         public static Uri HEALTH_TEMPLATE = new("ms-appx:///Assets/Images/health.png");
+        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png");
 
-        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png"); 
+        #endregion
+
+        #region Sounds
+
+        public static (string Url, SoundTypes SoundType)[] SOUND_TEMPLATES = new (string Url, SoundTypes SoundType)[]
+        {
+            new (),
+        };
 
         #endregion
     }
@@ -98,7 +144,7 @@ namespace SkyWay
         HEALTH_GAIN,
         HEALTH_LOSS,
         COLLECTIBLE_COLLECTED,
-        GAME_START,
+        CAR_START,
         GAME_OVER,
     }
 }
