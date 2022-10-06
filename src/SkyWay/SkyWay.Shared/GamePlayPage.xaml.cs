@@ -53,6 +53,7 @@ namespace SkyWay
         private bool _isGameOver;
         private bool _isPowerMode;
         private bool _isGamePaused;
+        private bool _isGameQuitting;
 
         private bool _isRecoveringFromDamage;
         private bool _isPointerActivated;
@@ -69,23 +70,32 @@ namespace SkyWay
 
         private Player _player;
 
+        private Uri[] _cars;
+        private Uri[] _islands;
+        private Uri[] _clouds;
+
+        private Sound[] _sounds;
+        private List<Sound> _playingSounds;
+
         #endregion
 
         #region Ctor
 
         public GamePlayPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             _isGameOver = true;
 
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
 
-            InitGame();
+            LoadGameElements();
+            LoadGameSounds();
+            InitializeGameViews();
 
-            this.Loaded += GamePlayPage_Loaded;
-            this.Unloaded += GamePlayPage_Unloaded;
+            Loaded += GamePlayPage_Loaded;
+            Unloaded += GamePlayPage_Unloaded;
         }
 
         #endregion
@@ -96,12 +106,12 @@ namespace SkyWay
 
         private void GamePlayPage_Loaded(object sender, RoutedEventArgs e)
         {
-            this.SizeChanged += GamePlayPage_SizeChanged;
+            SizeChanged += GamePlayPage_SizeChanged;
         }
 
         private void GamePlayPage_Unloaded(object sender, RoutedEventArgs e)
         {
-            this.SizeChanged -= GamePlayPage_SizeChanged;
+            SizeChanged -= GamePlayPage_SizeChanged;
         }
 
         private void GamePlayPage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -219,24 +229,51 @@ namespace SkyWay
 
         #endregion
 
+        #region Game
+
+        private void PauseGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isGamePaused)
+                ResumeGame();
+            else
+                PauseGame();
+        }
+
+        private void QuitGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isGameQuitting)
+            {
+                //TODO: quit game
+            }
+
+            _isGameQuitting = true;
+
+            PlaySound(SoundType.MENU_SELECT);
+            PauseGame();
+
+            //TODO: show game quitting content
+        }
+
+        #endregion    
+
         #endregion
 
         #region Methods
 
         #region Game
 
-        private void InitGame()
+        private void InitializeGameViews()
         {
             Console.WriteLine("INITIALIZING GAME");
 
             SetViewSize();
 
-            InitUnderView();
-            InitGameView();
-            InitOverView();
+            InitializeUnderView();
+            InitializeGameView();
+            InitializeOverView();
         }
 
-        private void InitUnderView()
+        private void InitializeUnderView()
         {
             // TODO: add some cars underneath
             for (int i = 0; i < 10; i++)
@@ -279,7 +316,7 @@ namespace SkyWay
             }
         }
 
-        private void InitGameView()
+        private void InitializeGameView()
         {
             // add 5 cars
             for (int i = 0; i < 5; i++)
@@ -309,7 +346,7 @@ namespace SkyWay
             GameView.Children.Add(_player);
         }
 
-        private void InitOverView()
+        private void InitializeOverView()
         {
             //TODO: add some clouds above
             for (int i = 0; i < 5; i++)
@@ -333,9 +370,21 @@ namespace SkyWay
             }
         }
 
+        private void LoadGameElements()
+        {
+            _cars = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CAR).Select(x => x.Value).ToArray();
+            _islands = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.ISLAND).Select(x => x.Value).ToArray();
+            _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CLOUD).Select(x => x.Value).ToArray();
+        }
+
         private void StartGame()
         {
             Console.WriteLine("GAME STARTED");
+
+            RandomizeBackgroundSound();
+            PlaySound(SoundType.BACKGROUND);
+            PlaySound(SoundType.GAME_START);
+            PlaySound(SoundType.CAR_CRUISING);
 
             _lives = _maxLives;
             SetLives();
@@ -345,10 +394,7 @@ namespace SkyWay
 
             _player.Opacity = 1;
 
-            _moveLeft = false;
-            _moveRight = false;
-            _moveUp = false;
-            _moveDown = false;
+            ResetControls();
 
             _isGameOver = false;
             _isPowerMode = false;
@@ -367,14 +413,14 @@ namespace SkyWay
 
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             RecyleCloud(x);
                         }
                         break;
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             RecyleCar(x);
                         }
@@ -387,21 +433,21 @@ namespace SkyWay
             // remove health and power ups, recylce cars
             foreach (GameObject x in GameView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             RecyleCloud(x);
                         }
                         break;
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             RecyleCar(x);
                         }
                         break;
-                    case Constants.COLLECTIBLE_TAG:
-                    case Constants.HEALTH_TAG:
-                    case Constants.POWERUP_TAG:
+                    case ElementType.COLLECTIBLE:
+                    case ElementType.HEALTH:
+                    case ElementType.POWERUP:
                         {
                             GameView.AddDestroyableGameObject(x);
                         }
@@ -413,9 +459,9 @@ namespace SkyWay
 
             foreach (GameObject x in OverView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             RecyleCloud(x);
                         }
@@ -428,6 +474,15 @@ namespace SkyWay
             RemoveGameObjects();
 
             App.EnterFullScreen(true);
+        }
+
+        private void ResetControls()
+        {
+            _moveLeft = false;
+            _moveRight = false;
+            _moveUp = false;
+            _moveDown = false;
+            _isPointerActivated = false;
         }
 
         private double GetGameObjectScale()
@@ -529,14 +584,14 @@ namespace SkyWay
 
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             UpdateCar(x);
                         }
                         break;
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             UpdateCloud(x);
                         }
@@ -548,34 +603,34 @@ namespace SkyWay
 
             foreach (GameObject x in GameView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             UpdateCar(x);
                         }
                         break;
-                    case Constants.POWERUP_TAG:
+                    case ElementType.POWERUP:
                         {
                             UpdatePowerUp(x);
                         }
                         break;
-                    case Constants.COLLECTIBLE_TAG:
+                    case ElementType.COLLECTIBLE:
                         {
                             UpdateCollectible(x);
                         }
                         break;
-                    case Constants.HEALTH_TAG:
+                    case ElementType.HEALTH:
                         {
                             UpdateHealth(x);
                         }
                         break;
-                    //case Constants.ROADMARK_TAG:
+                    //case Constants.ROADMARK:
                     //    {
                     //        UpdateRoadMark(x);
                     //    }
                     //    break;
-                    case Constants.PLAYER_TAG:
+                    case ElementType.PLAYER:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
                             {
@@ -590,14 +645,14 @@ namespace SkyWay
 
             foreach (GameObject x in OverView.Children.OfType<GameObject>())
             {
-                switch ((string)x.Tag)
+                switch ((ElementType)x.Tag)
                 {
-                    case Constants.CAR_TAG:
+                    case ElementType.CAR:
                         {
                             UpdateCar(x);
                         }
                         break;
-                    case Constants.CLOUD_TAG:
+                    case ElementType.CLOUD:
                         {
                             UpdateCloud(x);
                         }
@@ -620,6 +675,35 @@ namespace SkyWay
         {
             StopGame();
             _isGameOver = true;
+            StopSound(SoundType.BACKGROUND);
+            PlaySound(SoundType.GAME_OVER);
+        }
+
+        private void PauseGame()
+        {
+            _isGamePaused = true;
+
+            StopGame();
+            ResetControls();
+
+            PlaySound(SoundType.MENU_SELECT);
+            PauseSound(SoundType.BACKGROUND);
+            PauseSound(SoundType.CAR_CRUISING);
+
+            InputView.Focus(FocusState.Programmatic);
+        }
+
+        private void ResumeGame()
+        {
+            InputView.Focus(FocusState.Programmatic);
+
+            _isGamePaused = false;
+
+            PlaySound(SoundType.MENU_SELECT);
+            ResumeSound(SoundType.BACKGROUND);
+            ResumeSound(SoundType.CAR_CRUISING);
+
+            RunGame();
         }
 
         private void StopGame()
@@ -666,6 +750,7 @@ namespace SkyWay
                             _damageRecoveryCounter = _damageRecoveryDelay;
                             _isRecoveringFromDamage = true;
                             SetLives();
+                            PlaySound(SoundType.HEALTH_LOSS);
 
                             if (_lives == 0)
                                 GameOver();
@@ -676,31 +761,12 @@ namespace SkyWay
 
             if (_isGameOver)
                 return;
-
-            //TODO: this is expensive
-            // if vechicle will collide with another vehicle
-            //if (GameView.Children.OfType<GameObject>()
-            //    .Where(x => (string)x.Tag is Constants.CAR_TAG)
-            //    .LastOrDefault(v => v.GetDistantHitBox(scale)
-            //    .IntersectsWith(vehicle.GetDistantHitBox(scale))) is GameObject collidingVehicle)
-            //{
-            //    // slower vehicles will slow down faster vehicles
-            //    if (collidingVehicle.Speed > vehicle.Speed)
-            //    {
-            //        vehicle.Speed = collidingVehicle.Speed;
-            //    }
-            //    else
-            //    {
-            //        collidingVehicle.Speed = vehicle.Speed;
-            //    }
-            //}
         }
 
         private void RecyleCar(GameObject car)
         {
-            _markNum = _rand.Next(0, Constants.CAR_TEMPLATES.Length);
-
-            car.SetContent(Constants.CAR_TEMPLATES[_markNum]);
+            _markNum = _rand.Next(0, _cars.Length);
+            car.SetContent(_cars[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
             car.Speed = _gameSpeed - _rand.Next(1, 4);
 
@@ -764,14 +830,20 @@ namespace SkyWay
             if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
             {
                 GameView.AddDestroyableGameObject(collectible);
-                _score++;
-                _collectiblesCollected++;
+                Collectible();
             }
 
             if (collectible.GetTop() > GameView.Height)
             {
                 GameView.AddDestroyableGameObject(collectible);
             }
+        }
+
+        private void Collectible()
+        {
+            _score++;
+            _collectiblesCollected++;
+            PlaySound(SoundType.COLLECTIBLE_COLLECTED);
         }
 
         #endregion
@@ -790,9 +862,9 @@ namespace SkyWay
 
         private void RecyleCloud(GameObject cloud)
         {
-            _markNum = _rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
+            _markNum = _rand.Next(0, _clouds.Length);
 
-            cloud.SetContent(Constants.CLOUD_TEMPLATES[_markNum]);
+            cloud.SetContent(_clouds[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
             cloud.Speed = _gameSpeed - _rand.Next(1, 4);
 
@@ -825,8 +897,8 @@ namespace SkyWay
                 Rotation = _rand.Next(0, 360),
             };
 
-            _markNum = _rand.Next(0, Constants.ISLAND_TEMPLATES.Length);
-            island.SetContent(Constants.ISLAND_TEMPLATES[_markNum]);
+            _markNum = _rand.Next(0, _islands.Length);
+            island.SetContent(_islands[_markNum]);
 
             RandomizeIslandPosition(island);
             SeaView.Children.Add(island);
@@ -955,16 +1027,20 @@ namespace SkyWay
         private void PowerUp()
         {
             powerUpText.Visibility = Visibility.Visible;
+
             _isPowerMode = true;
+
             _powerModeCounter = _powerModeDelay;
-            _player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
+
+            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
             _player.Height += 50;
+
+            PlaySound(SoundType.POWER_UP);
         }
 
         private void PowerUpCoolDown()
         {
             _powerModeCounter -= 1;
-            //GameView.Background = new SolidColorBrush(Colors.Goldenrod);
 
             double remainingPow = (double)_powerModeCounter / (double)_powerModeDelay * 4;
 
@@ -980,9 +1056,10 @@ namespace SkyWay
             _isPowerMode = false;
 
             powerUpText.Visibility = Visibility.Collapsed;
-            _player.SetContent(Constants.PLAYER_TEMPLATE);
+            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
 
             _player.Height -= 50;
+            PlaySound(SoundType.POWER_DOWN);
         }
 
         #endregion
@@ -1005,7 +1082,7 @@ namespace SkyWay
                 Height = Constants.HEALTH_HEIGHT * _scale,
                 Width = Constants.HEALTH_WIDTH * _scale,
                 RenderTransformOrigin = new Point(0.5, 0.5),
-                RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(this.Resources["FoliageViewRotationAngle"]) },
+                RenderTransform = new RotateTransform() { Angle = Convert.ToDouble(Resources["FoliageViewRotationAngle"]) },
             };
 
             health.SetPosition(
@@ -1023,15 +1100,20 @@ namespace SkyWay
             if (_playerHitBox.IntersectsWith(health.GetHitBox(_scale)))
             {
                 GameView.AddDestroyableGameObject(health);
-
-                _lives++;
-                SetLives();
+                Health();
             }
 
             if (health.GetTop() > GameView.Height)
             {
                 GameView.AddDestroyableGameObject(health);
             }
+        }
+
+        private void Health()
+        {
+            _lives++;
+            SetLives();
+            PlaySound(SoundType.HEALTH_GAIN);
         }
 
         #endregion
@@ -1101,6 +1183,83 @@ namespace SkyWay
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 10;
             }
+        }
+
+        #endregion
+
+        #region Sound
+
+        private void LoadGameSounds()
+        {
+            _sounds = Constants.SOUND_TEMPLATES.Select(x =>
+            {
+                Sound sound = null;
+
+                switch (x.Key)
+                {
+                    case SoundType.BACKGROUND:                    
+                        {
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
+                        }
+                        break;
+                    case SoundType.CAR_CRUISING:
+                        {
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.1, loop: true);
+                        }
+                        break;
+                    case SoundType.COLLECTIBLE_COLLECTED:
+                        {
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.6);
+                        }
+                        break;
+                    default:
+                        {
+                            sound = new Sound(soundType: x.Key, soundSource: x.Value);
+                        }
+                        break;
+                }
+
+                return sound;
+
+            }).ToArray();
+
+            _playingSounds = new List<Sound>();
+            _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and not SoundType.INTRO));
+
+            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count);
+        }
+
+        private void RandomizeBackgroundSound()
+        {
+            var backgroundSounds = _sounds.Where(x => x.SoundType == SoundType.BACKGROUND).ToArray();
+            var backgroundSound = backgroundSounds[_rand.Next(0, backgroundSounds.Length)];
+
+            _playingSounds.RemoveAll(x => x.SoundType == SoundType.BACKGROUND);
+            _playingSounds.Add(backgroundSound);
+        }
+
+        private void PlaySound(SoundType soundType)
+        {
+            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType) is Sound playingSound)
+                playingSound.Play();
+        }
+
+        private void StopSound(SoundType soundType)
+        {
+            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType) is Sound playingSound)
+                playingSound.Stop();
+        }
+
+        private void PauseSound(SoundType soundType)
+        {
+            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType && x.IsPlaying) is Sound playingSound)
+                playingSound.Pause();
+        }
+
+        private void ResumeSound(SoundType soundType)
+        {
+            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType && x.IsPaused) is Sound playingSound)
+                playingSound.Resume();
         }
 
         #endregion

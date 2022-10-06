@@ -9,7 +9,7 @@ namespace SkyWay
     {
         public RoadMark()
         {
-            Tag = Constants.ROADMARK_TAG;
+            Tag = ElementType.ROADMARK;
 
             Background = new SolidColorBrush(Colors.White);
             BorderBrush = new SolidColorBrush(Colors.Wheat);

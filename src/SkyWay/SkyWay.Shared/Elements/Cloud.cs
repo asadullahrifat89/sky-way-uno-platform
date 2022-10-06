@@ -7,7 +7,7 @@ namespace SkyWay
     {
         public Cloud()
         {
-            Tag = Constants.CLOUD_TAG;
+            Tag = ElementType.CLOUD;
         }
     }
 }

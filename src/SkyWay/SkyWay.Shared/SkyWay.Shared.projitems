@@ -18,18 +18,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Car.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Cloud.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Collectible.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\GameEnvironment.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\GameObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Health.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Island.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Player.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\PowerUp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\RoadDivider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\RoadMark.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Car.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Cloud.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Collectible.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\GameEnvironment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\GameObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Health.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Island.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\PowerUp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadDivider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml.cs">
@@ -45,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerCredentials.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Contextual\SkyWayScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Peripherals\AudioPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
@@ -86,6 +88,20 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\game-over.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-loss.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\menu-select.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\power-down.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\power-up.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background1.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background2.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background3.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\intro1.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\intro2.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\coin-pickup.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-cruising.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\spaceship-start.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\splash_screen.gif" />
     <_Globbled_Page Include="$(MSBuildThisFileDirectory)**/*.xaml" Exclude="@(Page);@(ApplicationDefinition)">
       <SubType>Designer</SubType>
@@ -100,7 +116,6 @@
     <_Globbed_PRIResource Include="$(MSBuildThisFileDirectory)**/*.resw" Exclude="@(PRIResource)" />
     <PRIResource Include="@(_Globbed_PRIResource)" />
     <_Globbed_Content Include="$(MSBuildThisFileDirectory)Assets/**/*.*" Exclude="@(Content)" />
-    <Content Include="@(_Globbed_Content)" />
     <!-- Mark the files from this folder as being part of WinUI -->
     <Page Update="$(MSBuildThisFileDirectory)**/*.xaml" XamlRuntime="WinUI" />
     <ApplicationDefinition Update="$(MSBuildThisFileDirectory)**/*.xaml" XamlRuntime="WinUI" />
@@ -109,5 +124,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>

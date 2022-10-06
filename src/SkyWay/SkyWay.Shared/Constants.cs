@@ -6,20 +6,7 @@ namespace SkyWay
 {
     public static class Constants
     {
-        public const string PLAYER_TAG = "player";
-
-        public const string CAR_TAG = "car";
-
-        public const string POWERUP_TAG = "powerup";
-        public const string HEALTH_TAG = "health";
-
-        public const string ROADMARK_TAG = "roadmark";
-        public const string ROADDIVIDER_TAG = "roaddivider";
-
-        public const string CLOUD_TAG = "cloud";
-        public const string ISLAND_TAG = "island";
-
-        public const string COLLECTIBLE_TAG = "collectible";
+        #region Measurements
 
         public const double CAR_WIDTH = 60 * 1.5;
         public const double CAR_HEIGHT = 120 * 1.5;
@@ -47,40 +34,63 @@ namespace SkyWay
 
         public const double ROADDIVIDER_WIDTH = 30;
 
-        public static Uri[] CAR_TEMPLATES = new Uri[]
+        #endregion
+
+        #region Images
+
+        public static KeyValuePair<ElementType, Uri>[] ELEMENT_TEMPLATES = new KeyValuePair<ElementType, Uri>[]
         {
-            new Uri("ms-appx:///Assets/Images/car1.png"),
-            new Uri("ms-appx:///Assets/Images/car2.png"),
-            new Uri("ms-appx:///Assets/Images/car3.png"),
-            new Uri("ms-appx:///Assets/Images/car4.png"),
-            new Uri("ms-appx:///Assets/Images/car5.png"),
-            new Uri("ms-appx:///Assets/Images/car6.png"),
-            new Uri("ms-appx:///Assets/Images/car7.png"),
-            new Uri("ms-appx:///Assets/Images/car8.png"),
-            new Uri("ms-appx:///Assets/Images/car9.png"),
-            new Uri("ms-appx:///Assets/Images/car10.png"),
-            new Uri("ms-appx:///Assets/Images/car11.png"),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car1.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car2.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car3.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car4.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car5.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car6.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car7.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car8.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car9.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car10.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CAR, new Uri("ms-appx:///Assets/Images/car11.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CLOUD, new Uri("ms-appx:///Assets/Images/cloud1.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.CLOUD, new Uri("ms-appx:///Assets/Images/cloud2.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.ISLAND, new Uri("ms-appx:///Assets/Images/island1.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.ISLAND, new Uri("ms-appx:///Assets/Images/island2.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.ISLAND, new Uri("ms-appx:///Assets/Images/island3.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.PLAYER, new Uri("ms-appx:///Assets/Images/player.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.PLAYER_POWER_MODE, new Uri("ms-appx:///Assets/Images/player-power-mode.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.POWERUP, new Uri("ms-appx:///Assets/Images/powerup.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.HEALTH, new Uri("ms-appx:///Assets/Images/health.png")),
+            new KeyValuePair<ElementType, Uri>(ElementType.COLLECTIBLE, new Uri("ms-appx:///Assets/Images/collectible.png")),
         };
 
-        public static Uri[] CLOUD_TEMPLATES = new Uri[]
+        #endregion
+
+        #region Sounds
+
+        public static KeyValuePair<SoundType, string>[] SOUND_TEMPLATES = new KeyValuePair<SoundType, string>[]
         {
-            new Uri("ms-appx:///Assets/Images/cloud1.png"),
-            new Uri("ms-appx:///Assets/Images/cloud2.png"),
+            new KeyValuePair<SoundType, string>(SoundType.MENU_SELECT, "Assets/Sounds/menu-select.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.INTRO, "Assets/Sounds/intro1.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.INTRO, "Assets/Sounds/intro2.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background1.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background2.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background3.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.GAME_START, "Assets/Sounds/spaceship-start.mp3"),            
+            new KeyValuePair<SoundType, string>(SoundType.GAME_OVER, "Assets/Sounds/game-over.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.POWER_UP, "Assets/Sounds/power-up.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.POWER_DOWN, "Assets/Sounds/power-down.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.HEALTH_GAIN, "Assets/Sounds/health-gain.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.HEALTH_LOSS, "Assets/Sounds/health-loss.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.COLLECTIBLE_COLLECTED, "Assets/Sounds/coin-pickup.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.CAR_CRUISING, "Assets/Sounds/car-cruising.mp3"),
         };
 
-        public static Uri[] ISLAND_TEMPLATES = new Uri[]
-        {
-            new Uri("ms-appx:///Assets/Images/island1.png"),
-            new Uri("ms-appx:///Assets/Images/island2.png"),
-            new Uri("ms-appx:///Assets/Images/island3.png"),
-        };
-
-        public static Uri PLAYER_TEMPLATE = new("ms-appx:///Assets/Images/player.png");
-        public static Uri PLAYER_POWER_MODE_TEMPLATE = new("ms-appx:///Assets/Images/player-power-mode.png");
-        public static Uri POWERUP_TEMPLATE = new("ms-appx:///Assets/Images/powerup.png");
-
-        public static Uri HEALTH_TEMPLATE = new("ms-appx:///Assets/Images/health.png");
-
-        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png");
+        #endregion
     }
 }

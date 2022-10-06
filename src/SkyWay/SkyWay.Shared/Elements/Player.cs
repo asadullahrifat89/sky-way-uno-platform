@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SkyWay
@@ -9,8 +10,8 @@ namespace SkyWay
     {
         public Player()
         {
-            Tag = Constants.PLAYER_TAG;
-            SetContent(Constants.PLAYER_TEMPLATE);
+            Tag = ElementType.PLAYER;
+            SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
         }
     }
 }

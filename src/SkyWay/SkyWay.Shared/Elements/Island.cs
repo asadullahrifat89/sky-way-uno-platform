@@ -4,7 +4,7 @@
     {
         public Island()
         {
-            Tag = Constants.ISLAND_TAG;
+            Tag = ElementType.ISLAND;
         }
     }
 }
