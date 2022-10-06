@@ -69,6 +69,10 @@ namespace SkyWay
 
         private Player _player;
 
+        private Uri[] _cars;
+        private Uri[] _islands;
+        private Uri[] _clouds;
+
         #endregion
 
         #region Ctor
@@ -117,6 +121,10 @@ namespace SkyWay
         private void SetViewSize()
         {
             _scale = GetGameObjectScale();
+
+            _cars = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == Constants.CAR_TAG).Select(x => x.Value).ToArray();
+            _islands = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == Constants.ISLAND_TAG).Select(x => x.Value).ToArray();
+            _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == Constants.CLOUD_TAG).Select(x => x.Value).ToArray();
 
             SeaView.Width = _windowWidth;
             SeaView.Height = _windowHeight;
@@ -230,6 +238,8 @@ namespace SkyWay
             Console.WriteLine("INITIALIZING GAME");
 
             SetViewSize();
+
+
 
             InitUnderView();
             InitGameView();
@@ -698,9 +708,8 @@ namespace SkyWay
 
         private void RecyleCar(GameObject car)
         {
-            _markNum = _rand.Next(0, Constants.CAR_TEMPLATES.Length);
-
-            car.SetContent(Constants.CAR_TEMPLATES[_markNum]);
+            _markNum = _rand.Next(0, _cars.Length);
+            car.SetContent(_cars[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
             car.Speed = _gameSpeed - _rand.Next(1, 4);
 
@@ -790,9 +799,9 @@ namespace SkyWay
 
         private void RecyleCloud(GameObject cloud)
         {
-            _markNum = _rand.Next(0, Constants.CLOUD_TEMPLATES.Length);
+            _markNum = _rand.Next(0, _clouds.Length);
 
-            cloud.SetContent(Constants.CLOUD_TEMPLATES[_markNum]);
+            cloud.SetContent(_clouds[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
             cloud.Speed = _gameSpeed - _rand.Next(1, 4);
 
@@ -825,8 +834,8 @@ namespace SkyWay
                 Rotation = _rand.Next(0, 360),
             };
 
-            _markNum = _rand.Next(0, Constants.ISLAND_TEMPLATES.Length);
-            island.SetContent(Constants.ISLAND_TEMPLATES[_markNum]);
+            _markNum = _rand.Next(0, _islands.Length);
+            island.SetContent(_islands[_markNum]);
 
             RandomizeIslandPosition(island);
             SeaView.Children.Add(island);
@@ -957,7 +966,7 @@ namespace SkyWay
             powerUpText.Visibility = Visibility.Visible;
             _isPowerMode = true;
             _powerModeCounter = _powerModeDelay;
-            _player.SetContent(Constants.PLAYER_POWER_MODE_TEMPLATE);
+            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == Constants.PLAYER_POWER_MODE_TAG).Value);
             _player.Height += 50;
         }
 
@@ -980,7 +989,7 @@ namespace SkyWay
             _isPowerMode = false;
 
             powerUpText.Visibility = Visibility.Collapsed;
-            _player.SetContent(Constants.PLAYER_TEMPLATE);
+            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is Constants.PLAYER_TAG).Value);
 
             _player.Height -= 50;
         }
