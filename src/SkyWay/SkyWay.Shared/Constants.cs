@@ -47,6 +47,8 @@ namespace SkyWay
 
         public const double ROADDIVIDER_WIDTH = 30;
 
+        #region Images
+
         public static Uri[] CAR_TEMPLATES = new Uri[]
         {
             new Uri("ms-appx:///Assets/Images/car1.png"),
@@ -81,6 +83,22 @@ namespace SkyWay
 
         public static Uri HEALTH_TEMPLATE = new("ms-appx:///Assets/Images/health.png");
 
-        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png");
+        public static Uri COLLECTIBLE_TEMPLATE = new("ms-appx:///Assets/Images/collectible.png"); 
+
+        #endregion
+    }
+
+    public enum SoundTypes
+    {
+        GAME_INTRO,
+        MENU_SELECT,
+        BACKGROUND_MUSIC,
+        POWER_UP,
+        POWER_DOWN,
+        HEALTH_GAIN,
+        HEALTH_LOSS,
+        COLLECTIBLE_COLLECTED,
+        GAME_START,
+        GAME_OVER,
     }
 }

@@ -18,18 +18,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Car.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Cloud.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Collectible.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\GameEnvironment.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\GameObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Health.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Island.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Player.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\PowerUp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\RoadDivider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\RoadMark.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Car.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Cloud.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Collectible.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\GameEnvironment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\GameObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Health.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Island.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\PowerUp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadDivider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml.cs">
@@ -45,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerCredentials.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Contextual\SkyWayScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Peripherals\AudioPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
@@ -108,6 +110,8 @@
     <UpToDateCheckInput Include="$(MSBuildThisFileDirectory)**/*.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Assets\Sounds\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>
