@@ -7,11 +7,17 @@ namespace SkyWay
 {
     public class Sound
     {
+        #region Fields
+        
         private readonly AudioPlayer _audioPlayer;
-        private readonly Random random;
+        private readonly Random random; 
+
+        #endregion
 
         public Sound(SoundType soundType)
         {
+            this.SoundType = soundType;
+
             random = new Random();
             var baseUrl = App.GetBaseUrl();
 
@@ -19,15 +25,15 @@ namespace SkyWay
             {
                 case SoundType.INTRO:
                     {
-                        var tracks = Constants.SOUND_TEMPLATES.Where(x => x.Key == SoundType.INTRO).ToArray();
+                        var tracks = Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).ToArray();
                         var trackNum = random.Next(0, tracks.Length);
                         var track = tracks[trackNum];
 
                         var source = string.Concat(baseUrl, "/", track);
 
                         _audioPlayer = new AudioPlayer(
-                            source: source, 
-                            volume: 0.5, 
+                            source: source,
+                            volume: 0.5,
                             loop: true);
                     }
                     break;
@@ -38,48 +44,35 @@ namespace SkyWay
                     break;
                 case SoundType.BACKGROUND:
                     {
+                        var tracks = Constants.SOUND_TEMPLATES.Where(x => x.Key == soundType).ToArray();
+                        var trackNum = random.Next(0, tracks.Length);
+                        var track = tracks[trackNum];
 
-                    }
-                    break;
-                case SoundType.POWER_UP:
-                    {
+                        var source = string.Concat(baseUrl, "/", track);
 
-                    }
-                    break;
-                case SoundType.POWER_DOWN:
-                    {
-
-                    }
-                    break;
-                case SoundType.HEALTH_GAIN:
-                    {
-
-                    }
-                    break;
-                case SoundType.HEALTH_LOSS:
-                    {
-
-                    }
-                    break;
-                case SoundType.COLLECTIBLE_COLLECTED:
-                    {
-
-                    }
-                    break;
-                case SoundType.GAME_START:
-                    {
-
-                    }
-                    break;
-                case SoundType.GAME_OVER:
-                    {
-
+                        _audioPlayer = new AudioPlayer(
+                            source: source,
+                            volume: 0.4,
+                            loop: true);
                     }
                     break;
                 default:
+                    {
+                        var track = Constants.SOUND_TEMPLATES.FirstOrDefault(x => x.Key == soundType).Value;
+                        var source = string.Concat(baseUrl, "/", track);
+                        _audioPlayer = new AudioPlayer(source: source);
+                    }
                     break;
             }
         }
+
+        #region Properties
+
+        public SoundType SoundType { get; set; }
+
+        #endregion
+
+        #region Methods
 
         public void Play()
         {
@@ -99,7 +92,9 @@ namespace SkyWay
         public void Resume()
         {
             _audioPlayer.Resume();
-        }
+        } 
+
+        #endregion
     }
 
     public enum SoundType

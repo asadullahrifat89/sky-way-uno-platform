@@ -77,9 +77,13 @@ namespace SkyWay
             new KeyValuePair<SoundType, string>(SoundType.INTRO, "Assets/Sounds/intro2.mp3"),
 
             new KeyValuePair<SoundType, string>(SoundType.GAME_START, "Assets/Sounds/spaceship-start.mp3"),
-            new KeyValuePair<SoundType, string>(SoundType.GAME_OVER, "Assets/Sounds/car-crash.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.GAME_OVER, "Assets/Sounds/game-over.mp3"),
+
             new KeyValuePair<SoundType, string>(SoundType.COLLECTIBLE_COLLECTED, "Assets/Sounds/coin-pickup.mp3"),
             new KeyValuePair<SoundType, string>(SoundType.POWER_UP, "Assets/Sounds/powerup.mp3"),
+
+            new KeyValuePair<SoundType, string>(SoundType.HEALTH_GAIN, "Assets/Sounds/health-gain.mp3"),
+            new KeyValuePair<SoundType, string>(SoundType.HEALTH_LOSS, "Assets/Sounds/health-loss.mp3"),
         };
 
         #endregion

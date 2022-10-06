@@ -88,7 +88,9 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island3.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-crash.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\game-over.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-loss.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\powerup.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background1.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\background2.mp3" />
@@ -111,7 +113,6 @@
     <_Globbed_PRIResource Include="$(MSBuildThisFileDirectory)**/*.resw" Exclude="@(PRIResource)" />
     <PRIResource Include="@(_Globbed_PRIResource)" />
     <_Globbed_Content Include="$(MSBuildThisFileDirectory)Assets/**/*.*" Exclude="@(Content)" />
-    <Content Include="@(_Globbed_Content)" />
     <!-- Mark the files from this folder as being part of WinUI -->
     <Page Update="$(MSBuildThisFileDirectory)**/*.xaml" XamlRuntime="WinUI" />
     <ApplicationDefinition Update="$(MSBuildThisFileDirectory)**/*.xaml" XamlRuntime="WinUI" />
