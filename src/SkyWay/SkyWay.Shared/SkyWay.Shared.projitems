@@ -89,6 +89,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island3.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-engine.mp3" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-start.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\game-over.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-loss.mp3" />
@@ -101,7 +102,6 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\intro1.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\intro2.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\coin-pickup.mp3" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-start.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\splash_screen.gif" />
     <_Globbled_Page Include="$(MSBuildThisFileDirectory)**/*.xaml" Exclude="@(Page);@(ApplicationDefinition)">
       <SubType>Designer</SubType>
