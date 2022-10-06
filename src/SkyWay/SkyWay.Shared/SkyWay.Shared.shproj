@@ -10,4 +10,7 @@
   <PropertyGroup />
   <Import Project="SkyWay.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
+  <ItemGroup>
+    <_Globbed_Content Remove="Assets\Sounds\spellcast-46164.mp3" />
+  </ItemGroup>
 </Project>
