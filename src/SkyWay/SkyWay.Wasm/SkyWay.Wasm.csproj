@@ -71,6 +71,9 @@
 	</ItemGroup>
 	<Import Project="..\SkyWay.Shared\SkyWay.Shared.projitems" Label="Shared" Condition="Exists('..\SkyWay.Shared\SkyWay.Shared.projitems')" />
 	<ItemGroup>
+	  <_Globbed_Compile Remove="..\SkyWay.Shared\Services\Implementations\BackendService.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<_Globbed_Content Remove="Assets\Icon192x192.png" />
 	</ItemGroup>
 	<ItemGroup>

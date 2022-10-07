@@ -9,7 +9,7 @@ namespace SkyWay.Wasm
 
         static int Main(string[] args)
         {
-            Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+            Application.Start(_ => _app = new App());
 
             return 0;
         }

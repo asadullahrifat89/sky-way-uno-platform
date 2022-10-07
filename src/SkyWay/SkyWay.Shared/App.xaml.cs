@@ -106,7 +106,7 @@ namespace SkyWay
             {                
                 rootFrame = new Frame();
 
-                rootFrame.Background = App.Current.Resources["FrameBackgroundColor"] as SolidColorBrush;
+                rootFrame.Background = Current.Resources["FrameBackgroundColor"] as SolidColorBrush;
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
                 rootFrame.IsNavigationStackEnabled = true;
@@ -283,7 +283,7 @@ namespace SkyWay
 
             serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
             serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
-            serviceCollection.AddSingleton<IWebApiEndpointsService, WebApiEndpointsService>();
+            serviceCollection.AddSingleton<IBackendService, BackendService>();
 
             return serviceCollection.BuildServiceProvider();
         }

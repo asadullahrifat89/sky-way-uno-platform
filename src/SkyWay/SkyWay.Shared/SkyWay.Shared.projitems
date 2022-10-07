@@ -40,8 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AssetHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GameProfileHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IWebApiEndpointsService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\WebApiEndpointsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IBackendService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CookieHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ErrorResponse.cs" />
@@ -65,6 +64,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\HttpService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IHttpRequestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IHttpService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\BackendService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
@@ -130,7 +130,6 @@
       <DependentUpon>%(Filename)</DependentUpon>
     </_Globbed_Compile>
     <_Globbed_Compile Include="$(MSBuildThisFileDirectory)**/*.cs" Exclude="@(Compile);@(_Globbed_Compile)" />
-    <Compile Include="@(_Globbed_Compile)" />
     <_Globbed_PRIResource Include="$(MSBuildThisFileDirectory)**/*.resw" Exclude="@(PRIResource)" />
     <PRIResource Include="@(_Globbed_PRIResource)" />
     <_Globbed_Content Include="$(MSBuildThisFileDirectory)Assets/**/*.*" Exclude="@(Content)" />
@@ -142,6 +141,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Services\Implementations\" />
   </ItemGroup>
 </Project>
