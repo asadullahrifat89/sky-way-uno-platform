@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AstroOdyssey;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SkyWay
 {
-    public static class HttpRequestHelper
+    public class HttpRequestService : IHttpRequestService
     {
         #region Fields
 
@@ -18,11 +18,20 @@ namespace SkyWay
 
         #endregion
 
+        #region Ctor
+
+        public HttpRequestService(IHttpService httpService)
+        {
+            _httpService = httpService;
+        }
+
+        #endregion
+
         #region Methods
 
         #region Public Methods
 
-        public static async Task<(TResponse SuccessResponse, TErrorResponse ErrorResponse, HttpStatusCode StatusCode)> SendRequest<TResponse, TErrorResponse>(
+        public async Task<(TResponse SuccessResponse, TErrorResponse ErrorResponse, HttpStatusCode StatusCode)> SendRequest<TResponse, TErrorResponse>(
             string baseUrl,
             string path,
             Dictionary<string, string> httpHeaders,
@@ -31,8 +40,6 @@ namespace SkyWay
             object payload = null,
             IEnumerable<KeyValuePair<string, string>> formUrlEncodedContent = null)
         {
-            _httpService ??= App.Container.GetService<IHttpService>();
-
             dynamic response = null;
             dynamic errResponse = null;
 
@@ -114,9 +121,8 @@ namespace SkyWay
             }
         }
 
-        public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage httpRequestMessage)
         {
-            _httpService ??= App.Container.GetService<IHttpService>();
             return await _httpService.SendAsync(httpRequestMessage);
         }
 
@@ -124,7 +130,7 @@ namespace SkyWay
 
         #region private static Methods
 
-        private static dynamic ParseResponse<TResponse>(string content)
+        private dynamic ParseResponse<TResponse>(string content)
         {
             dynamic response;
             var responseType = typeof(TResponse);
@@ -147,7 +153,7 @@ namespace SkyWay
             return response;
         }
 
-        private static string BuildQueryString(HttpMethod httpMethod, object payload)
+        private string BuildQueryString(HttpMethod httpMethod, object payload)
         {
             var queryString = string.Empty;
 
@@ -163,7 +169,7 @@ namespace SkyWay
             return queryString;
         }
 
-        private static bool IsPrimitiveType(Type listType)
+        private bool IsPrimitiveType(Type listType)
         {
             return listType == typeof(string)
                             || listType == typeof(int)

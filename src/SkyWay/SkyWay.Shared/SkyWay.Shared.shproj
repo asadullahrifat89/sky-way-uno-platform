@@ -16,7 +16,6 @@
     <_Globbed_Compile Remove="Helpers\AuthTokenHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CacheHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CookieHelper.cs" />
-    <_Globbed_Compile Remove="Helpers\HttpRequestHelper.cs" />
     <_Globbed_Compile Remove="Helpers\PlayerCredentialsHelper.cs" />
     <_Globbed_Compile Remove="Helpers\SessionHelper.cs" />
     <_Globbed_Compile Remove="Services\HttpService.cs" />

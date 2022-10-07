@@ -41,7 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CookieHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpRequestHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\HttpRequestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerCredentialsHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SessionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AttachedUser.cs" />
@@ -55,8 +55,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Contextual\SkyWayScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Peripherals\AudioPlayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\HttpService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IHttpService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\HttpService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IHttpRequestService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IHttpService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
@@ -134,5 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\Contracts\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\Implementations\" />
   </ItemGroup>
 </Project>

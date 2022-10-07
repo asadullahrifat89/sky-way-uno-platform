@@ -10,6 +10,8 @@ using Windows.UI.Core;
 using Frame = Microsoft.UI.Xaml.Controls.Frame;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.ViewManagement;
+using System.ServiceProcess;
+using AstroOdyssey;
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
@@ -29,7 +31,7 @@ namespace SkyWay
         #endregion
 
         #region Ctor
-       
+
         public App()
         {
             InitializeLogging();
@@ -89,7 +91,7 @@ namespace SkyWay
 #endif
             e.Handled = true;
         }
-      
+
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
 #if DEBUG
@@ -147,7 +149,7 @@ namespace SkyWay
             _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             _systemNavigationManager.BackRequested += OnBackRequested;
         }
-      
+
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
             var rootFrame = _window.Content as Frame;
@@ -170,12 +172,12 @@ namespace SkyWay
                 rootFrame.GoBack();
             }
         }
-       
+
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
         }
-      
+
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
@@ -297,18 +299,14 @@ namespace SkyWay
 #endif
         }
 
-      
+
         private IServiceProvider ConfigureDependencyInjection()
         {
-            // Create new service collection which generates the IServiceProvider
             var serviceCollection = new ServiceCollection();
 
-            // Register the MessageService with the container
             serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
-            //serviceCollection.AddFactories();
-            //serviceCollection.AddHelpers();
+            serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
 
-            // Build the IServiceProvider and return it
             return serviceCollection.BuildServiceProvider();
         }
 
