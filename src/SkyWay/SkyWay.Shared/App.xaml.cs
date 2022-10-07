@@ -217,6 +217,17 @@ namespace SkyWay
 
         #region Private
 
+        private IServiceProvider ConfigureDependencyInjection()
+        {
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
+            serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
+            serviceCollection.AddSingleton<IBackendService, BackendService>();
+
+            return serviceCollection.BuildServiceProvider();
+        }
+
         private static void InitializeLogging()
         {
 #if DEBUG
@@ -275,17 +286,6 @@ namespace SkyWay
 #endif
 
 #endif
-        }
-
-        private IServiceProvider ConfigureDependencyInjection()
-        {
-            var serviceCollection = new ServiceCollection();
-
-            serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
-            serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
-            serviceCollection.AddSingleton<IBackendService, BackendService>();
-
-            return serviceCollection.BuildServiceProvider();
         }
 
         #endregion

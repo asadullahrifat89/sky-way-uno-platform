@@ -12,15 +12,15 @@ namespace SkyWay
     {
         #region Fields
 
-        private readonly IHttpRequestService _httpRequestHelper;
+        private readonly IHttpRequestService _httpRequestService;
 
         #endregion
 
         #region Ctor
 
-        public BackendService(IHttpRequestService httpRequestHelper)
+        public BackendService(IHttpRequestService httpRequestService)
         {
-            _httpRequestHelper = httpRequestHelper;
+            _httpRequestService = httpRequestService;
         }
 
         #endregion
@@ -184,7 +184,7 @@ namespace SkyWay
 
         private async Task<ServiceResponse> GenerateSession(string gameId, string userId)
         {
-            var response = await _httpRequestHelper.SendRequest<ServiceResponse, ServiceResponse>(
+            var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
                 path: Constants.Action_GenerateSession,
                 httpHeaders: new Dictionary<string, string>() { { "Authorization", $"bearer {AuthTokenHelper.AuthToken.AccessToken}" } },
@@ -202,7 +202,7 @@ namespace SkyWay
 
         private async Task<ServiceResponse> ValidateSession(string gameId, string sessionId)
         {
-            var response = await _httpRequestHelper.SendRequest<ServiceResponse, ServiceResponse>(
+            var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
                 path: Constants.Action_ValidateSession,
                 httpHeaders: new Dictionary<string, string>(),
@@ -220,7 +220,7 @@ namespace SkyWay
 
         private async Task<ServiceResponse> Authenticate(string userNameOrEmail, string password)
         {
-            var response = await _httpRequestHelper.SendRequest<ServiceResponse, ServiceResponse>(
+            var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
                 path: Constants.Action_Authenticate,
                 httpHeaders: new Dictionary<string, string>(),
@@ -292,7 +292,7 @@ namespace SkyWay
 
         private async Task<ServiceResponse> Signup(string fullName, string userName, string email, string password)
         {
-            var response = await _httpRequestHelper.SendRequest<ServiceResponse, ServiceResponse>(
+            var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                  baseUrl: Constants.GAME_API_BASEURL,
                  path: Constants.Action_SignUp,
                  httpHeaders: new Dictionary<string, string>(),
@@ -316,7 +316,7 @@ namespace SkyWay
             if (!await RefreshAuthToken())
                 return new ServiceResponse() { HttpStatusCode = HttpStatusCode.Conflict, ExternalError = "Failed to refresh token." };
 
-            var response = await _httpRequestHelper.SendRequest<ServiceResponse, ServiceResponse>(
+            var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
                 path: Constants.Action_SubmitGameScore,
                 httpHeaders: new Dictionary<string, string>() { { "Authorization", $"bearer {AuthTokenHelper.AuthToken.AccessToken}" } },
@@ -343,7 +343,7 @@ namespace SkyWay
             if (!await RefreshAuthToken())
                 new QueryRecordResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
 
-            var response = await _httpRequestHelper.SendRequest<QueryRecordResponse<GameProfile>, QueryRecordResponse<GameProfile>>(
+            var response = await _httpRequestService.SendRequest<QueryRecordResponse<GameProfile>, QueryRecordResponse<GameProfile>>(
                  baseUrl: Constants.GAME_API_BASEURL,
                  path: Constants.Action_GetGameProfile,
                  httpHeaders: new Dictionary<string, string>() { { "Authorization", $"bearer {AuthTokenHelper.AuthToken.AccessToken}" } },
@@ -363,7 +363,7 @@ namespace SkyWay
             if (!await RefreshAuthToken())
                 new QueryRecordsResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
 
-            var response = await _httpRequestHelper.SendRequest<QueryRecordsResponse<GameProfile>, QueryRecordsResponse<GameProfile>>(
+            var response = await _httpRequestService.SendRequest<QueryRecordsResponse<GameProfile>, QueryRecordsResponse<GameProfile>>(
                  baseUrl: Constants.GAME_API_BASEURL,
                  path: Constants.Action_GetGameProfiles,
                  httpHeaders: new Dictionary<string, string>() { { "Authorization", $"bearer {AuthTokenHelper.AuthToken.AccessToken}" } },
@@ -385,7 +385,7 @@ namespace SkyWay
             if (!await RefreshAuthToken())
                 new QueryRecordsResponse<GameScore>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
 
-            var response = await _httpRequestHelper.SendRequest<QueryRecordsResponse<GameScore>, QueryRecordsResponse<GameScore>>(
+            var response = await _httpRequestService.SendRequest<QueryRecordsResponse<GameScore>, QueryRecordsResponse<GameScore>>(
                  baseUrl: Constants.GAME_API_BASEURL,
                  path: Constants.Action_GetGameScores,
                  httpHeaders: new Dictionary<string, string>() { { "Authorization", $"bearer {AuthTokenHelper.AuthToken.AccessToken}" } },
