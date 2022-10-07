@@ -53,10 +53,7 @@ namespace SkyWay
                    .Build();
 
             InitializeLogging();
-
             InitializeComponent();
-
-            //Container = ConfigureDependencyInjection();
 
             Uno.UI.ApplicationHelper.RequestedCustomTheme = "Dark";
 
@@ -81,25 +78,12 @@ namespace SkyWay
 
         private IHost Host { get; }
 
-        //public static IServiceProvider Container { get; set; }
-
-        //public static PlayerCredentials AuthCredentials { get; set; }
-
-        //public static GameProfile GameProfile { get; set; }
-
-        //public static AuthToken AuthToken { get; set; }
-
         //public static PlayerScore PlayerScore { get; set; }
 
         //public static bool GameScoreSubmissionPending { get; set; }
 
         //public static PlayerShip Ship { get; set; }
-
-        //public static Session Session { get; set; }
-
         public static string CurrentCulture { get; set; }
-
-        //public static bool HasUserLoggedIn => GameProfile is not null && GameProfile.User is not null && !GameProfile.User.UserId.IsNullOrBlank() && !GameProfile.User.UserName.IsNullOrBlank();
 
         #endregion
 
@@ -115,9 +99,6 @@ namespace SkyWay
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            var hostEnvironment = Host.Services.GetRequiredService<IHostEnvironment>();
-            Debug.WriteLine($"Env: {hostEnvironment.EnvironmentName}");
-
 #if NET6_0_OR_GREATER && WINDOWS && !HAS_UNO
             _window = new Window();
             _window.Activate();
@@ -157,6 +138,9 @@ namespace SkyWay
 
             _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             _systemNavigationManager.BackRequested += OnBackRequested;
+
+            var hostEnvironment = Host.Services.GetRequiredService<IHostEnvironment>();
+            Console.WriteLine($"Env: {hostEnvironment.EnvironmentName}");
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
