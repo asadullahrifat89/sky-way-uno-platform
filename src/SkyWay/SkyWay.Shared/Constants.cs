@@ -80,7 +80,7 @@ namespace SkyWay
             new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background2.mp3"),
             new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background3.mp3"),
 
-                       
+
             new KeyValuePair<SoundType, string>(SoundType.GAME_OVER, "Assets/Sounds/game-over.mp3"),
 
             new KeyValuePair<SoundType, string>(SoundType.POWER_UP, "Assets/Sounds/power-up.mp3"),
@@ -96,7 +96,7 @@ namespace SkyWay
         };
 
         #endregion
-        
+
         #region Api Base Urls
 
 #if DEBUG
@@ -120,7 +120,7 @@ namespace SkyWay
         public const string Action_GetGameProfile = "/api/Query/GetGameProfile";
         public const string Action_GetGameProfiles = "/api/Query/GetGameProfiles";
         public const string Action_GetGameScores = "/api/Query/GetGameScores";
-        public const string Action_GetUser = "/api/Query/GetUser"; 
+        public const string Action_GetUser = "/api/Query/GetUser";
 
         #endregion
 
@@ -132,12 +132,6 @@ namespace SkyWay
         public const string COOKIE_KEY = "Cookie";
         public const string COOKIE_ACCEPTED_KEY = "Accepted";
 
-        #endregion
-
-        #region Localization keys
-
-        public static LocalizationKey[] LOCALIZATION_KEYS;
-
-        #endregion
+        #endregion              
     }
 }

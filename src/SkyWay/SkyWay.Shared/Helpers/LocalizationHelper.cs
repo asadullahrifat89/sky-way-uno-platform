@@ -5,34 +5,44 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Security.Policy;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace SkyWay
 {
     public static class LocalizationHelper
     {
+        #region Fields
+
+        private static LocalizationKey[] LOCALIZATION_KEYS;
+
+        #endregion
+
         #region Methods
 
-        public static async void LoadLocalizationKeys()
+        public static async Task LoadLocalizationKeys()
         {
             var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
-            var content = await FileIO.ReadTextAsync(file);
-            Constants.LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(content);
+            var localizationJson = await FileIO.ReadTextAsync(file);
+            LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(localizationJson);
 
 #if DEBUG
-            Console.WriteLine("Localization Keys Count:" + Constants.LOCALIZATION_KEYS.Length); 
+            Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
+
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["LOCALIZATION_KEYS"] = localizationJson;
 #endif
         }
 
         public static string GetLocalizedResource(string resourceKey)
         {
-            var localizationTemplate = Constants.LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == resourceKey);
+            var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == resourceKey);
             return localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == App.CurrentCulture).Value;
         }
 
         public static void SetLocalizedResource(UIElement uIElement)
         {
-            var localizationTemplate = Constants.LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == uIElement.Name);
+            var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == uIElement.Name);
 
             if (localizationTemplate is not null)
             {
