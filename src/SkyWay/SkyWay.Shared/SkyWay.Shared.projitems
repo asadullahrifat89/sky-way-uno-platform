@@ -39,8 +39,15 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AssetHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GameProfileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IWebApiEndpointsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\WebApiEndpointsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CookieHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ErrorResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\QueryRecordResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\QueryRecordsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ServiceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\HttpRequestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerCredentialsHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SessionHelper.cs" />
@@ -135,7 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Services\Contracts\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\Implementations\" />
   </ItemGroup>
 </Project>

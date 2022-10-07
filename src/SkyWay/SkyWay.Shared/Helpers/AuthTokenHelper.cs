@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SkyWay.Helpers
+namespace SkyWay
 {
     public static class AuthTokenHelper
     {
@@ -20,12 +20,7 @@ namespace SkyWay.Helpers
                 return true;
 
             return false;
-        }
-
-        public static void SetAuthToken(AuthToken authToken)
-        {
-            AuthToken = authToken;
-        }
+        }       
 
         #endregion
     }

@@ -16,8 +16,13 @@
     <_Globbed_Compile Remove="Helpers\AuthTokenHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CacheHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CookieHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\GameProfileHelper.cs" />
     <_Globbed_Compile Remove="Helpers\PlayerCredentialsHelper.cs" />
     <_Globbed_Compile Remove="Helpers\SessionHelper.cs" />
+    <_Globbed_Compile Remove="Models\Responses\ErrorResponse.cs" />
+    <_Globbed_Compile Remove="Models\Responses\QueryRecordResponse.cs" />
+    <_Globbed_Compile Remove="Models\Responses\QueryRecordsResponse.cs" />
+    <_Globbed_Compile Remove="Models\Responses\ServiceResponse.cs" />
     <_Globbed_Compile Remove="Services\HttpService.cs" />
     <_Globbed_Compile Remove="Services\IHttpService.cs" />
   </ItemGroup>

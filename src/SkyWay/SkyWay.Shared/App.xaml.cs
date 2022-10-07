@@ -11,7 +11,7 @@ using Frame = Microsoft.UI.Xaml.Controls.Frame;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.ViewManagement;
 using System.ServiceProcess;
-using AstroOdyssey;
+using SkyWay;
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
@@ -283,6 +283,7 @@ namespace SkyWay
 
             serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
             serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
+            serviceCollection.AddSingleton<IWebApiEndpointsService, WebApiEndpointsService>();
 
             return serviceCollection.BuildServiceProvider();
         }
