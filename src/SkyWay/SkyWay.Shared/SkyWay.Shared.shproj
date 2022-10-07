@@ -14,6 +14,7 @@
     <_Globbed_Compile Remove="Helpers\AssetHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CacheHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CookieHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\SessionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <_Globbed_Content Remove="Assets\Sounds\spellcast-46164.mp3" />

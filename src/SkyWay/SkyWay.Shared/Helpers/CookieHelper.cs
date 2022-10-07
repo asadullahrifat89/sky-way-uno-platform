@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SkyWay
 {
-    public static class CookieHelper
+    public class CookieHelper
     {
         #region Methods
 
