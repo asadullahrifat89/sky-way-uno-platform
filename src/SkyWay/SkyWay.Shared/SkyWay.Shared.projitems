@@ -37,8 +37,10 @@
       <DependentUpon>GamePlayPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AssetHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CookieHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerCredentialsHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SessionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AttachedUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AuthToken.cs" />

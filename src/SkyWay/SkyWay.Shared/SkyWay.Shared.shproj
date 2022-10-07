@@ -12,8 +12,10 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
     <_Globbed_Compile Remove="Helpers\AssetHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\AuthTokenHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CacheHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CookieHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\PlayerCredentialsHelper.cs" />
     <_Globbed_Compile Remove="Helpers\SessionHelper.cs" />
   </ItemGroup>
   <ItemGroup>

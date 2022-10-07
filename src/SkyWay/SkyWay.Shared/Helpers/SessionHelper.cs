@@ -7,7 +7,11 @@ namespace SkyWay
 {
     public class SessionHelper
     {
-        private static Session _session;
+        #region Properties
+        
+        public static Session Session { get; set; } 
+
+        #endregion
 
         #region Methods
 
@@ -24,6 +28,11 @@ namespace SkyWay
             return null;
         }
 
+        public static void SetSession(Session session)
+        {
+            Session = session;
+        }
+
         public static void SetCachedSession(Session session)
         {
             CacheHelper.SetCachedValue(Constants.CACHE_SESSION_KEY, JsonConvert.SerializeObject(session));
@@ -31,10 +40,10 @@ namespace SkyWay
 
         public static bool WillSessionExpireSoon()
         {
-            if (_session is null)
+            if (Session is null)
                 return true;
 
-            if (DateTime.UtcNow.AddMinutes(1) > _session.ExpiresOn)
+            if (DateTime.UtcNow.AddMinutes(1) > Session.ExpiresOn)
                 return true;
 
             return false;
@@ -42,14 +51,14 @@ namespace SkyWay
 
         public static bool HasSessionExpired()
         {
-            if (_session is null)
+            if (Session is null)
                 return true;
 
-            if (DateTime.UtcNow > _session.ExpiresOn)
+            if (DateTime.UtcNow > Session.ExpiresOn)
                 return true;
 
             return false;
-        }      
+        }
 
         #endregion
     }
