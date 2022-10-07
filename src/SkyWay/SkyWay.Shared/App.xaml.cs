@@ -12,6 +12,11 @@ using Microsoft.UI.Xaml.Media;
 using Windows.UI.ViewManagement;
 using System.ServiceProcess;
 using SkyWay;
+using System.Collections;
+using Microsoft.Extensions.Hosting;
+using Uno.Extensions.Hosting;
+using System.Web.Services.Description;
+using System.Diagnostics;
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
@@ -34,10 +39,24 @@ namespace SkyWay
 
         public App()
         {
+            Host = UnoHost
+                   .CreateDefaultBuilder()
+#if DEBUG
+                   .UseEnvironment(Environments.Development)
+#endif
+                   .ConfigureServices(serviceCollection =>
+                   {
+                       serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
+                       serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
+                       serviceCollection.AddSingleton<IBackendService, BackendService>();
+                   })
+                   .Build();
+
             InitializeLogging();
 
             InitializeComponent();
-            Container = ConfigureDependencyInjection();
+
+            //Container = ConfigureDependencyInjection();
 
             Uno.UI.ApplicationHelper.RequestedCustomTheme = "Dark";
 
@@ -60,7 +79,9 @@ namespace SkyWay
 
         #region Properties
 
-        public static IServiceProvider Container { get; set; }
+        private IHost Host { get; }
+
+        //public static IServiceProvider Container { get; set; }
 
         //public static PlayerCredentials AuthCredentials { get; set; }
 
@@ -94,6 +115,9 @@ namespace SkyWay
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            var hostEnvironment = Host.Services.GetRequiredService<IHostEnvironment>();
+            Debug.WriteLine($"Env: {hostEnvironment.EnvironmentName}");
+
 #if NET6_0_OR_GREATER && WINDOWS && !HAS_UNO
             _window = new Window();
             _window.Activate();
@@ -216,17 +240,6 @@ namespace SkyWay
         #endregion
 
         #region Private
-
-        private IServiceProvider ConfigureDependencyInjection()
-        {
-            var serviceCollection = new ServiceCollection();
-
-            serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
-            serviceCollection.AddSingleton<IHttpRequestService, HttpRequestService>();
-            serviceCollection.AddSingleton<IBackendService, BackendService>();
-
-            return serviceCollection.BuildServiceProvider();
-        }
 
         private static void InitializeLogging()
         {
