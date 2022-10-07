@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GameProfileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LocalizationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Peripherals\LocalizationKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IBackendService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CookieHelper.cs" />
