@@ -1044,7 +1044,6 @@ namespace SkyWay
             _powerModeCounter = _powerModeDelay;
 
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
-            _player.Height += 50;
 
             PlaySound(SoundType.POWER_UP);
         }
@@ -1068,8 +1067,6 @@ namespace SkyWay
 
             powerUpText.Visibility = Visibility.Collapsed;
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
-
-            _player.Height -= 50;
             PlaySound(SoundType.POWER_DOWN);
         }
 

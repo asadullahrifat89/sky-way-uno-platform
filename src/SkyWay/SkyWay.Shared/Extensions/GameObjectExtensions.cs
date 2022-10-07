@@ -43,10 +43,10 @@ namespace SkyWay
         public static Rect GetHitBox(this GameObject gameObject, double scale)
         {
             var rect = new Rect(
-                x: gameObject.GetLeft() + (gameObject.Width / 3) * scale,
-                y: gameObject.GetTop() + 15 * scale,
-                width: gameObject.Width - (gameObject.Width / 3) * scale,
-                height: gameObject.Height - 15 * scale);
+                x: gameObject.GetLeft() + (gameObject.Width / 3) - 5 * scale,
+                y: gameObject.GetTop() + (gameObject.Height / 6) * scale,
+                width: gameObject.Width - (gameObject.Width / 3) - 5 * scale,
+                height: gameObject.Height - ((gameObject.Height / 6) * 3) * scale);
 
             gameObject.SetHitBoxBorder(rect);
 

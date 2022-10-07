@@ -25,9 +25,11 @@ namespace SkyWay
 
         public GameObject()
         {
-            //TODO: remove these
+            Child = _content;
+            RenderTransformOrigin = new Point(0.5, 0.5);
 
             #region HitBox Debug
+
             //BorderThickness = new Microsoft.UI.Xaml.Thickness(1);
             //BorderBrush = new SolidColorBrush(Colors.Black);
 
@@ -50,9 +52,7 @@ namespace SkyWay
 
             #endregion
 
-            Child = _content;
 
-            RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
         }
 
         #endregion
