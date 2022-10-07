@@ -9,10 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <ResourceDictionary />
-    </Page.Resources>
-
     <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
 
         <!--  This hosts the islands  -->
@@ -21,12 +17,14 @@
         <!--  This hosts clouds and cars that do not collide  -->
         <GameEnvironment x:Name="UnderView" Background="Transparent" />
 
+        <!--  Fog  -->
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
             Background="{StaticResource SeaBackgroundColor}"
             Opacity="0.5" />
 
+        <!--  This hosts the player and game elements  -->
         <GameEnvironment x:Name="GameView" Background="Transparent" />
 
         <!--  This hosts clouds and cars that do not collide  -->
