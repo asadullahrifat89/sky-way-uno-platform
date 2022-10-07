@@ -277,7 +277,7 @@ namespace SkyWay
 
         private void InitializeUnderView()
         {
-            // TODO: add some cars underneath
+            // add some cars underneath
             for (int i = 0; i < 10; i++)
             {
                 var car = new Car()
@@ -296,7 +296,7 @@ namespace SkyWay
                 UnderView.Children.Add(car);
             }
 
-            // TODO: add some clouds underneath
+            // add some clouds underneath
             for (int i = 0; i < 15; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);
@@ -350,7 +350,7 @@ namespace SkyWay
 
         private void InitializeOverView()
         {
-            //TODO: add some clouds above
+            // add some clouds above
             for (int i = 0; i < 5; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);

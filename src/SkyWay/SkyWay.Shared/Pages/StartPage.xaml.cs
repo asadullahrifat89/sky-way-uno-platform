@@ -15,11 +15,20 @@ using Windows.Foundation.Collections;
 
 namespace SkyWay
 {   
-    public sealed partial class HomePage : Page
+    public sealed partial class StartPage : Page
     {
-        public HomePage()
+        public StartPage()
         {
             this.InitializeComponent();
+        }
+
+        private void LanguageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button)?.Tag is string tag)
+            {
+                LocalizationHelper.CurrentCulture = tag;
+                LocalizationHelper.SaveLocalizationCache(tag);
+            }
         }
     }
 }

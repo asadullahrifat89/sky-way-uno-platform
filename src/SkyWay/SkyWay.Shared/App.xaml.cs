@@ -21,11 +21,12 @@ namespace SkyWay
     public sealed partial class App : Application
     {
         #region Fields
-
-        private static Window _window;
+              
         private readonly SystemNavigationManager _systemNavigationManager;
         private readonly List<Type> _goBackNotAllowedToPages;
         private readonly List<(Type IfGoingBackTo, Type RouteTo)> _goBackPageRoutes;
+
+        private static Window _window;
         private static string _baseUrl;
 
         #endregion
@@ -61,7 +62,7 @@ namespace SkyWay
             _goBackNotAllowedToPages = new List<Type>() { typeof(GamePage) };
             _goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { /*(IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(GamePage))*/ };
 
-            CurrentCulture = "en";
+            LocalizationHelper.CurrentCulture = "en";
         }
 
         #endregion
@@ -73,9 +74,6 @@ namespace SkyWay
         //public static PlayerScore PlayerScore { get; set; }
 
         //public static bool GameScoreSubmissionPending { get; set; }
-
-        //public static PlayerShip Ship { get; set; }
-        public static string CurrentCulture { get; set; }
 
         #endregion
 
@@ -117,6 +115,7 @@ namespace SkyWay
             }
 
 #if !(NET6_0_OR_GREATER && WINDOWS)
+
             if (args.UWPLaunchActivatedEventArgs.PrelaunchActivated == false)
 #endif
             {

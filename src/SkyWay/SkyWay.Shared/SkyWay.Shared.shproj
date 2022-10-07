@@ -11,9 +11,6 @@
   <Import Project="SkyWay.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\HomePage.xaml" />
-  </ItemGroup>
-  <ItemGroup>
     <_Globbed_Compile Remove="Extensions\HttpServiceExtensions.cs" />
     <_Globbed_Compile Remove="Helpers\AssetHelper.cs" />
     <_Globbed_Compile Remove="Helpers\AuthTokenHelper.cs" />

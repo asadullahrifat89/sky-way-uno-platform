@@ -18,6 +18,11 @@ namespace SkyWay
 
         #endregion
 
+        #region Properties
+        public static string CurrentCulture { get; set; }
+
+        #endregion
+
         #region Methods
 
         public static async Task LoadLocalizationKeys()
@@ -37,7 +42,7 @@ namespace SkyWay
         public static string GetLocalizedResource(string resourceKey)
         {
             var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == resourceKey);
-            return localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == App.CurrentCulture).Value;
+            return localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == CurrentCulture).Value;
         }
 
         public static void SetLocalizedResource(UIElement uIElement)
@@ -46,7 +51,7 @@ namespace SkyWay
 
             if (localizationTemplate is not null)
             {
-                var value = localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == App.CurrentCulture).Value;
+                var value = localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == CurrentCulture).Value;
 
                 if (uIElement is TextBlock textBlock)
                     textBlock.Text = value;
@@ -63,6 +68,18 @@ namespace SkyWay
                 else if (uIElement is CheckBox checkBox)
                     checkBox.Content = value;
             }
+        }
+
+        public static void CheckLocalizationCache()
+        {
+            if (CacheHelper.GetCachedValue(Constants.CACHE_LANGUAGE_KEY) is string language)
+                CurrentCulture = language;
+        }
+
+        public static void SaveLocalizationCache(string tag)
+        {
+            if (CacheHelper.GetCachedValue(Constants.COOKIE_KEY) is string cookie && cookie == "Accepted")
+                CacheHelper.SetCachedValue(Constants.CACHE_LANGUAGE_KEY, tag);
         }
 
         #endregion        

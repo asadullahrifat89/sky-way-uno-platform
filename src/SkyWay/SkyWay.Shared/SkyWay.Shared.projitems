@@ -41,8 +41,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GameProfileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LocalizationHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Peripherals\LocalizationKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IBackendService.cs" />

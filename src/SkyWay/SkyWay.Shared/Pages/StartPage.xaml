@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="SkyWay.StartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SkyWay.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
+
+        <!--  Language selection buttons  -->
+        <StackPanel
+            x:Name="LanguageSelectionPanel"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+
+            <!--  English  -->
+            <Button
+                x:Name="EnglishButton"
+                Margin="2"
+                Click="LanguageButton_Click"
+                Content="English"
+                CornerRadius="50"
+                IsFocusEngagementEnabled="False"
+                IsTabStop="False"
+                Style="{StaticResource DefaultButton}"
+                Tag="en" />
+
+            <!--  French  -->
+            <Button
+                x:Name="FrenchButton"
+                Margin="2"
+                Click="LanguageButton_Click"
+                Content="French"
+                CornerRadius="50"
+                IsFocusEngagementEnabled="False"
+                IsTabStop="False"
+                Style="{StaticResource DefaultButton}"
+                Tag="fr" />
+
+            <!--  German  -->
+            <Button
+                x:Name="DeutschButton"
+                Margin="2"
+                Click="LanguageButton_Click"
+                Content="Deutsch"
+                CornerRadius="50"
+                IsFocusEngagementEnabled="False"
+                IsTabStop="False"
+                Style="{StaticResource DefaultButton}"
+                Tag="de" />
+
+        </StackPanel>
+
+    </Grid>
+</Page>
