@@ -48,7 +48,7 @@ namespace SkyWay
 
             _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
 
-            //_goBackNotAllowedToPages = new List<Type>() { typeof(GamePlayPage) };
+            _goBackNotAllowedToPages = new List<Type>() { typeof(GamePlayPage) };
             //_goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { (IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(GamePlayPage)) };
 
             //CurrentCulture = "en";
@@ -66,9 +66,9 @@ namespace SkyWay
 
         //public static AuthToken AuthToken { get; set; }
 
-        public static PlayerScore PlayerScore { get; set; }
+        //public static PlayerScore PlayerScore { get; set; }
 
-        public static bool GameScoreSubmissionPending { get; set; }
+        //public static bool GameScoreSubmissionPending { get; set; }
 
         //public static PlayerShip Ship { get; set; }
 
@@ -304,7 +304,7 @@ namespace SkyWay
             var serviceCollection = new ServiceCollection();
 
             // Register the MessageService with the container
-            //serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
+            serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
             //serviceCollection.AddFactories();
             //serviceCollection.AddHelpers();
 

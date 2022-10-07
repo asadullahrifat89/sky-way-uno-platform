@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HttpServiceExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml.cs">
@@ -53,6 +54,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Contextual\SkyWayScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Peripherals\AudioPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\HttpService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IHttpService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
