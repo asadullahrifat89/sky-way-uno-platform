@@ -53,7 +53,7 @@ namespace SkyWay
             _goBackNotAllowedToPages = new List<Type>() { typeof(GamePlayPage) };
             _goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { /*(IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(GamePlayPage))*/ };
 
-            //CurrentCulture = "en";
+            CurrentCulture = "en";
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace SkyWay
 
         //public static Session Session { get; set; }
 
-        //public static string CurrentCulture { get; set; }
+        public static string CurrentCulture { get; set; }
 
         //public static bool HasUserLoggedIn => GameProfile is not null && GameProfile.User is not null && !GameProfile.User.UserId.IsNullOrBlank() && !GameProfile.User.UserName.IsNullOrBlank();
 
@@ -103,7 +103,7 @@ namespace SkyWay
             var rootFrame = _window.Content as Frame;
 
             if (rootFrame == null)
-            {                
+            {
                 rootFrame = new Frame();
 
                 rootFrame.Background = Current.Resources["FrameBackgroundColor"] as SolidColorBrush;
@@ -113,9 +113,9 @@ namespace SkyWay
 
                 if (args.UWPLaunchActivatedEventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    
+
                 }
-                
+
                 _window.Content = rootFrame;
             }
 
@@ -127,7 +127,7 @@ namespace SkyWay
                 {
                     rootFrame.Navigate(typeof(GamePlayPage), args.Arguments);
                 }
-                
+
                 _window.Activate();
             }
 
@@ -165,7 +165,7 @@ namespace SkyWay
 
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();            
+            var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
         }
 

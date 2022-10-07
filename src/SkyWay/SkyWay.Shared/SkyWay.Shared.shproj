@@ -17,6 +17,7 @@
     <_Globbed_Compile Remove="Helpers\CacheHelper.cs" />
     <_Globbed_Compile Remove="Helpers\CookieHelper.cs" />
     <_Globbed_Compile Remove="Helpers\GameProfileHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\LocalizationHelper.cs" />
     <_Globbed_Compile Remove="Helpers\PlayerCredentialsHelper.cs" />
     <_Globbed_Compile Remove="Helpers\SessionHelper.cs" />
     <_Globbed_Compile Remove="Models\Responses\ErrorResponse.cs" />
