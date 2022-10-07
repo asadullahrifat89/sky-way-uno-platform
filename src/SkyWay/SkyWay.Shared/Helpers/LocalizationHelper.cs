@@ -9,7 +9,7 @@ using Windows.Storage;
 
 namespace SkyWay
 {
-    public static class LocalizationService
+    public static class LocalizationHelper
     {
         #region Methods
 

@@ -99,7 +99,7 @@ namespace SkyWay
             Loaded += GamePlayPage_Loaded;
             Unloaded += GamePlayPage_Unloaded;
 
-            LocalizationService.LoadLocalizationKeys();
+            LocalizationHelper.LoadLocalizationKeys();
         }
 
         #endregion
