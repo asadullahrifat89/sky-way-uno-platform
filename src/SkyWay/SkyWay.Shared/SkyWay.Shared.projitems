@@ -108,6 +108,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\localization.json" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-engine.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-start.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />

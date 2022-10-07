@@ -130,7 +130,13 @@ namespace SkyWay
         public const string CACHE_LANGUAGE_KEY = "Language";
 
         public const string COOKIE_KEY = "Cookie";
-        public const string COOKIE_ACCEPTED_KEY = "Accepted"; 
+        public const string COOKIE_ACCEPTED_KEY = "Accepted";
+
+        #endregion
+
+        #region Localization keys
+
+        public static LocalizationKey[] LOCALIZATION_KEYS;
 
         #endregion
     }
