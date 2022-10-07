@@ -7,16 +7,11 @@ using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
-using Frame = Microsoft.UI.Xaml.Controls.Frame;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.ViewManagement;
-using System.ServiceProcess;
-using SkyWay;
-using System.Collections;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.Extensions.Hosting;
 using Uno.Extensions.Hosting;
-using System.Web.Services.Description;
-using System.Diagnostics;
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
@@ -41,9 +36,6 @@ namespace SkyWay
         {
             Host = UnoHost
                    .CreateDefaultBuilder()
-#if DEBUG
-                   .UseEnvironment(Environments.Development)
-#endif
                    .ConfigureServices(serviceCollection =>
                    {
                        serviceCollection.AddHttpService(lifeTime: 300, retryCount: 3, retryWait: 1);
@@ -138,9 +130,6 @@ namespace SkyWay
 
             _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             _systemNavigationManager.BackRequested += OnBackRequested;
-
-            var hostEnvironment = Host.Services.GetRequiredService<IHostEnvironment>();
-            Console.WriteLine($"Env: {hostEnvironment.EnvironmentName}");
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
