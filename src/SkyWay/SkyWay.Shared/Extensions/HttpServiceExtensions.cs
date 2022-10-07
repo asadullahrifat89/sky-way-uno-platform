@@ -29,7 +29,6 @@ namespace SkyWay
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
             {
                 return true;
-                //return errors == SslPolicyErrors.None;
             };
 
             return serviceCollection;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SkyWay
 {
-    public class SessionHelper
+    public static class SessionHelper
     {
         #region Properties
         

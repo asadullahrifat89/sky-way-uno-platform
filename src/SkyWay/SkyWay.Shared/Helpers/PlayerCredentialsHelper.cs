@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SkyWay
 {
-    public class PlayerCredentialsHelper
+    public static class PlayerCredentialsHelper
     {
         #region Properties
 

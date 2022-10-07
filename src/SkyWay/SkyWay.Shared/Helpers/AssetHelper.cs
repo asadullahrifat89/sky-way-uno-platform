@@ -6,7 +6,7 @@ using Windows.Storage;
 
 namespace SkyWay
 {
-    public class AssetHelper
+    public static class AssetHelper
     {
         #region Methods
 

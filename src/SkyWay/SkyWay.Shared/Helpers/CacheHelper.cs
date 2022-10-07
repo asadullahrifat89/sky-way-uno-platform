@@ -5,7 +5,7 @@ using Windows.Storage;
 
 namespace SkyWay
 {
-    public class CacheHelper
+    public static class CacheHelper
     {
         #region Methods
 

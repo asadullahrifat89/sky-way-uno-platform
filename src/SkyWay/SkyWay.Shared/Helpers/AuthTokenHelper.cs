@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SkyWay.Helpers
 {
-    public class AuthTokenHelper
+    public static class AuthTokenHelper
     {
         #region Properties
 
