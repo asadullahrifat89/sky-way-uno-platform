@@ -74,7 +74,7 @@ namespace SkyWay
             return (true, "OK");
         }
 
-        public async Task<(bool IsSuccess, string Message)> ValidateSession(Session session)
+        public async Task<(bool IsSuccess, string Message)> ValidateUserSession(Session session)
         {
             ServiceResponse response = await ValidateSession(Constants.GAME_ID, session.SessionId);
 
@@ -88,7 +88,7 @@ namespace SkyWay
             return (true, "OK");
         }
 
-        public async Task<(bool IsSuccess, string Message)> GenerateSession()
+        public async Task<(bool IsSuccess, string Message)> GenerateUserSession()
         {
             ServiceResponse response = await GenerateSession(
                 gameId: Constants.GAME_ID,
@@ -110,7 +110,7 @@ namespace SkyWay
             return (true, "OK");
         }
 
-        public async Task<(bool IsSuccess, string Message)> SubmitScore(double score)
+        public async Task<(bool IsSuccess, string Message)> SubmitUserGameScore(double score)
         {
             ServiceResponse response = await SubmitGameScore(score);
 
