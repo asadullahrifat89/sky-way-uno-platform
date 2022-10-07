@@ -14,10 +14,10 @@ namespace SkyWay
 
         Task<(bool IsSuccess, string Message)> ValidateUserSession(Session session);
 
-        Task<QueryRecordResponse<GameProfile>> GetGameProfile();
+        Task<(bool IsSuccess, string Message, GameProfile GameProfile)> GetUserGameProfile();
 
-        Task<QueryRecordsResponse<GameScore>> GetGameScores(int pageIndex, int pageSize);
+        Task<(bool IsSuccess, string Message, GameScore[] GameScores)> GetUserGameScores(int pageIndex, int pageSize);
 
-        Task<QueryRecordsResponse<GameProfile>> GetGameProfiles(int pageIndex, int pageSize);
+        Task<(bool IsSuccess, string Message, GameProfile[] GameProfiles)> GetUserGameProfiles(int pageIndex, int pageSize);
     }
 }

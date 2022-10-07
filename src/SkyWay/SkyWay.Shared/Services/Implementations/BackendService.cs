@@ -123,6 +123,55 @@ namespace SkyWay
             return (true, "OK");
         }
 
+        public async Task<(bool IsSuccess, string Message, GameProfile GameProfile)> GetUserGameProfile()
+        {
+            var recordResponse = await GetGameProfile();
+
+            if (!recordResponse.IsSuccess)
+            {
+                var error = recordResponse.Errors.Errors;
+                return (false, string.Join("\n", error), null);
+            }
+
+            // store game profile
+            var gameProfile = recordResponse.Result;
+            GameProfileHelper.GameProfile = gameProfile;
+
+            return (true, "OK", gameProfile);
+        }
+
+        public async Task<(bool IsSuccess, string Message, GameProfile[] GameProfiles)> GetUserGameProfiles(int pageIndex, int pageSize)
+        {
+            var recordsResponse = await GetGameProfiles(pageIndex: pageIndex, pageSize: pageSize);
+
+            if (!recordsResponse.IsSuccess)
+            {
+                var error = recordsResponse.Errors.Errors;
+                return (false, string.Join("\n", error), Array.Empty<GameProfile>());
+            }
+
+            var result = recordsResponse.Result;
+            var count = recordsResponse.Result.Count;
+
+            return count > 0 ? (true, "OK", result.Records) : (true, "OK", Array.Empty<GameProfile>());
+        }
+
+        public async Task<(bool IsSuccess, string Message, GameScore[] GameScores)> GetUserGameScores(int pageIndex, int pageSize)
+        {
+            var recordsResponse = await GetGameScores(pageIndex: pageIndex, pageSize: pageSize);
+
+            if (!recordsResponse.IsSuccess)
+            {
+                var error = recordsResponse.Errors.Errors;
+                return (false, string.Join("\n", error), Array.Empty<GameScore>());
+            }
+
+            var result = recordsResponse.Result;
+            var count = recordsResponse.Result.Count;
+
+            return count > 0 ? (true, "OK", result.Records) : (true, "OK", Array.Empty<GameScore>());
+        }
+
         #endregion
 
         #region Private
@@ -289,11 +338,7 @@ namespace SkyWay
                 : response.ErrorResponse ?? new ServiceResponse() { HttpStatusCode = HttpStatusCode.InternalServerError, ExternalError = "Internal server error." };
         }
 
-        #endregion
-
-        #region Queries
-
-        public async Task<QueryRecordResponse<GameProfile>> GetGameProfile()
+        private async Task<QueryRecordResponse<GameProfile>> GetGameProfile()
         {
             if (!await RefreshAuthToken())
                 new QueryRecordResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
@@ -308,16 +353,12 @@ namespace SkyWay
                      GameId = Constants.GAME_ID,
                  });
 
-            // hold the game profile
-            if (response.StatusCode == HttpStatusCode.OK && response.SuccessResponse is not null)
-                GameProfileHelper.GameProfile = response.SuccessResponse.Result;
-
             return response.StatusCode == HttpStatusCode.OK
                 ? response.SuccessResponse ?? new QueryRecordResponse<GameProfile>()
                 : response.ErrorResponse ?? new QueryRecordResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
         }
 
-        public async Task<QueryRecordsResponse<GameProfile>> GetGameProfiles(int pageIndex, int pageSize)
+        private async Task<QueryRecordsResponse<GameProfile>> GetGameProfiles(int pageIndex, int pageSize)
         {
             if (!await RefreshAuthToken())
                 new QueryRecordsResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
@@ -339,7 +380,7 @@ namespace SkyWay
                 : response.ErrorResponse ?? new QueryRecordsResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
         }
 
-        public async Task<QueryRecordsResponse<GameScore>> GetGameScores(int pageIndex, int pageSize)
+        private async Task<QueryRecordsResponse<GameScore>> GetGameScores(int pageIndex, int pageSize)
         {
             if (!await RefreshAuthToken())
                 new QueryRecordsResponse<GameScore>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
@@ -362,7 +403,7 @@ namespace SkyWay
                 : response.ErrorResponse ?? new QueryRecordsResponse<GameScore>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
         }
 
-        #endregion
+        #endregion      
 
         #endregion
     }
