@@ -36,9 +36,10 @@ namespace SkyWay
         private int _powerModeCounter = 250;
         private readonly int _powerModeDelay = 250;
 
-        private int _lives = 3;
-        private readonly int _maxLives = 3;
+        private int _lives;
+        private readonly int _maxLives = 5;
         private int _healthSpawnCounter = 500;
+        int _damageRecoveryOpacityFrameSkip;
 
         private int _collectibleSpawnCounter = 200;
 
@@ -741,7 +742,17 @@ namespace SkyWay
             {
                 if (_isRecoveringFromDamage)
                 {
-                    _player.Opacity = 0.66;
+                    _damageRecoveryOpacityFrameSkip--;
+                    if (_damageRecoveryOpacityFrameSkip < 0)
+                    {
+                        _player.Opacity = 0.33;
+                        _damageRecoveryOpacityFrameSkip = 5;
+                    }
+                    else
+                    {
+                        _player.Opacity = 1;
+                    }
+
                     _damageRecoveryCounter--;
 
                     if (_damageRecoveryCounter <= 0)
@@ -752,7 +763,7 @@ namespace SkyWay
                 }
                 else
                 {
-                    // if vehicle collides with player
+                    // if car collides with player
                     if (_playerHitBox.IntersectsWith(car.GetHitBox(_scale)))
                     {
                         if (!_isPowerMode)
