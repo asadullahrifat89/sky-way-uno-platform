@@ -58,8 +58,8 @@ namespace SkyWay
 
             _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
 
-            _goBackNotAllowedToPages = new List<Type>() { typeof(GamePlayPage) };
-            _goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { /*(IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(GamePlayPage))*/ };
+            _goBackNotAllowedToPages = new List<Type>() { typeof(GamePage) };
+            _goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { /*(IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(GamePage))*/ };
 
             CurrentCulture = "en";
         }
@@ -122,7 +122,7 @@ namespace SkyWay
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(GamePlayPage), args.Arguments);
+                    rootFrame.Navigate(typeof(GamePage), args.Arguments);
                 }
 
                 _window.Activate();

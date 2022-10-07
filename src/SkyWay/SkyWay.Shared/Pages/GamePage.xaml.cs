@@ -16,7 +16,7 @@ using Windows.System;
 
 namespace SkyWay
 {
-    public sealed partial class GamePlayPage : Page
+    public sealed partial class GamePage : Page
     {
         #region Fields
 
@@ -83,7 +83,7 @@ namespace SkyWay
 
         #region Ctor
 
-        public GamePlayPage()
+        public GamePage()
         {
             InitializeComponent();
 
@@ -96,8 +96,8 @@ namespace SkyWay
             LoadGameSounds();
             InitializeGameViews();
 
-            Loaded += GamePlayPage_Loaded;
-            Unloaded += GamePlayPage_Unloaded;
+            Loaded += GamePage_Loaded;
+            Unloaded += GamePage_Unloaded;
         }
 
         #endregion
@@ -106,17 +106,17 @@ namespace SkyWay
 
         #region Page
 
-        private void GamePlayPage_Loaded(object sender, RoutedEventArgs e)
+        private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged += GamePlayPage_SizeChanged;
+            SizeChanged += GamePage_SizeChanged;
         }
 
-        private void GamePlayPage_Unloaded(object sender, RoutedEventArgs e)
+        private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged -= GamePlayPage_SizeChanged;
+            SizeChanged -= GamePage_SizeChanged;
         }
 
-        private void GamePlayPage_SizeChanged(object sender, SizeChangedEventArgs args)
+        private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
         {
             _windowWidth = args.NewSize.Width;
             _windowHeight = args.NewSize.Height;
