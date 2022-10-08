@@ -494,6 +494,8 @@ namespace SkyWay
             StopGame();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
+
+            App.EnterFullScreen(true);
         }
 
         #endregion        

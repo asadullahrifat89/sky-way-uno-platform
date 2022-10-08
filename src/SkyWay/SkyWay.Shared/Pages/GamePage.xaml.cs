@@ -376,9 +376,7 @@ namespace SkyWay
             }
 
             RecycleGameObjects();
-            RemoveGameObjects();
-
-            App.EnterFullScreen(true);
+            RemoveGameObjects();          
 
             StartGameSounds();
             RunGame();
