@@ -56,5 +56,247 @@
 
         </StackPanel>
 
+        <!--  UI controls  -->
+        <Border
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            BorderThickness="0,3,0,3"
+            CornerRadius="10"
+            Style="{StaticResource GameUIContainer}">
+
+            <StackPanel
+                x:Name="ActionStack"
+                Width="315"
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+                <!--  Game logo  -->
+                <Image Height="150" Source="ms-appx:///Assets/Images/logo_game.png" />
+
+                <!--  Game name  -->
+                <TextBlock
+                    x:Name="GameName"
+                    Margin="0,15"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords" />
+
+                <!--  Tag line  -->
+                <TextBlock
+                    x:Name="StartPage_Tagline"
+                    Margin="10,0,10,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="A classic rock metal ⚡ space shooter on WebAssembly."
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords" />
+
+                <!--  Start game button  -->
+                <Button
+                    x:Name="PlayButton"
+                    Height="50"
+                    Margin="30,10,30,5"
+                    HorizontalAlignment="Stretch"
+                    BorderThickness="3"
+                    Click="PlayButton_Click"
+                    Content="START GAME"
+                    CornerRadius="50"
+                    FontSize="24"
+                    FontWeight="SemiBold"
+                    IsFocusEngagementEnabled="False"
+                    IsTabStop="False" />
+
+                <StackPanel Margin="30,5,30,5">
+
+                    <!--  Leaderboard button  -->
+                    <Button
+                        x:Name="LeaderboardButton"
+                        Height="50"
+                        HorizontalAlignment="Stretch"
+                        BorderThickness="3"
+                        Click="LeaderboardButton_Click"
+                        Content="Leaderboard"
+                        CornerRadius="50"
+                        FontSize="24"
+                        FontWeight="SemiBold"
+                        IsFocusEngagementEnabled="False"
+                        IsTabStop="False"
+                        Visibility="Collapsed" />
+
+                    <!--  Login Button  -->
+                    <Button
+                        x:Name="LoginButton"
+                        Height="50"
+                        HorizontalAlignment="Stretch"
+                        BorderThickness="3"
+                        Click="LoginButton_Click"
+                        Content="Login"
+                        CornerRadius="50"
+                        FontSize="24"
+                        FontWeight="SemiBold"
+                        IsFocusEngagementEnabled="False"
+                        IsTabStop="False"
+                        Visibility="Collapsed" />
+
+                    <!--  Logout Button  -->
+                    <Button
+                        x:Name="LogoutButton"
+                        Height="40"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="White"
+                        BorderThickness="0"
+                        Click="LogoutButton_Click"
+                        Content="Logout"
+                        CornerRadius="50"
+                        FontWeight="SemiBold"
+                        IsFocusEngagementEnabled="False"
+                        IsTabStop="False"
+                        Visibility="Collapsed" />
+
+                </StackPanel>
+
+                <!--  Register Button  -->
+                <Button
+                    x:Name="RegisterButton"
+                    Height="40"
+                    Margin="5,5,5,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderBrush="White"
+                    BorderThickness="0"
+                    Click="RegisterButton_Click"
+                    Content="No account yet?"
+                    CornerRadius="50"
+                    FontWeight="SemiBold"
+                    IsFocusEngagementEnabled="False"
+                    IsTabStop="False"
+                    Visibility="Collapsed" />
+
+                <!--  Brand Tag line  -->
+                <HyperlinkButton
+                    x:Name="BrandProfileButton"
+                    Margin="0,5,0,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Content="Made with ❤️ by Asadullah Rifat"
+                    FontSize="17"
+                    Foreground="White"
+                    IsFocusEngagementEnabled="False"
+                    IsTabStop="False"
+                    NavigateUri="https://www.linkedin.com/in/asadullah-rifat/" />
+
+                <!--  Error text  -->
+                <TextBlock
+                    x:Name="ErrorText"
+                    Margin="5"
+                    FontWeight="SemiBold"
+                    Foreground="Crimson"
+                    Visibility="Collapsed" />
+
+                <!--  Progress bar  -->
+                <ProgressBar
+                    x:Name="ProgressBar"
+                    Height="5"
+                    Foreground="{StaticResource ProgressBarForegroundColor}"
+                    IsFocusEngagementEnabled="False"
+                    IsIndeterminate="True"
+                    IsTabStop="False"
+                    ShowError="False"
+                    ShowPaused="True" />
+
+            </StackPanel>
+
+        </Border>
+
+        <!--  Welcome back and cookie message  -->
+        <StackPanel
+            Margin="10,50"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom">
+
+            <!--  Welcome back toast  -->
+            <Border
+                x:Name="WelcomeBackToast"
+                BorderThickness="3"
+                CornerRadius="10"
+                Opacity="0"
+                Style="{StaticResource GameUIContainer}">
+
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock
+                        x:Name="WelcomeBackText"
+                        Margin="5,0"
+                        FontWeight="SemiBold"
+                        Text="Welcome back!"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="UserName"
+                        FontWeight="SemiBold"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+            </Border>
+
+            <!--  Cookie toast  -->
+            <Border
+                x:Name="CookieToast"
+                BorderThickness="3"
+                CornerRadius="10"
+                Style="{StaticResource GameUIContainer}"
+                Visibility="Collapsed">
+
+                <Grid Margin="10" ColumnDefinitions="Auto,*,Auto">
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="45"
+                        Text="🍪" />
+                    <TextBlock
+                        x:Name="CookieText"
+                        Grid.Column="1"
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="We use cookies to personalize your game experience!"
+                        TextWrapping="Wrap" />
+                    <WrapPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="CookieDeclineButton"
+                            Height="35"
+                            BorderThickness="2"
+                            Click="CookieDeclineButton_Click"
+                            Content="Decline"
+                            CornerRadius="50"
+                            FontWeight="SemiBold"
+                            IsFocusEngagementEnabled="False"
+                            IsTabStop="False"
+                            Style="{StaticResource DefaultButton}" />
+                        <Button
+                            x:Name="CookieAcceptButton"
+                            Height="35"
+                            BorderThickness="2"
+                            Click="CookieAcceptButton_Click"
+                            Content="Accept"
+                            CornerRadius="50"
+                            FontWeight="SemiBold"
+                            IsFocusEngagementEnabled="False"
+                            IsTabStop="False"
+                            Style="{StaticResource DefaultButton}" />
+                    </WrapPanel>
+                </Grid>
+
+            </Border>
+
+        </StackPanel>
+
     </Grid>
 </Page>

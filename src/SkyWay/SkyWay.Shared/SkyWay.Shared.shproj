@@ -28,4 +28,7 @@
     <_Globbed_Compile Remove="Services\HttpService.cs" />
     <_Globbed_Compile Remove="Services\IHttpService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <_Globbed_Content Remove="Assets\Images\logo_game.png" />
+  </ItemGroup>
 </Project>
