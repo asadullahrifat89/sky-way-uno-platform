@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\PageExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerScoreHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ScalingHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SoundHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GamePage.xaml.cs">

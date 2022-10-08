@@ -153,29 +153,7 @@ namespace SkyWay
 
         #region Methods
 
-        #region Page
-
-        private void SetViewSize()
-        {
-            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
-
-            UnderView.Width = _windowWidth;
-            UnderView.Height = _windowHeight;
-        }
-
-        private void NavigateToPage(Type pageType)
-        {
-            if (pageType == typeof(GamePage))
-                SoundHelper.StopSound(SoundType.INTRO);
-
-            StopGame();
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);
-        }
-
-        #endregion        
-
-        #region Functionality
+        #region Logic
 
         private async Task CheckUserSession()
         {
@@ -203,7 +181,9 @@ namespace SkyWay
                 }
                 else
                 {
-                    if (SessionHelper.GetCachedSession() is Session session && await ValidateSession(session) && await GetGameProfile())
+                    if (SessionHelper.GetCachedSession() is Session session
+                        && await ValidateSession(session)
+                        && await GetGameProfile())
                     {
                         SetLogoutContext();
                         ShowWelcomeBackToast();
@@ -225,11 +205,11 @@ namespace SkyWay
 
         private async Task<bool> GetGameProfile()
         {
-            (bool IsSuccess, string Message, GameProfile GameProfile) response = await _backendService.GetUserGameProfile();
+            (bool IsSuccess, string Message, _) = await _backendService.GetUserGameProfile();
 
-            if (!response.IsSuccess)
+            if (!IsSuccess)
             {
-                var error = response.Message;
+                var error = Message;
                 this.ShowError(error);
                 return false;
             }
@@ -243,6 +223,7 @@ namespace SkyWay
             SessionHelper.RemoveCachedSession();
             AuthTokenHelper.AuthToken = null;
             GameProfileHelper.GameProfile = null;
+            //TODO: set player socre to null
         }
 
         private void ShowCookieToast()
@@ -494,6 +475,28 @@ namespace SkyWay
             SoundHelper.StopSound(SoundType.INTRO);
         }
         #endregion
+
+        #region Page
+
+        private void SetViewSize()
+        {
+            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
+
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            if (pageType == typeof(GamePage))
+                SoundHelper.StopSound(SoundType.INTRO);
+
+            StopGame();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);
+        }
+
+        #endregion        
 
         #endregion
     }

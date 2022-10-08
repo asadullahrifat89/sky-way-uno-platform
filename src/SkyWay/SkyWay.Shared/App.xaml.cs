@@ -34,9 +34,7 @@ namespace SkyWay
 
         public IHost Host { get; }
 
-        //public static PlayerScore PlayerScore { get; set; }
-
-        //public static bool GameScoreSubmissionPending { get; set; }
+          
 
         #endregion
 
