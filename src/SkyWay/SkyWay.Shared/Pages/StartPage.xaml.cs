@@ -36,9 +36,6 @@ namespace SkyWay
         private Uri[] _cars;
         private Uri[] _clouds;
 
-        private Sound[] _sounds;
-        private List<Sound> _playingSounds;
-
         #endregion
 
         #region Ctor
@@ -51,7 +48,7 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            LoadGameSounds();
+            SoundHelper.LoadGameSounds();
             InitializeGameViews();
 
             Loaded += GamePage_Loaded;
@@ -74,6 +71,7 @@ namespace SkyWay
         {
             SizeChanged -= GamePage_SizeChanged;
             StopGame();
+            StopGameSounds();
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -144,7 +142,7 @@ namespace SkyWay
 
         private void SetViewSize()
         {
-            _scale = GetGameObjectScale();
+            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
 
             UnderView.Width = _windowWidth;
             UnderView.Height = _windowHeight;
@@ -212,27 +210,11 @@ namespace SkyWay
             }
         }
 
-        private double GetGameObjectScale()
-        {
-            return _windowWidth switch
-            {
-                <= 300 => 0.60,
-                <= 400 => 0.65,
-                <= 500 => 0.70,
-                <= 700 => 0.75,
-                <= 900 => 0.80,
-                <= 1000 => 0.85,
-                <= 1400 => 0.90,
-                <= 2000 => 0.95,
-                _ => 1,
-            };
-        }
-
-        private void StartGame() 
+        private void StartGame()
         {
             Console.WriteLine("GAME STARTED");
 
-            PlayStartGameSounds();
+            StartGameSounds();
 
             RunGame();
 
@@ -267,8 +249,8 @@ namespace SkyWay
         }
 
         private void GameViewLoop()
-        {           
-            UpdateGameObjects();          
+        {
+            UpdateGameObjects();
         }
 
         private void UpdateGameObjects()
@@ -290,7 +272,7 @@ namespace SkyWay
                     default:
                         break;
                 }
-            }          
+            }
         }
 
         private void StopGame()
@@ -367,53 +349,15 @@ namespace SkyWay
 
         #region Sound
 
-        private void LoadGameSounds()
+        private void StartGameSounds()
         {
-            _sounds = Constants.SOUND_TEMPLATES.Where(x => x.Key == SoundType.MENU_SELECT || x.Key == SoundType.INTRO).Select(x => new Sound(soundType: x.Key, soundSource: x.Value)).ToArray();
-
-            _playingSounds = new List<Sound>();
-            _playingSounds.AddRange(_sounds);
-
-            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count);
+            SoundHelper.RandomizeIntroSound();
+            SoundHelper.PlaySound(SoundType.INTRO);
         }
 
-        private void RandomizeIntroSound()
+        private void StopGameSounds()
         {
-            var introSounds = _sounds.Where(x => x.SoundType == SoundType.INTRO).ToArray();
-            var introSound = introSounds[_rand.Next(0, introSounds.Length)];
-
-            _playingSounds.RemoveAll(x => x.SoundType == SoundType.INTRO);
-            _playingSounds.Add(introSound);
-        }
-
-        private void PlayStartGameSounds()
-        {
-            RandomizeIntroSound();
-            PlaySound(SoundType.INTRO);
-        }
-
-        private void PlaySound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType) is Sound playingSound)
-                playingSound.Play();
-        }
-
-        private void StopSound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType) is Sound playingSound)
-                playingSound.Stop();
-        }
-
-        private void PauseSound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType && x.IsPlaying) is Sound playingSound)
-                playingSound.Pause();
-        }
-
-        private void ResumeSound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType && x.IsPaused) is Sound playingSound)
-                playingSound.Resume();
+            SoundHelper.StopSound(SoundType.INTRO);
         }
 
         #endregion

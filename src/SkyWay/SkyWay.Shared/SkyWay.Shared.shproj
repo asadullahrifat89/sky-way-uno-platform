@@ -19,7 +19,9 @@
     <_Globbed_Compile Remove="Helpers\GameProfileHelper.cs" />
     <_Globbed_Compile Remove="Helpers\LocalizationHelper.cs" />
     <_Globbed_Compile Remove="Helpers\PlayerCredentialsHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\ScalingHelper.cs" />
     <_Globbed_Compile Remove="Helpers\SessionHelper.cs" />
+    <_Globbed_Compile Remove="Helpers\SoundHelper.cs" />
     <_Globbed_Compile Remove="Models\Responses\ErrorResponse.cs" />
     <_Globbed_Compile Remove="Models\Responses\QueryRecordResponse.cs" />
     <_Globbed_Compile Remove="Models\Responses\QueryRecordsResponse.cs" />
