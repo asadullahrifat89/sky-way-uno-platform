@@ -50,6 +50,8 @@ namespace SkyWay
             LoadGameElements();
             SoundHelper.LoadGameSounds();
             InitializeGameViews();
+
+            LocalizationHelper.LoadLocalizationKeys();
             AssetHelper.PreloadAssets(ProgressBar);
 
             Loaded += GamePage_Loaded;
@@ -62,12 +64,10 @@ namespace SkyWay
 
         #region Page
 
-        private async void GamePage_Loaded(object sender, RoutedEventArgs e)
+        private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeChanged += GamePage_SizeChanged;
             StartGame();
-
-            await LocalizationHelper.LoadLocalizationKeys();
 
             //TODO: set localization
             //TODO: check login session
@@ -76,7 +76,7 @@ namespace SkyWay
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
             SizeChanged -= GamePage_SizeChanged;
-            StopGame();          
+            StopGame();
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -105,7 +105,7 @@ namespace SkyWay
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(GamePage));
-        }       
+        }
 
         private void LeaderboardButton_Click(object sender, RoutedEventArgs e)
         {
@@ -157,7 +157,7 @@ namespace SkyWay
         {
             StopGame();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);          
+            App.NavigateToPage(pageType);
         }
 
         #endregion
@@ -229,7 +229,7 @@ namespace SkyWay
             StartGameSounds();
 
             RecycleGameObjects();
-            RunGame();            
+            RunGame();
         }
 
         private void RecycleGameObjects()
@@ -302,9 +302,9 @@ namespace SkyWay
         #region Car
 
         private void UpdateCar(GameObject car)
-        {            
+        {
             car.SetTop(car.GetTop() - car.Speed);
-            
+
             if (car.GetTop() < 0 - car.Height)
             {
                 RecyleCar(car);

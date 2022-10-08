@@ -15,6 +15,7 @@ namespace SkyWay
         #region Fields
 
         private static LocalizationKey[] LOCALIZATION_KEYS;
+        private static string _localizationJson;
 
         #endregion
 
@@ -25,18 +26,20 @@ namespace SkyWay
 
         #region Methods
 
-        public static async Task LoadLocalizationKeys()
+        public static async void LoadLocalizationKeys()
         {
-            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
-            var localizationJson = await FileIO.ReadTextAsync(file);
-            LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(localizationJson);
+            if (_localizationJson.IsNullOrBlank())
+            {
+                var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
+                _localizationJson = await FileIO.ReadTextAsync(file);
+                LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
 
 #if DEBUG
-            Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
-
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["LOCALIZATION_KEYS"] = localizationJson;
+                Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
+                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+                localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
 #endif
+            }
         }
 
         public static string GetLocalizedResource(string resourceKey)
