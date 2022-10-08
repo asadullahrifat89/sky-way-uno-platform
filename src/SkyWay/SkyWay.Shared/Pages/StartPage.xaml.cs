@@ -285,12 +285,10 @@ namespace SkyWay
         #region Car
 
         private void UpdateCar(GameObject car)
-        {
-            // move down vehicle
-            car.SetTop(car.GetTop() + car.Speed);
-
-            // if vechicle goes out of bounds
-            if (car.GetTop() > UnderView.Height)
+        {            
+            car.SetTop(car.GetTop() - car.Speed);
+            
+            if (car.GetTop() < 0 - car.Height)
             {
                 RecyleCar(car);
             }
@@ -310,7 +308,7 @@ namespace SkyWay
         {
             car.SetPosition(
                 left: _rand.Next(100, (int)UnderView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
+                top: (int)UnderView.Height);
         }
 
         #endregion

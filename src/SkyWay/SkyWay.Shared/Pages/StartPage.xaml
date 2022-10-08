@@ -60,12 +60,7 @@
         </StackPanel>
 
         <!--  UI controls  -->
-        <Border
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            BorderThickness="0,3,0,3"
-            CornerRadius="10"
-            Style="{StaticResource GameUIContainer}">
+        <Border Style="{StaticResource GameUIContainer}">
 
             <StackPanel
                 x:Name="ActionStack"
@@ -81,7 +76,7 @@
                 <!--  Game name  -->
                 <TextBlock
                     x:Name="GameName"
-                    Margin="0,15"
+                    Margin="0,0,0,15"
                     FontSize="30"
                     FontWeight="Bold"
                     Text="Sky Way"
