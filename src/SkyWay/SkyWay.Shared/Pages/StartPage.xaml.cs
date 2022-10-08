@@ -114,7 +114,7 @@ namespace SkyWay
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigateToPage(typeof(LoginPage));
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
