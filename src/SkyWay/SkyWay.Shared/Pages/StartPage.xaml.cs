@@ -42,7 +42,7 @@ namespace SkyWay
 
         public StartPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
@@ -50,6 +50,7 @@ namespace SkyWay
             LoadGameElements();
             SoundHelper.LoadGameSounds();
             InitializeGameViews();
+            AssetHelper.PreloadAssets(ProgressBar);
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
