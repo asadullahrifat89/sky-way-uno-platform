@@ -691,7 +691,8 @@ namespace SkyWay
         {
             if (_isGameQuitting)
             {
-                //TODO: quit game
+                StopGame();
+                StopGameSounds();
                 NavigateToPage(typeof(StartPage));
             }
             else
@@ -704,9 +705,7 @@ namespace SkyWay
         }
 
         private void NavigateToPage(Type pageType)
-        {
-            StopGame();
-            StopGameSounds();
+        {           
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
         }
