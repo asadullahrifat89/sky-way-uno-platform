@@ -7,9 +7,10 @@ namespace SkyWay
     public static class Constants
     {
         public const string GAME_ID = "sky-way";
-        public const double DEFAULT_FRAME_TIME = 18;
 
         #region Measurements
+
+        public const double DEFAULT_FRAME_TIME = 18;
 
         public const double CAR_WIDTH = 60 * 1.5;
         public const double CAR_HEIGHT = 120 * 1.5;
@@ -98,7 +99,7 @@ namespace SkyWay
 
         #endregion
 
-        #region Api Base Urls
+        #region Web Api Base Urls
 
 #if DEBUG
         public const string GAME_API_BASEURL = "https://localhost:7238";
@@ -108,7 +109,7 @@ namespace SkyWay
 
         #endregion
 
-        #region Api Endpoints
+        #region Web Api Endpoints
 
         public const string Action_Ping = "/api/Query/Ping";
 
@@ -125,14 +126,18 @@ namespace SkyWay
 
         #endregion
 
-        #region Cache Keys
-
+        #region Session Keys
+        
         public const string CACHE_SESSION_KEY = "Session";
         public const string CACHE_LANGUAGE_KEY = "Language";
 
-        public const string COOKIE_KEY = "Cookie";
-        public const string COOKIE_ACCEPTED_KEY = "Accepted";
+        #endregion
 
-        #endregion              
+        #region Cookie Keys
+        
+        public const string COOKIE_KEY = "Cookie";
+        public const string COOKIE_ACCEPTED_KEY = "Accepted"; 
+
+        #endregion
     }
 }
