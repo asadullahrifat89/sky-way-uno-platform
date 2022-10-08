@@ -258,13 +258,13 @@
                             x:Name="CookieDeclineButton"
                             Height="35"
                             Click="CookieDeclineButton_Click"
-                            Content="Decline"
+                            Content="👎"
                             Style="{StaticResource DefaultButton}" />
                         <Button
                             x:Name="CookieAcceptButton"
                             Height="35"
                             Click="CookieAcceptButton_Click"
-                            Content="Accept"
+                            Content="👍"
                             Style="{StaticResource DefaultButton}" />
                     </WrapPanel>
                 </Grid>

@@ -27,7 +27,17 @@ namespace SkyWay
         private readonly List<(Type IfGoingBackTo, Type RouteTo)> _goBackPageRoutes;
 
         private static Window _window;
-      
+
+        #endregion
+
+        #region Properties
+
+        public IHost Host { get; }
+
+        //public static PlayerScore PlayerScore { get; set; }
+
+        //public static bool GameScoreSubmissionPending { get; set; }
+
         #endregion
 
         #region Ctor
@@ -54,7 +64,7 @@ namespace SkyWay
 #endif
             UnhandledException += App_UnhandledException;
 
-            Uno.UI.FeatureConfiguration.Page.IsPoolingEnabled = true;
+            Uno.UI.FeatureConfiguration.Page.IsPoolingEnabled = true;            
 
             _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
 
@@ -64,27 +74,9 @@ namespace SkyWay
             LocalizationHelper.CurrentCulture = "en";
         }
 
-        #endregion
-
-        #region Properties
-
-        private IHost Host { get; }
-
-        //public static PlayerScore PlayerScore { get; set; }
-
-        //public static bool GameScoreSubmissionPending { get; set; }
-
-        #endregion
+        #endregion        
 
         #region Events
-
-        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-#if DEBUG
-            Console.WriteLine(e.Message);
-#endif
-            e.Handled = true;
-        }
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
@@ -162,6 +154,14 @@ namespace SkyWay
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
+        }
+
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+#if DEBUG
+            Console.WriteLine(e.Message);
+#endif
+            e.Handled = true;
         }
 
         #endregion

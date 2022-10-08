@@ -18,6 +18,12 @@ namespace SkyWay
             CacheHelper.SetCachedValue(Constants.COOKIE_KEY, Constants.COOKIE_ACCEPTED_KEY);
         }
 
+        public static void SetCookieDeclined()
+        {
+            CacheHelper.RemoveCachedValue(Constants.COOKIE_KEY);
+        }
+
+
         #endregion
     }
 }

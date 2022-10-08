@@ -20,55 +20,63 @@ namespace SkyWay
 
         public static void LoadGameSounds()
         {
-            _sounds = Constants.SOUND_TEMPLATES.Select(x =>
+            if (_sounds is null)
             {
-                Sound sound = null;
+                _sounds = Constants.SOUND_TEMPLATES.Select(x =>
+                    {
+                        Sound sound = null;
 
-                switch (x.Key)
-                {
-                    case SoundType.BACKGROUND:
+                        switch (x.Key)
                         {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
+                            case SoundType.BACKGROUND:
+                                {
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
+                                }
+                                break;
+                            case SoundType.INTRO:
+                                {
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.9, loop: true);
+                                }
+                                break;
+                            case SoundType.CAR_ENGINE:
+                                {
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.2, loop: true);
+                                }
+                                break;
+                            case SoundType.COLLECTIBLE_COLLECTED:
+                                {
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.6);
+                                }
+                                break;
+                            default:
+                                {
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value);
+                                }
+                                break;
                         }
-                        break;
-                    case SoundType.INTRO:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.9, loop: true);
-                        }
-                        break;
-                    case SoundType.CAR_ENGINE:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.2, loop: true);
-                        }
-                        break;
-                    case SoundType.COLLECTIBLE_COLLECTED:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.6);
-                        }
-                        break;
-                    default:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value);
-                        }
-                        break;
-                }
 
-                return sound;
+                        return sound;
 
-            }).ToArray();
+                    }).ToArray();
 
-            _playingSounds = new List<Sound>();
+                _playingSounds = new List<Sound>();
 
-            // add all sounds except background and intro as these will be randomized before playing
-            _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and not SoundType.INTRO));
+                // add all sounds except background and intro as these will be randomized before playing
+                _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and not SoundType.INTRO));
+            }
 
 #if DEBUG
-            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count); 
+            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count);
 #endif
         }
 
         public static void RandomizeBackgroundSound()
         {
+            foreach (var sound in _playingSounds.Where(x => x.SoundType == SoundType.BACKGROUND))
+            {
+                sound.Stop();
+            }
+
             var backgroundSounds = _sounds.Where(x => x.SoundType == SoundType.BACKGROUND).ToArray();
             var backgroundSound = backgroundSounds[_rand.Next(0, backgroundSounds.Length)];
 
@@ -78,11 +86,21 @@ namespace SkyWay
 
         public static void RandomizeIntroSound()
         {
+            foreach (var sound in _playingSounds.Where(x => x.SoundType == SoundType.INTRO))
+            {
+                sound.Stop();
+            }
+
             var introSounds = _sounds.Where(x => x.SoundType == SoundType.INTRO).ToArray();
             var introSound = introSounds[_rand.Next(0, introSounds.Length)];
 
             _playingSounds.RemoveAll(x => x.SoundType == SoundType.INTRO);
             _playingSounds.Add(introSound);
+        }
+
+        public static bool IsSoundPlaying(SoundType soundType)
+        {
+            return _playingSounds.Any(x => x.SoundType == soundType && x.IsPlaying);
         }
 
         public static void PlaySound(SoundType soundType)

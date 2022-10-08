@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Uno.Extensions;
 
@@ -37,6 +38,33 @@ namespace SkyWay
             }
 
             //TODO: disable  Tag="ActionButton" tagged button
+
+            if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
+            {
+                DisableActionButtons(buttons);
+            }
+        }
+
+        public static void ShowError(this Page page, string progressBarMessage = null)
+        {
+            if (FindChild<ProgressBar>(parent: page, childName: "ProgressBar") is ProgressBar progressBar)
+            {
+                progressBar.Tag = false;
+                progressBar.ShowPaused = true;
+                progressBar.ShowError = true;
+            }
+
+            if (FindChild<TextBlock>(parent: page, childName: "ProgressBarMessageBlock") is TextBlock messageBlock)
+            {
+                messageBlock.Foreground = App.Current.Resources["ProgressBarErrorColor"] as SolidColorBrush;
+                messageBlock.Text = "⚠️ " + progressBarMessage;
+                messageBlock.Visibility = progressBarMessage.IsNullOrBlank() ? Visibility.Collapsed : Visibility.Visible;
+            }
+
+            if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
+            {
+                EnableActionButtons(buttons);
+            }
         }
 
         #endregion
@@ -50,7 +78,7 @@ namespace SkyWay
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                    if (child != null && child is T)
+                    if (child is not null && child is T)
                     {
                         yield return (T)child;
                     }
@@ -70,9 +98,7 @@ namespace SkyWay
             {
                 DependencyObject foundChild = null;
 
-                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-
-                for (int i = 0; i < childrenCount; i++)
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
 
@@ -119,15 +145,21 @@ namespace SkyWay
             }
         }
 
-        private static void EnableActionButton(Button button)
+        private static void EnableActionButtons(IEnumerable<Button> buttons)
         {
-            button.IsEnabled = true;
+            foreach (var button in buttons)
+            {
+                button.IsEnabled = true;
+            }
         }
 
-        private static void DisableActionButton(Button button)
+        private static void DisableActionButtons(IEnumerable<Button> buttons)
         {
-            button.IsEnabled = false;
-        } 
+            foreach (var button in buttons)
+            {
+                button.IsEnabled = false;
+            }
+        }
 
         #endregion
 
