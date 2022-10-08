@@ -165,12 +165,12 @@ namespace SkyWay
 
         private void NavigateToPage(Type pageType)
         {
-            StopGame();
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);
-
             if (pageType == typeof(GamePage))
                 SoundHelper.StopSound(SoundType.INTRO);
+
+            StopGame();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);           
         }
 
         #endregion        
@@ -402,7 +402,7 @@ namespace SkyWay
 
         private void StopGame()
         {
-            _gameViewTimer.Dispose();
+            _gameViewTimer?.Dispose();
         }
 
         #endregion

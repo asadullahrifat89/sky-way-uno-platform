@@ -684,7 +684,7 @@ namespace SkyWay
 
         private void StopGame()
         {
-            _gameViewTimer.Dispose();
+            _gameViewTimer?.Dispose();
         }
 
         private void QuitGame()
