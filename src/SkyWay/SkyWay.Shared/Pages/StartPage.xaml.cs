@@ -52,7 +52,7 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            InitializeGameViews();
+            PopulateGameViews();
 
             LocalizationHelper.LoadLocalizationKeys();
             AssetHelper.PreloadAssets(ProgressBar);
@@ -262,13 +262,13 @@ namespace SkyWay
 
         #region Game
 
-        private void InitializeGameViews()
+        private void PopulateGameViews()
         {
 #if DEBUG
             Console.WriteLine("INITIALIZING GAME");
 #endif
             SetViewSize();
-            InitializeUnderView();
+            PopulateUnderView();
         }
 
         private void LoadGameElements()
@@ -277,7 +277,7 @@ namespace SkyWay
             _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CLOUD).Select(x => x.Value).ToArray();
         }
 
-        private void InitializeUnderView()
+        private void PopulateUnderView()
         {
             // add some cars underneath
             for (int i = 0; i < 10; i++)

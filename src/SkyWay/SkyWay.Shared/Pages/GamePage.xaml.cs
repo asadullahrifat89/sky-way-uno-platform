@@ -90,7 +90,7 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            InitializeGameViews();
+            PopulateGameViews();
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -233,18 +233,18 @@ namespace SkyWay
 
         #region Game
 
-        private void InitializeGameViews()
+        private void PopulateGameViews()
         {
             Console.WriteLine("INITIALIZING GAME");
 
             SetViewSize();
 
-            InitializeUnderView();
-            InitializeGameView();
-            InitializeOverView();
+            PopulateUnderView();
+            PopulateGameView();
+            PopulateOverView();
         }
 
-        private void InitializeUnderView()
+        private void PopulateUnderView()
         {
             // add some cars underneath
             for (int i = 0; i < 10; i++)
@@ -287,7 +287,7 @@ namespace SkyWay
             }
         }
 
-        private void InitializeGameView()
+        private void PopulateGameView()
         {
             // add 5 cars
             for (int i = 0; i < 5; i++)
@@ -317,7 +317,7 @@ namespace SkyWay
             GameView.Children.Add(_player);
         }
 
-        private void InitializeOverView()
+        private void PopulateOverView()
         {
             // add some clouds above
             for (int i = 0; i < 5; i++)
