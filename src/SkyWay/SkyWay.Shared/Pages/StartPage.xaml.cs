@@ -47,12 +47,12 @@ namespace SkyWay
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
 
-            LoadGameElements();
-            SoundHelper.LoadGameSounds();
+            LoadGameElements();           
             InitializeGameViews();
 
             LocalizationHelper.LoadLocalizationKeys();
             AssetHelper.PreloadAssets(ProgressBar);
+            SoundHelper.LoadGameSounds();
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -166,10 +166,10 @@ namespace SkyWay
 
         private void InitializeGameViews()
         {
-            Console.WriteLine("INITIALIZING GAME");
-
+#if DEBUG
+            Console.WriteLine("INITIALIZING GAME"); 
+#endif
             SetViewSize();
-
             InitializeUnderView();
         }
 
@@ -224,10 +224,10 @@ namespace SkyWay
 
         private void StartGame()
         {
-            Console.WriteLine("GAME STARTED");
-
+#if DEBUG
+            Console.WriteLine("GAME STARTED"); 
+#endif
             StartGameSounds();
-
             RecycleGameObjects();
             RunGame();
         }
