@@ -112,7 +112,7 @@
                     BorderThickness="0"
                     Click="LoginButton_Click"
                     Content="Already have an account?"
-                    FontSize="15"
+                    FontSize="18"
                     Foreground="White" />
 
                 <!--  Message text  -->
