@@ -75,7 +75,7 @@ namespace SkyWay
             LocalizationHelper.CheckLocalizationCache();
 
             //TODO: set localization
-            await CheckLoginSession();
+            await CheckUserSession();
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
@@ -126,8 +126,8 @@ namespace SkyWay
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
-        {
-
+        {           
+            PerformLogout();
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
@@ -170,14 +170,14 @@ namespace SkyWay
 
             StopGame();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);           
+            App.NavigateToPage(pageType);
         }
 
         #endregion        
 
         #region Functionality
 
-        private async Task CheckLoginSession()
+        private async Task CheckUserSession()
         {
             SessionHelper.TryLoadSession();
 
@@ -235,6 +235,14 @@ namespace SkyWay
             }
 
             return true;
+        }
+
+        private void PerformLogout()
+        {
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            SessionHelper.RemoveCachedSession();
+            AuthTokenHelper.AuthToken = null;
+            GameProfileHelper.GameProfile = null;
         }
 
         private void ShowCookieToast()
