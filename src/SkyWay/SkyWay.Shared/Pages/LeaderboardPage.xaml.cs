@@ -41,6 +41,10 @@ namespace SkyWay
         {
             this.InitializeComponent();
             _backendService = (Application.Current as App).Host.Services.GetRequiredService<IBackendService>();
+
+            GameProfilesList.ItemsSource = GameProfilesCollection;
+            GameScoresList.ItemsSource = GameScoresCollection;
+
             this.Loaded += LeaderboardPage_Loaded;
         }
 

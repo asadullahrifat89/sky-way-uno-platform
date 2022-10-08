@@ -6,7 +6,7 @@ namespace SkyWay
 {
     public static class PlayerScoreHelper
     {
-        public static PlayerScore PlayerScore { get; set; }
+        public static SkyWayScore PlayerScore { get; set; }
 
         public static bool GameScoreSubmissionPending { get; set; }
     }

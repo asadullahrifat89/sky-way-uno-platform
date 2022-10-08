@@ -38,6 +38,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerScoreHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ScalingHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SoundHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\GameOverPage.xaml.cs">
+      <DependentUpon>GameOverPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\BackendService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\GameOverPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
