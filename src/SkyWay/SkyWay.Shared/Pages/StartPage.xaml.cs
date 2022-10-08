@@ -22,7 +22,7 @@ namespace SkyWay
         #region Fields
 
         private PeriodicTimer _gameViewTimer;
-        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(18);
+        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private readonly Random _rand = new();
 

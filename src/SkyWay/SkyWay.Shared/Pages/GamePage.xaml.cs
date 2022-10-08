@@ -59,7 +59,7 @@ namespace SkyWay
 
         private bool _isRecoveringFromDamage;
         private bool _isPointerActivated;
-        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(18);
+        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private int _accelerationCounter;
 

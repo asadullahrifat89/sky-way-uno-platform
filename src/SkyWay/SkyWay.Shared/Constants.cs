@@ -7,6 +7,7 @@ namespace SkyWay
     public static class Constants
     {
         public const string GAME_ID = "sky-way";
+        public const double DEFAULT_FRAME_TIME = 18;
 
         #region Measurements
 
