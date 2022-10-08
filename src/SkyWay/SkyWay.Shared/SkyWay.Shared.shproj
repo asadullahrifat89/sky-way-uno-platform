@@ -12,6 +12,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\LoginPage.xaml" />
+    <UpToDateCheckInput Remove="Pages\SignUpPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <_Globbed_Compile Remove="Extensions\HttpServiceExtensions.cs" />
@@ -32,6 +33,7 @@
     <_Globbed_Compile Remove="Models\Responses\ServiceResponse.cs" />
     <_Globbed_Compile Remove="Pages\HomePage.xaml.cs" />
     <_Globbed_Compile Remove="Pages\LoginPage.xaml.cs" />
+    <_Globbed_Compile Remove="Pages\SignUpPage.xaml.cs" />
     <_Globbed_Compile Remove="Services\HttpService.cs" />
     <_Globbed_Compile Remove="Services\IHttpService.cs" />
   </ItemGroup>
@@ -40,5 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <_Globbled_Page Remove="Pages\LoginPage.xaml" />
+    <_Globbled_Page Remove="Pages\SignUpPage.xaml" />
   </ItemGroup>
 </Project>
