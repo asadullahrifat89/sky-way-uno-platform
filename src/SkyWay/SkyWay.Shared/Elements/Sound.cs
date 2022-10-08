@@ -18,7 +18,7 @@ namespace SkyWay
             SoundType = soundType;
             SoundSource = soundSource;
 
-            var baseUrl = App.GetBaseUrl();
+            var baseUrl = AssetHelper.GetBaseUrl();
             var source = $"{baseUrl}/{SoundSource}";
             _audioPlayer = new AudioPlayer(source: source, volume: volume, loop: loop);
         }

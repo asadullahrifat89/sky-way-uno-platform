@@ -223,18 +223,8 @@ namespace SkyWay
 
         private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_isGameQuitting)
-            {
-                //TODO: quit game
-            }
-
-            _isGameQuitting = true;
-
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            PauseGame();
-
-            //TODO: show game quitting content
-        }
+            QuitGame();
+        }     
 
         #endregion
 
@@ -384,14 +374,10 @@ namespace SkyWay
         {
             Console.WriteLine("GAME STARTED");
 
-            StartGameSounds();
-
             _lives = _maxLives;
             SetLives();
 
             _gameSpeed = _defaultGameSpeed;
-            RunGame();
-
             _player.Opacity = 1;
 
             ResetControls();
@@ -411,6 +397,17 @@ namespace SkyWay
                 SeaView.AddDestroyableGameObject(x);
             }
 
+            RecycleGameObjects();
+            RemoveGameObjects();
+
+            App.EnterFullScreen(true);
+
+            StartGameSounds();
+            RunGame();
+        }
+
+        private void RecycleGameObjects()
+        {
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
                 switch ((ElementType)x.Tag)
@@ -470,10 +467,6 @@ namespace SkyWay
                         break;
                 }
             }
-
-            RemoveGameObjects();
-
-            App.EnterFullScreen(true);
         }
 
         private void ResetControls()
@@ -693,6 +686,30 @@ namespace SkyWay
         private void StopGame()
         {
             _gameViewTimer.Dispose();
+        }
+
+        private void QuitGame()
+        {
+            if (_isGameQuitting)
+            {
+                //TODO: quit game
+                NavigateToPage(typeof(StartPage));
+            }
+            else
+            {
+                _isGameQuitting = true;
+                PauseGame();
+            }            
+
+            //TODO: show game quitting content
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            StopGame();
+            StopGameSounds();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);
         }
 
         #endregion

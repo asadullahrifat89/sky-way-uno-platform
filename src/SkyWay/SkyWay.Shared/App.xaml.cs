@@ -27,8 +27,7 @@ namespace SkyWay
         private readonly List<(Type IfGoingBackTo, Type RouteTo)> _goBackPageRoutes;
 
         private static Window _window;
-        private static string _baseUrl;
-
+      
         #endregion
 
         #region Ctor
@@ -192,22 +191,7 @@ namespace SkyWay
         {
             var rootFrame = _window.Content as Frame;
             rootFrame.Navigate(pageType, parameter);
-        }
-
-        public static string GetBaseUrl()
-        {
-            if (_baseUrl.IsNullOrBlank())
-            {
-                var indexUrl = Uno.Foundation.WebAssemblyRuntime.InvokeJS("window.location.href;");
-                var appPackageId = Environment.GetEnvironmentVariable("UNO_BOOTSTRAP_APP_BASE");
-                _baseUrl = $"{indexUrl}{appPackageId}";
-
-#if DEBUG
-                Console.WriteLine(_baseUrl);
-#endif 
-            }
-            return _baseUrl;
-        }
+        }    
 
         #endregion
 

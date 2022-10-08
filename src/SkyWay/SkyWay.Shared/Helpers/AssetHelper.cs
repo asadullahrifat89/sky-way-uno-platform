@@ -8,7 +8,28 @@ namespace SkyWay
 {
     public static class AssetHelper
     {
+        #region Fields
+        
+        private static string _baseUrl; 
+
+        #endregion
+
         #region Methods
+
+        public static string GetBaseUrl()
+        {
+            if (_baseUrl.IsNullOrBlank())
+            {
+                var indexUrl = Uno.Foundation.WebAssemblyRuntime.InvokeJS("window.location.href;");
+                var appPackageId = Environment.GetEnvironmentVariable("UNO_BOOTSTRAP_APP_BASE");
+                _baseUrl = $"{indexUrl}{appPackageId}";
+
+#if DEBUG
+                Console.WriteLine(_baseUrl);
+#endif 
+            }
+            return _baseUrl;
+        }
 
         public static async void PreloadAssets(ProgressBar progressBar)
         {

@@ -62,17 +62,21 @@ namespace SkyWay
 
         #region Page
 
-        private void GamePage_Loaded(object sender, RoutedEventArgs e)
+        private async void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeChanged += GamePage_SizeChanged;
             StartGame();
+
+            await LocalizationHelper.LoadLocalizationKeys();
+
+            //TODO: set localization
+            //TODO: check login session
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
             SizeChanged -= GamePage_SizeChanged;
-            StopGame();
-            StopGameSounds();
+            StopGame();          
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -100,8 +104,8 @@ namespace SkyWay
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
+            NavigateToPage(typeof(GamePage));
+        }       
 
         private void LeaderboardButton_Click(object sender, RoutedEventArgs e)
         {
@@ -147,6 +151,13 @@ namespace SkyWay
 
             UnderView.Width = _windowWidth;
             UnderView.Height = _windowHeight;
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            StopGame();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);          
         }
 
         #endregion
@@ -217,8 +228,12 @@ namespace SkyWay
 
             StartGameSounds();
 
-            RunGame();
+            RecycleGameObjects();
+            RunGame();            
+        }
 
+        private void RecycleGameObjects()
+        {
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
                 switch ((ElementType)x.Tag)
@@ -279,6 +294,7 @@ namespace SkyWay
         private void StopGame()
         {
             _gameViewTimer.Dispose();
+            StopGameSounds();
         }
 
         #endregion
