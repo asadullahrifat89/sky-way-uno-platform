@@ -10,6 +10,134 @@
 
     <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
 
+        <Border Style="{StaticResource GameUIContainer}">
+
+            <StackPanel
+                x:Name="ActionStack"
+                Width="315"
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+                <!--  Game name  -->
+                <TextBlock
+                    x:Name="GameName"
+                    Margin="0,0,0,15"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    Text="Sky Way"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords" />
+
+                <!--  Fullname  -->
+                <TextBox
+                    x:Name="UserFullNameBox"
+                    Margin="5"
+                    CornerRadius="50"
+                    FontWeight="SemiBold"
+                    Header="Enter your full name"
+                    TextChanged="UserFullNameBox_TextChanged" />
+
+                <!--  Email  -->
+                <TextBox
+                    x:Name="UserEmailBox"
+                    Margin="5"
+                    CornerRadius="50"
+                    FontWeight="SemiBold"
+                    Header="Enter email"
+                    TextChanged="UserEmailBox_TextChanged" />
+
+                <!--  Username  -->
+                <TextBox
+                    x:Name="UserNameBox"
+                    Margin="5"
+                    CornerRadius="50"
+                    FontWeight="SemiBold"
+                    Header="Set a username"
+                    TextChanged="UserNameBox_TextChanged" />
+
+                <!--  Password  -->
+                <PasswordBox
+                    x:Name="PasswordBox"
+                    Margin="5"
+                    CornerRadius="50"
+                    Header="Set a password"
+                    KeyDown="PasswordBox_KeyDown"
+                    TextChanged="PasswordBox_TextChanged" />
+
+                <!--  Confirm password  -->
+                <PasswordBox
+                    x:Name="ConfirmPasswordBox"
+                    Margin="5"
+                    CornerRadius="50"
+                    Header="Confirm password"
+                    KeyDown="PasswordBox_KeyDown"
+                    TextChanged="ConfirmPasswordBox_TextChanged" />
+
+                <!--  I agree  -->
+                <CheckBox
+                    x:Name="ConfirmCheckBox"
+                    Margin="5"
+                    Checked="ConfirmCheckBox_Checked"
+                    Content="Yes, I agree to the conditions of participation."
+                    FontSize="14"
+                    Unchecked="ConfirmCheckBox_Unchecked" />
+
+                <!--  Subscribe to newsletters  -->
+                <!--<CheckBox
+                    x:Name="ConfirmNewsLettersCheckBox"
+                    Margin="5"
+                    Content="Yes, I would like to subscribe to newsletters."
+                    FontSize="14" />-->
+
+                <!--  Signup button  -->
+                <Button
+                    x:Name="SignupButton"
+                    Height="50"
+                    Margin="30,15,30,5"
+                    HorizontalAlignment="Stretch"
+                    Click="SignupButton_Click"
+                    Content="Signup"
+                    IsEnabled="False" />
+
+                <!--  Login Button  -->
+                <Button
+                    x:Name="LoginButton"
+                    Height="40"
+                    Margin="5,0,5,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="LoginButton_Click"
+                    Content="Already have an account?"
+                    FontSize="15"
+                    Foreground="White" />
+
+                <!--  Message text  -->
+                <TextBlock
+                    x:Name="ProgressBarMessageBlock"
+                    Margin="5"
+                    FontWeight="SemiBold"
+                    Foreground="Crimson"
+                    Visibility="Collapsed" />
+
+                <!--  Progress bar  -->
+                <ProgressBar
+                    x:Name="ProgressBar"
+                    Height="5"
+                    Foreground="{StaticResource ProgressBarForegroundColor}"
+                    IsFocusEngagementEnabled="False"
+                    IsIndeterminate="True"
+                    IsTabStop="False"
+                    ShowError="False"
+                    ShowPaused="True" />
+
+            </StackPanel>
+
+        </Border>
+
         <!--#region Go back-->
         <Button
             x:Name="GoBackButton"

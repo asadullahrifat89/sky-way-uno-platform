@@ -86,6 +86,19 @@ namespace SkyWay
             }
         }
 
+        public static void SetProgressBarMessage(
+            this Page page,
+            string message,
+            bool isError)
+        {
+            if (FindChild<TextBlock>(parent: page, childName: "ProgressBarMessageBlock") is TextBlock messageBlock)
+            {
+                messageBlock.Foreground = isError ? App.Current.Resources["ProgressBarErrorColor"] as SolidColorBrush : App.Current.Resources["ProgressBarOkColor"] as SolidColorBrush;
+                messageBlock.Text = (isError ? "⚠️ " : "👍 ") + message;
+                messageBlock.Visibility = Visibility.Visible;
+            }
+        }
+
         #endregion
 
         #region Private

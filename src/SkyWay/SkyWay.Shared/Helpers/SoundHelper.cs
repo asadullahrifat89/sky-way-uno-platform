@@ -30,7 +30,7 @@ namespace SkyWay
                         {
                             case SoundType.BACKGROUND:
                                 {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.8, loop: true);
                                 }
                                 break;
                             case SoundType.INTRO:
@@ -40,12 +40,12 @@ namespace SkyWay
                                 break;
                             case SoundType.CAR_ENGINE:
                                 {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.2, loop: true);
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.3, loop: true);
                                 }
                                 break;
                             case SoundType.COLLECTIBLE_COLLECTED:
                                 {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.6);
+                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.7);
                                 }
                                 break;
                             default:

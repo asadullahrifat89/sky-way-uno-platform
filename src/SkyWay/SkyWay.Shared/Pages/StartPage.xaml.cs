@@ -132,7 +132,7 @@ namespace SkyWay
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigateToPage(typeof(SignUpPage));
         }
 
         private void CookieAcceptButton_Click(object sender, RoutedEventArgs e)

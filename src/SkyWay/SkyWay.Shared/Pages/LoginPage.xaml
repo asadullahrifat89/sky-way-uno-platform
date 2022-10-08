@@ -72,7 +72,6 @@
                     BorderThickness="0"
                     Click="RegisterButton_Click"
                     Content="No account yet?"
-                    FontSize="15"
                     FontWeight="SemiBold"
                     Foreground="White" />
 
