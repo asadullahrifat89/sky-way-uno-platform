@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -36,6 +37,8 @@ namespace SkyWay
         private Uri[] _cars;
         private Uri[] _clouds;
 
+        private readonly IBackendService _backendService;
+
         #endregion
 
         #region Ctor
@@ -43,14 +46,17 @@ namespace SkyWay
         public StartPage()
         {
             InitializeComponent();
+            _backendService = (Application.Current as App).Host.Services.GetRequiredService<IBackendService>();
 
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            SoundHelper.LoadGameSounds();
             InitializeGameViews();
+
+            LocalizationHelper.LoadLocalizationKeys();
             AssetHelper.PreloadAssets(ProgressBar);
+            SoundHelper.LoadGameSounds();
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -66,17 +72,16 @@ namespace SkyWay
         {
             SizeChanged += GamePage_SizeChanged;
             StartGame();
-
-            await LocalizationHelper.LoadLocalizationKeys();
+            LocalizationHelper.CheckLocalizationCache();
 
             //TODO: set localization
-            //TODO: check login session
+            await CheckUserSession();
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
             SizeChanged -= GamePage_SizeChanged;
-            StopGame();          
+            StopGame();
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -86,7 +91,9 @@ namespace SkyWay
 
             SetViewSize();
 
+#if DEBUG
             Console.WriteLine($"WINDOWS SIZE: {_windowWidth}x{_windowHeight}");
+#endif
         }
 
         #endregion
@@ -99,13 +106,14 @@ namespace SkyWay
             {
                 LocalizationHelper.CurrentCulture = tag;
                 LocalizationHelper.SaveLocalizationCache(tag);
+                //TODO: change localization
             }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(GamePage));
-        }       
+        }
 
         private void LeaderboardButton_Click(object sender, RoutedEventArgs e)
         {
@@ -114,12 +122,12 @@ namespace SkyWay
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigateToPage(typeof(LoginPage));
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
-        {
-
+        {           
+            PerformLogout();
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
@@ -129,12 +137,14 @@ namespace SkyWay
 
         private void CookieAcceptButton_Click(object sender, RoutedEventArgs e)
         {
-
+            CookieHelper.SetCookieAccepted();
+            CookieToast.Visibility = Visibility.Collapsed;
         }
 
         private void CookieDeclineButton_Click(object sender, RoutedEventArgs e)
         {
-
+            CookieHelper.SetCookieDeclined();
+            CookieToast.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -155,9 +165,116 @@ namespace SkyWay
 
         private void NavigateToPage(Type pageType)
         {
+            if (pageType == typeof(GamePage))
+                SoundHelper.StopSound(SoundType.INTRO);
+
             StopGame();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);          
+            App.NavigateToPage(pageType);
+        }
+
+        #endregion        
+
+        #region Functionality
+
+        private async Task CheckUserSession()
+        {
+            SessionHelper.TryLoadSession();
+
+            if (GameProfileHelper.HasUserLoggedIn())
+            {
+                if (SessionHelper.HasSessionExpired())
+                {
+                    SessionHelper.RemoveCachedSession();
+                    SetLoginContext();
+                }
+                else
+                {
+                    SetLogoutContext();
+                }
+            }
+            else
+            {
+                if (SessionHelper.HasSessionExpired())
+                {
+                    SessionHelper.RemoveCachedSession();
+                    SetLoginContext();
+                    ShowCookieToast();
+                }
+                else
+                {
+                    if (SessionHelper.GetCachedSession() is Session session && await ValidateSession(session) && await GetGameProfile())
+                    {
+                        SetLogoutContext();
+                        ShowWelcomeBackToast();
+                    }
+                    else
+                    {
+                        SetLoginContext();
+                        ShowCookieToast();
+                    }
+                }
+            }
+        }
+
+        private async Task<bool> ValidateSession(Session session)
+        {
+            var (IsSuccess, _) = await _backendService.ValidateUserSession(session);
+            return IsSuccess;
+        }
+
+        private async Task<bool> GetGameProfile()
+        {
+            (bool IsSuccess, string Message, GameProfile GameProfile) response = await _backendService.GetUserGameProfile();
+
+            if (!response.IsSuccess)
+            {
+                var error = response.Message;
+                this.ShowError(error);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void PerformLogout()
+        {
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            SessionHelper.RemoveCachedSession();
+            AuthTokenHelper.AuthToken = null;
+            GameProfileHelper.GameProfile = null;
+        }
+
+        private void ShowCookieToast()
+        {
+            if (!CookieHelper.IsCookieAccepted())
+                CookieToast.Visibility = Visibility.Visible;
+        }
+
+        private void SetLogoutContext()
+        {
+            LogoutButton.Visibility = Visibility.Visible;
+            LeaderboardButton.Visibility = Visibility.Visible;
+            LoginButton.Visibility = Visibility.Collapsed;
+            RegisterButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void SetLoginContext()
+        {
+            LogoutButton.Visibility = Visibility.Collapsed;
+            LeaderboardButton.Visibility = Visibility.Collapsed;
+            LoginButton.Visibility = Visibility.Visible;
+            RegisterButton.Visibility = Visibility.Visible;
+        }
+
+        private async void ShowWelcomeBackToast()
+        {
+            SoundHelper.PlaySound(SoundType.POWER_UP);
+            UserName.Text = GameProfileHelper.GameProfile.User.UserName;
+
+            WelcomeBackToast.Opacity = 1;
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            WelcomeBackToast.Opacity = 0;
         }
 
         #endregion
@@ -166,10 +283,10 @@ namespace SkyWay
 
         private void InitializeGameViews()
         {
+#if DEBUG
             Console.WriteLine("INITIALIZING GAME");
-
+#endif
             SetViewSize();
-
             InitializeUnderView();
         }
 
@@ -224,12 +341,12 @@ namespace SkyWay
 
         private void StartGame()
         {
+#if DEBUG
             Console.WriteLine("GAME STARTED");
-
+#endif
             StartGameSounds();
-
             RecycleGameObjects();
-            RunGame();            
+            RunGame();
         }
 
         private void RecycleGameObjects()
@@ -293,8 +410,7 @@ namespace SkyWay
 
         private void StopGame()
         {
-            _gameViewTimer.Dispose();
-            StopGameSounds();
+            _gameViewTimer?.Dispose();
         }
 
         #endregion
@@ -302,9 +418,9 @@ namespace SkyWay
         #region Car
 
         private void UpdateCar(GameObject car)
-        {            
+        {
             car.SetTop(car.GetTop() - car.Speed);
-            
+
             if (car.GetTop() < 0 - car.Height)
             {
                 RecyleCar(car);
@@ -366,15 +482,17 @@ namespace SkyWay
 
         private void StartGameSounds()
         {
-            SoundHelper.RandomizeIntroSound();
-            SoundHelper.PlaySound(SoundType.INTRO);
+            if (!SoundHelper.IsSoundPlaying(SoundType.INTRO))
+            {
+                SoundHelper.RandomizeIntroSound();
+                SoundHelper.PlaySound(SoundType.INTRO);
+            }
         }
 
         private void StopGameSounds()
         {
             SoundHelper.StopSound(SoundType.INTRO);
         }
-
         #endregion
 
         #endregion

@@ -38,6 +38,12 @@ namespace SkyWay
             CacheHelper.SetCachedValue(Constants.CACHE_SESSION_KEY, JsonConvert.SerializeObject(session));
         }
 
+        public static void RemoveCachedSession() 
+        {
+            CacheHelper.RemoveCachedValue(Constants.CACHE_SESSION_KEY);
+            Session = null;
+        }
+
         public static bool WillSessionExpireSoon()
         {
             if (Session is null)
@@ -58,6 +64,12 @@ namespace SkyWay
                 return true;
 
             return false;
+        }
+
+        public static void TryLoadSession() 
+        {
+            if (Session is null)
+                Session = GetCachedSession();
         }
 
         #endregion

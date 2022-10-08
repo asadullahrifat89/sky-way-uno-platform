@@ -90,7 +90,6 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            SoundHelper.LoadGameSounds();
             InitializeGameViews();
 
             Loaded += GamePage_Loaded;
@@ -104,7 +103,7 @@ namespace SkyWay
         #region Page
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
-        {
+        {            
             SizeChanged += GamePage_SizeChanged;
         }
 
@@ -224,7 +223,7 @@ namespace SkyWay
         private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
             QuitGame();
-        }     
+        }
 
         #endregion
 
@@ -476,7 +475,7 @@ namespace SkyWay
             _moveUp = false;
             _moveDown = false;
             _isPointerActivated = false;
-        }     
+        }
 
         private async void RunGame()
         {
@@ -654,7 +653,7 @@ namespace SkyWay
             _isGameOver = true;
             StopGameSounds();
             SoundHelper.PlaySound(SoundType.GAME_OVER);
-        }      
+        }
 
         private void PauseGame()
         {
@@ -685,7 +684,7 @@ namespace SkyWay
 
         private void StopGame()
         {
-            _gameViewTimer.Dispose();
+            _gameViewTimer?.Dispose();
         }
 
         private void QuitGame()
@@ -699,7 +698,7 @@ namespace SkyWay
             {
                 _isGameQuitting = true;
                 PauseGame();
-            }            
+            }
 
             //TODO: show game quitting content
         }
