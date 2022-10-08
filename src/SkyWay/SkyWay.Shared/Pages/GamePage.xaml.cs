@@ -44,7 +44,7 @@ namespace SkyWay
         private int _collectibleSpawnCounter = 200;
 
         private double _score;
-        private double _collectiblesCollected;
+        private int _collectiblesCollected;
 
         private int _islandSpawnCounter;
 
@@ -103,7 +103,7 @@ namespace SkyWay
         #region Page
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
-        {            
+        {
             SizeChanged += GamePage_SizeChanged;
         }
 
@@ -230,27 +230,6 @@ namespace SkyWay
         #endregion
 
         #region Methods
-
-        #region Page
-
-        private void SetViewSize()
-        {
-            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
-
-            SeaView.Width = _windowWidth;
-            SeaView.Height = _windowHeight;
-
-            UnderView.Width = _windowWidth;
-            UnderView.Height = _windowHeight;
-
-            GameView.Width = _windowWidth;
-            GameView.Height = _windowHeight;
-
-            OverView.Width = _windowWidth;
-            OverView.Height = _windowHeight;
-        }
-
-        #endregion
 
         #region Game
 
@@ -398,8 +377,6 @@ namespace SkyWay
 
             RecycleGameObjects();
             RemoveGameObjects();
-
-            App.EnterFullScreen(true);
 
             StartGameSounds();
             RunGame();
@@ -650,9 +627,18 @@ namespace SkyWay
         private void GameOver()
         {
             StopGame();
-            _isGameOver = true;
             StopGameSounds();
+
+            _isGameOver = true;
+
+            PlayerScoreHelper.PlayerScore = new SkyWayScore()
+            {
+                Score = Math.Ceiling(_score),
+                CollectiblesCollected = _collectiblesCollected
+            };
+
             SoundHelper.PlaySound(SoundType.GAME_OVER);
+            NavigateToPage(typeof(GameOverPage));
         }
 
         private void PauseGame()
@@ -674,6 +660,7 @@ namespace SkyWay
             InputView.Focus(FocusState.Programmatic);
 
             _isGamePaused = false;
+            _isGameQuitting = false;
 
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             SoundHelper.ResumeSound(SoundType.BACKGROUND);
@@ -691,7 +678,8 @@ namespace SkyWay
         {
             if (_isGameQuitting)
             {
-                //TODO: quit game
+                StopGame();
+                StopGameSounds();
                 NavigateToPage(typeof(StartPage));
             }
             else
@@ -701,14 +689,6 @@ namespace SkyWay
             }
 
             //TODO: show game quitting content
-        }
-
-        private void NavigateToPage(Type pageType)
-        {
-            StopGame();
-            StopGameSounds();
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);
         }
 
         #endregion
@@ -792,6 +772,38 @@ namespace SkyWay
 
         #endregion
 
+        #region Cloud
+
+        private void UpdateCloud(GameObject cloud)
+        {
+            cloud.SetTop(cloud.GetTop() + cloud.Speed);
+
+            if (cloud.GetTop() > GameView.Height)
+            {
+                RecyleCloud(cloud);
+            }
+        }
+
+        private void RecyleCloud(GameObject cloud)
+        {
+            _markNum = _rand.Next(0, _clouds.Length);
+
+            cloud.SetContent(_clouds[_markNum]);
+            cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
+            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
+
+            RandomizeCloudPosition(cloud);
+        }
+
+        private void RandomizeCloudPosition(GameObject cloud)
+        {
+            cloud.SetPosition(
+                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
+                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+        }
+
+        #endregion
+
         #region Collectible
 
         private void SpawnCollectible()
@@ -829,6 +841,12 @@ namespace SkyWay
                         break;
                 }
 
+                if (left < 0)
+                    left = 0;
+
+                if (left + collectible.Width >= GameView.Width)
+                    left = GameView.Width - collectible.Width;
+
                 top += collectible.Height;
             }
         }
@@ -856,39 +874,7 @@ namespace SkyWay
             SoundHelper.PlaySound(SoundType.COLLECTIBLE_COLLECTED);
         }
 
-        #endregion
-
-        #region Cloud
-
-        private void UpdateCloud(GameObject cloud)
-        {
-            cloud.SetTop(cloud.GetTop() + cloud.Speed);
-
-            if (cloud.GetTop() > GameView.Height)
-            {
-                RecyleCloud(cloud);
-            }
-        }
-
-        private void RecyleCloud(GameObject cloud)
-        {
-            _markNum = _rand.Next(0, _clouds.Length);
-
-            cloud.SetContent(_clouds[_markNum]);
-            cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
-            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
-
-            RandomizeCloudPosition(cloud);
-        }
-
-        private void RandomizeCloudPosition(GameObject cloud)
-        {
-            cloud.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
-        }
-
-        #endregion
+        #endregion        
 
         #region Island
 
@@ -934,72 +920,7 @@ namespace SkyWay
                 top: _rand.Next(0, (int)GameView.Height) * -1);
         }
 
-        #endregion
-
-        #region Player
-
-        private void UpdatePlayer()
-        {
-            double effectiveSpeed = _accelerationCounter >= _playerSpeed ? _playerSpeed : _accelerationCounter / 1.3;
-
-            // increase acceleration and stop when player speed is reached
-            if (_accelerationCounter <= _playerSpeed)
-                _accelerationCounter++;
-
-            //Console.WriteLine("ACC:" + _accelerationCounter);            
-
-            double left = _player.GetLeft();
-            double top = _player.GetTop();
-
-            double playerMiddleX = left + _player.Width / 2;
-            double playerMiddleY = top + _player.Height / 2;
-
-            if (_isPointerActivated)
-            {
-                // move up
-                if (_pointerPosition.Y < playerMiddleY - _playerSpeed)
-                {
-                    _player.SetTop(top - effectiveSpeed);
-                }
-                // move left
-                if (_pointerPosition.X < playerMiddleX - _playerSpeed && left > 0)
-                {
-                    _player.SetLeft(left - effectiveSpeed);
-                }
-
-                // move down
-                if (_pointerPosition.Y > playerMiddleY + _playerSpeed)
-                {
-                    _player.SetTop(top + effectiveSpeed);
-                }
-                // move right
-                if (_pointerPosition.X > playerMiddleX + _playerSpeed && left + _player.Width < GameView.Width)
-                {
-                    _player.SetLeft(left + effectiveSpeed);
-                }
-            }
-            else
-            {
-                if (_moveLeft && left > 0)
-                {
-                    _player.SetLeft(left - effectiveSpeed);
-                }
-                if (_moveRight && left + _player.Width < GameView.Width)
-                {
-                    _player.SetLeft(left + effectiveSpeed);
-                }
-                if (_moveUp && top > 0 + (50 * _scale))
-                {
-                    _player.SetTop(top - effectiveSpeed);
-                }
-                if (_moveDown && top < GameView.Height - (100 * _scale))
-                {
-                    _player.SetTop(top + effectiveSpeed);
-                }
-            }
-        }
-
-        #endregion
+        #endregion      
 
         #region Power Up
 
@@ -1125,6 +1046,71 @@ namespace SkyWay
 
         #endregion
 
+        #region Player
+
+        private void UpdatePlayer()
+        {
+            double effectiveSpeed = _accelerationCounter >= _playerSpeed ? _playerSpeed : _accelerationCounter / 1.3;
+
+            // increase acceleration and stop when player speed is reached
+            if (_accelerationCounter <= _playerSpeed)
+                _accelerationCounter++;
+
+            //Console.WriteLine("ACC:" + _accelerationCounter);            
+
+            double left = _player.GetLeft();
+            double top = _player.GetTop();
+
+            double playerMiddleX = left + _player.Width / 2;
+            double playerMiddleY = top + _player.Height / 2;
+
+            if (_isPointerActivated)
+            {
+                // move up
+                if (_pointerPosition.Y < playerMiddleY - _playerSpeed)
+                {
+                    _player.SetTop(top - effectiveSpeed);
+                }
+                // move left
+                if (_pointerPosition.X < playerMiddleX - _playerSpeed && left > 0)
+                {
+                    _player.SetLeft(left - effectiveSpeed);
+                }
+
+                // move down
+                if (_pointerPosition.Y > playerMiddleY + _playerSpeed)
+                {
+                    _player.SetTop(top + effectiveSpeed);
+                }
+                // move right
+                if (_pointerPosition.X > playerMiddleX + _playerSpeed && left + _player.Width < GameView.Width)
+                {
+                    _player.SetLeft(left + effectiveSpeed);
+                }
+            }
+            else
+            {
+                if (_moveLeft && left > 0)
+                {
+                    _player.SetLeft(left - effectiveSpeed);
+                }
+                if (_moveRight && left + _player.Width < GameView.Width)
+                {
+                    _player.SetLeft(left + effectiveSpeed);
+                }
+                if (_moveUp && top > 0 + (50 * _scale))
+                {
+                    _player.SetTop(top - effectiveSpeed);
+                }
+                if (_moveDown && top < GameView.Height - (100 * _scale))
+                {
+                    _player.SetTop(top + effectiveSpeed);
+                }
+            }
+        }
+
+        #endregion
+
         #region Road Marks
 
         private void UpdateRoadMark(GameObject roadMark)
@@ -1212,6 +1198,33 @@ namespace SkyWay
         {
             SoundHelper.StopSound(SoundType.BACKGROUND);
             SoundHelper.StopSound(SoundType.CAR_ENGINE);
+        }
+
+        #endregion
+
+        #region Page
+
+        private void SetViewSize()
+        {
+            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
+
+            SeaView.Width = _windowWidth;
+            SeaView.Height = _windowHeight;
+
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+
+            GameView.Width = _windowWidth;
+            GameView.Height = _windowHeight;
+
+            OverView.Width = _windowWidth;
+            OverView.Height = _windowHeight;
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);
         }
 
         #endregion

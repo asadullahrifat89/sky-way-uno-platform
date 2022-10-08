@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Add resources here  -->
-            
+
             <!--#region Buttons-->
             <Style x:Key="DefaultButton" TargetType="Button">
                 <Setter Property="CornerRadius" Value="50" />

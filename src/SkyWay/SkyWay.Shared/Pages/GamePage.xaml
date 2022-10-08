@@ -110,7 +110,7 @@
         </Border>
         <!--#endregion-->
 
-        <!--#region Input border-->
+        <!--#region Input Border-->
         <Border
             x:Name="InputView"
             HorizontalAlignment="Stretch"
@@ -123,7 +123,7 @@
             PointerReleased="InputView_PointerReleased" />
         <!--#endregion-->
 
-        <!--#region Pause & quit game-->
+        <!--#region Pause & Quit game-->
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
 
             <!--  Pause game  -->

@@ -45,6 +45,23 @@ namespace SkyWay
             }
         }
 
+        public static void StopProgressBar(this Page page)
+        {
+            if (FindChild<ProgressBar>(parent: page, childName: "ProgressBar") is ProgressBar progressBar)
+            {
+                progressBar.Tag = false;
+                progressBar.ShowError = false;
+                progressBar.ShowPaused = true;
+            }
+
+            //TODO: enable  Tag="ActionButton" tagged button
+
+            if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
+            {
+                EnableActionButtons(buttons);
+            }
+        }
+
         public static void ShowError(this Page page, string progressBarMessage = null)
         {
             if (FindChild<ProgressBar>(parent: page, childName: "ProgressBar") is ProgressBar progressBar)
@@ -61,9 +78,24 @@ namespace SkyWay
                 messageBlock.Visibility = progressBarMessage.IsNullOrBlank() ? Visibility.Collapsed : Visibility.Visible;
             }
 
+            //TODO: enable  Tag="ActionButton" tagged button
+
             if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
             {
                 EnableActionButtons(buttons);
+            }
+        }
+
+        public static void SetProgressBarMessage(
+            this Page page,
+            string message,
+            bool isError)
+        {
+            if (FindChild<TextBlock>(parent: page, childName: "ProgressBarMessageBlock") is TextBlock messageBlock)
+            {
+                messageBlock.Foreground = isError ? App.Current.Resources["ProgressBarErrorColor"] as SolidColorBrush : App.Current.Resources["ProgressBarOkColor"] as SolidColorBrush;
+                messageBlock.Text = (isError ? "⚠️ " : "👍 ") + message;
+                messageBlock.Visibility = Visibility.Visible;
             }
         }
 

@@ -11,7 +11,10 @@
   <Import Project="SkyWay.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\GameOverPage.xaml" />
+    <UpToDateCheckInput Remove="Pages\LeaderboardPage.xaml" />
     <UpToDateCheckInput Remove="Pages\LoginPage.xaml" />
+    <UpToDateCheckInput Remove="Pages\SignUpPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <_Globbed_Compile Remove="Extensions\HttpServiceExtensions.cs" />
@@ -30,8 +33,11 @@
     <_Globbed_Compile Remove="Models\Responses\QueryRecordResponse.cs" />
     <_Globbed_Compile Remove="Models\Responses\QueryRecordsResponse.cs" />
     <_Globbed_Compile Remove="Models\Responses\ServiceResponse.cs" />
+    <_Globbed_Compile Remove="Pages\GameOverPage.xaml.cs" />
     <_Globbed_Compile Remove="Pages\HomePage.xaml.cs" />
+    <_Globbed_Compile Remove="Pages\LeaderboardPage.xaml.cs" />
     <_Globbed_Compile Remove="Pages\LoginPage.xaml.cs" />
+    <_Globbed_Compile Remove="Pages\SignUpPage.xaml.cs" />
     <_Globbed_Compile Remove="Services\HttpService.cs" />
     <_Globbed_Compile Remove="Services\IHttpService.cs" />
   </ItemGroup>
@@ -39,6 +45,9 @@
     <_Globbed_Content Remove="Assets\Images\logo_game.png" />
   </ItemGroup>
   <ItemGroup>
+    <_Globbled_Page Remove="Pages\GameOverPage.xaml" />
+    <_Globbled_Page Remove="Pages\LeaderboardPage.xaml" />
     <_Globbled_Page Remove="Pages\LoginPage.xaml" />
+    <_Globbled_Page Remove="Pages\SignUpPage.xaml" />
   </ItemGroup>
 </Project>

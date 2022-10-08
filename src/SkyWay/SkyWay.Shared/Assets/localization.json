@@ -1,6 +1,6 @@
 ﻿[
   {
-    "Key": "ApplicationName_Header",
+    "Key": "GameName",
     "CultureValues": [
       {
         "Culture": "en",
@@ -17,7 +17,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_Tagline",
+    "Key": "StartPage_Tagline",
     "CultureValues": [
       {
         "Culture": "en",
@@ -34,7 +34,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_DeutschButton",
+    "Key": "DeutschButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -51,7 +51,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_EnglishButton",
+    "Key": "EnglishButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -68,7 +68,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_FrenchButton",
+    "Key": "FrenchButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -85,7 +85,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_PlayButton",
+    "Key": "PlayButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -102,7 +102,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_LogoutButton",
+    "Key": "LogoutButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -119,7 +119,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_BrandProfileButton",
+    "Key": "BrandProfileButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -136,7 +136,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_WelcomeBackText",
+    "Key": "WelcomeBackText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -170,7 +170,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_CookieText",
+    "Key": "CookieText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -187,7 +187,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_CookieDeclineButton",
+    "Key": "CookieDeclineButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -204,7 +204,7 @@
     ]
   },
   {
-    "Key": "GameStartPage_CookieAcceptButton",
+    "Key": "CookieAcceptButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -340,7 +340,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_Tagline",
+    "Key": "InstructionsPage_Tagline",
     "CultureValues": [
       {
         "Culture": "en",
@@ -357,7 +357,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_ControlsText",
+    "Key": "ControlsText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -374,7 +374,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_ControlsText2",
+    "Key": "ControlsText2",
     "CultureValues": [
       {
         "Culture": "en",
@@ -391,7 +391,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_EnemiesText",
+    "Key": "EnemiesText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -408,7 +408,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_EnemiesText2",
+    "Key": "EnemiesText2",
     "CultureValues": [
       {
         "Culture": "en",
@@ -425,7 +425,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_BossesText",
+    "Key": "BossesText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -442,7 +442,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_BossesText2",
+    "Key": "BossesText2",
     "CultureValues": [
       {
         "Culture": "en",
@@ -459,7 +459,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_HealthText",
+    "Key": "HealthText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -476,7 +476,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_HealthText2",
+    "Key": "HealthText2",
     "CultureValues": [
       {
         "Culture": "en",
@@ -493,7 +493,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_PowerupText",
+    "Key": "PowerupText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -510,7 +510,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_PowerupText2",
+    "Key": "PowerupText2",
     "CultureValues": [
       {
         "Culture": "en",
@@ -527,7 +527,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_CollectiblesText",
+    "Key": "CollectiblesText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -544,7 +544,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_CollectiblesText2",
+    "Key": "CollectiblesText2",
     "CultureValues": [
       {
         "Culture": "en",
@@ -561,7 +561,7 @@
     ]
   },
   {
-    "Key": "GameInstructionsPage_PlayButton",
+    "Key": "PlayButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -576,177 +576,7 @@
         "Value": "👍 D'accord"
       }
     ]
-  },
-  {
-    "Key": "BEAM_CANNON",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "BEAM CANNON"
-      },
-      {
-        "Culture": "de",
-        "Value": "STRAHLKANONE"
-      },
-      {
-        "Culture": "fr",
-        "Value": "CANON À FAISCEAU"
-      }
-    ]
-  },
-  {
-    "Key": "BLAZE_BLITZ",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "BLAZE BLITZ"
-      },
-      {
-        "Culture": "de",
-        "Value": "BLAZE BLITZ"
-      },
-      {
-        "Culture": "fr",
-        "Value": "BLAZE BLITZ"
-      }
-    ]
-  },
-  {
-    "Key": "PLASMA_BOMB",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "PLASMA BOMB"
-      },
-      {
-        "Culture": "de",
-        "Value": "PLASMABOMBE"
-      },
-      {
-        "Culture": "fr",
-        "Value": "BOMBE À PLASMA"
-      }
-    ]
-  },
-  {
-    "Key": "BOSS",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "BOSS"
-      },
-      {
-        "Culture": "de",
-        "Value": "BOSS"
-      },
-      {
-        "Culture": "fr",
-        "Value": "CHEF"
-      }
-    ]
-  },
-  {
-    "Key": "CLOAK_DOWN",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "CLOAK DOWN"
-      },
-      {
-        "Culture": "de",
-        "Value": "KLAPPEN SIE SICH"
-      },
-      {
-        "Culture": "fr",
-        "Value": "CLOCHEZ-VOUS"
-      }
-    ]
-  },
-  {
-    "Key": "CLOAK_UP",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "CLOAK UP"
-      },
-      {
-        "Culture": "de",
-        "Value": "SICH TARNEN"
-      },
-      {
-        "Culture": "fr",
-        "Value": "COUVREZ-VOUS"
-      }
-    ]
-  },
-  {
-    "Key": "FIRING_RATE_DECREASED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "FIRING RATE DECREASED"
-      },
-      {
-        "Culture": "de",
-        "Value": "FEUERRATE VERRINGERT"
-      },
-      {
-        "Culture": "fr",
-        "Value": "LA CADENCE DE TIR A DIMINUÉ"
-      }
-    ]
-  },
-  {
-    "Key": "FIRING_RATE_INCREASED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "FIRING RATE INCREASED"
-      },
-      {
-        "Culture": "de",
-        "Value": "FEUERRATE ERHÖHT"
-      },
-      {
-        "Culture": "fr",
-        "Value": "CADENCE DE TIR AUGMENTÉE"
-      }
-    ]
-  },
-  {
-    "Key": "SHIELD_DOWN",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "SHIELD DOWN"
-      },
-      {
-        "Culture": "de",
-        "Value": "SCHILD NACH UNTEN"
-      },
-      {
-        "Culture": "fr",
-        "Value": "ABAISSER LE BOUCLIER"
-      }
-    ]
-  },
-  {
-    "Key": "SHIELD_UP",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "SHIELD UP"
-      },
-      {
-        "Culture": "de",
-        "Value": "SCHILD AUF"
-      },
-      {
-        "Culture": "fr",
-        "Value": "AUGMENTATION DU BOUCLIER"
-      }
-    ]
-  },
+  },  
   {
     "Key": "COMPLETE",
     "CultureValues": [
@@ -763,24 +593,7 @@
         "Value": "COMPLÈTE"
       }
     ]
-  },
-  {
-    "Key": "ENEMY_APPROACHES",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "ENEMY APPROACHES"
-      },
-      {
-        "Culture": "de",
-        "Value": "FEINDLICHE ANNÄHERUNGEN"
-      },
-      {
-        "Culture": "fr",
-        "Value": "L'ENNEMI S'APPROCHE"
-      }
-    ]
-  },
+  }, 
   {
     "Key": "FANTASTIC_GAME",
     "CultureValues": [
@@ -812,40 +625,6 @@
       {
         "Culture": "fr",
         "Value": "JEU PAUSÉ"
-      }
-    ]
-  },
-  {
-    "Key": "GOOD_GAME",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Good game"
-      },
-      {
-        "Culture": "de",
-        "Value": "Gutes Spiel"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Bon jeu"
-      }
-    ]
-  },
-  {
-    "Key": "GREAT_GAME",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Great game"
-      },
-      {
-        "Culture": "de",
-        "Value": "Tolles Spiel"
-      },
-      {
-        "Culture": "fr",
-        "Value": "bon jeu"
       }
     ]
   },
@@ -984,75 +763,7 @@
         "Value": "🕹️ Score du dernier match"
       }
     ]
-  },
-  {
-    "Key": "DESTROYED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Destroyed"
-      },
-      {
-        "Culture": "de",
-        "Value": "Zerstörte"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Détruits"
-      }
-    ]
-  },
-  {
-    "Key": "ENEMIES_DESTROYED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Enemies"
-      },
-      {
-        "Culture": "de",
-        "Value": "Feinde"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Ennemis"
-      }
-    ]
-  },
-  {
-    "Key": "METEORS_DESTROYED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Meteors"
-      },
-      {
-        "Culture": "de",
-        "Value": "Meteoriten"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Météores"
-      }
-    ]
-  },
-  {
-    "Key": "BOSSES_DESTROYED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Bosses"
-      },
-      {
-        "Culture": "de",
-        "Value": "Bosse"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Bosses"
-      }
-    ]
-  },
+  },  
   {
     "Key": "COLLECTIBLES_COLLECTED",
     "CultureValues": [
@@ -1086,41 +797,7 @@
         "Value": "NAVIRE RÉPARÉ"
       }
     ]
-  },
-  {
-    "Key": "SONIC_BLAST",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "SONIC BLAST"
-      },
-      {
-        "Culture": "de",
-        "Value": "SONIC BLAST"
-      },
-      {
-        "Culture": "fr",
-        "Value": "SONIC BLAST"
-      }
-    ]
-  },
-  {
-    "Key": "SUPREME_GAME",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Supreme game"
-      },
-      {
-        "Culture": "de",
-        "Value": "Höchstes Spiel"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Jeu suprême"
-      }
-    ]
-  },
+  },  
   {
     "Key": "TAP_ON_SCREEN_TO_BEGIN",
     "CultureValues": [
@@ -1207,7 +884,7 @@
     ]
   },
   {
-    "Key": "GameOverPage_SignupPromptText",
+    "Key": "SignupPromptText",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1241,7 +918,7 @@
     ]
   },
   {
-    "Key": "GameOverPage_PlayAgainButton",
+    "Key": "PlayAgainButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1258,7 +935,7 @@
     ]
   },
   {
-    "Key": "GameOverPage_LeaderboardButton",
+    "Key": "LeaderboardButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1275,7 +952,7 @@
     ]
   },
   {
-    "Key": "GameLoginPage_UserNameBox",
+    "Key": "UserNameBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1292,7 +969,7 @@
     ]
   },
   {
-    "Key": "GameLoginPage_PasswordBox",
+    "Key": "PasswordBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1309,7 +986,7 @@
     ]
   },
   {
-    "Key": "GameLoginPage_LoginButton",
+    "Key": "LoginButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1326,7 +1003,7 @@
     ]
   },
   {
-    "Key": "GameLoginPage_RegisterButton",
+    "Key": "RegisterButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1343,7 +1020,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_UserFullNameBox",
+    "Key": "UserFullNameBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1360,7 +1037,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_UserEmailBox",
+    "Key": "UserEmailBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1377,7 +1054,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_UserNameBox",
+    "Key": "UserNameBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1394,7 +1071,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_PasswordBox",
+    "Key": "PasswordBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1411,7 +1088,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_ConfirmPasswordBox",
+    "Key": "ConfirmPasswordBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1428,7 +1105,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_SignupButton",
+    "Key": "SignupButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1445,7 +1122,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_LoginButton",
+    "Key": "LoginButton",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1462,7 +1139,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_ConfirmCheckBox",
+    "Key": "ConfirmCheckBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1479,7 +1156,7 @@
     ]
   },
   {
-    "Key": "GameSignupPage_ConfirmNewsLettersCheckBox",
+    "Key": "ConfirmNewsLettersCheckBox",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1670,7 +1347,7 @@
     ]
   },
   {
-    "Key": "GameLeaderboardPage_Tagline",
+    "Key": "LeaderboardPage_Tagline",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1687,7 +1364,7 @@
     ]
   },
   {
-    "Key": "GameLeaderboardPage_DailyScoreboardToggle",
+    "Key": "DailyScoreboardToggle",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1704,7 +1381,7 @@
     ]
   },
   {
-    "Key": "GameLeaderboardPage_AllTimeScoreboardToggle",
+    "Key": "AllTimeScoreboardToggle",
     "CultureValues": [
       {
         "Culture": "en",
@@ -1721,7 +1398,7 @@
     ]
   },
   {
-    "Key": "GameLeaderboardPage_PlayNowButton",
+    "Key": "PlayNowButton",
     "CultureValues": [
       {
         "Culture": "en",
