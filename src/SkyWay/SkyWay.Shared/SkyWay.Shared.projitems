@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\HttpServiceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\PageExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ScalingHelper.cs" />

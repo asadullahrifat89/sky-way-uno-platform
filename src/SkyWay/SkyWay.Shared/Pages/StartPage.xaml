@@ -34,9 +34,6 @@
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="English"
-                CornerRadius="50"
-                IsFocusEngagementEnabled="False"
-                IsTabStop="False"
                 Style="{StaticResource DefaultButton}"
                 Tag="en" />
 
@@ -46,9 +43,6 @@
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="French"
-                CornerRadius="50"
-                IsFocusEngagementEnabled="False"
-                IsTabStop="False"
                 Style="{StaticResource DefaultButton}"
                 Tag="fr" />
 
@@ -58,9 +52,6 @@
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="Deutsch"
-                CornerRadius="50"
-                IsFocusEngagementEnabled="False"
-                IsTabStop="False"
                 Style="{StaticResource DefaultButton}"
                 Tag="de" />
 
@@ -107,14 +98,10 @@
                     Height="50"
                     Margin="30,10,30,5"
                     HorizontalAlignment="Stretch"
-                    BorderThickness="3"
                     Click="PlayButton_Click"
                     Content="Start Game"
-                    CornerRadius="50"
                     FontSize="24"
-                    FontWeight="SemiBold"
-                    IsFocusEngagementEnabled="False"
-                    IsTabStop="False" />
+                    Tag="ActionButton" />
 
                 <StackPanel Margin="30,5,30,5">
 
@@ -123,14 +110,9 @@
                         x:Name="LeaderboardButton"
                         Height="50"
                         HorizontalAlignment="Stretch"
-                        BorderThickness="3"
                         Click="LeaderboardButton_Click"
                         Content="Leaderboard"
-                        CornerRadius="50"
                         FontSize="24"
-                        FontWeight="SemiBold"
-                        IsFocusEngagementEnabled="False"
-                        IsTabStop="False"
                         Visibility="Collapsed" />
 
                     <!--  Login Button  -->
@@ -138,14 +120,10 @@
                         x:Name="LoginButton"
                         Height="50"
                         HorizontalAlignment="Stretch"
-                        BorderThickness="3"
                         Click="LoginButton_Click"
                         Content="Login"
-                        CornerRadius="50"
                         FontSize="24"
-                        FontWeight="SemiBold"
-                        IsFocusEngagementEnabled="False"
-                        IsTabStop="False"
+                        Tag="ActionButton"
                         Visibility="Collapsed" />
 
                     <!--  Logout Button  -->
@@ -154,14 +132,10 @@
                         Height="40"
                         HorizontalAlignment="Center"
                         Background="Transparent"
-                        BorderBrush="White"
                         BorderThickness="0"
                         Click="LogoutButton_Click"
                         Content="Logout"
-                        CornerRadius="50"
-                        FontWeight="SemiBold"
-                        IsFocusEngagementEnabled="False"
-                        IsTabStop="False"
+                        Tag="ActionButton"
                         Visibility="Collapsed" />
 
                 </StackPanel>
@@ -174,14 +148,10 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    BorderBrush="White"
                     BorderThickness="0"
                     Click="RegisterButton_Click"
                     Content="No account yet?"
-                    CornerRadius="50"
-                    FontWeight="SemiBold"
-                    IsFocusEngagementEnabled="False"
-                    IsTabStop="False"
+                    Tag="ActionButton"
                     Visibility="Collapsed" />
 
                 <!--  Brand Tag line  -->
@@ -197,9 +167,9 @@
                     IsTabStop="False"
                     NavigateUri="https://www.linkedin.com/in/asadullah-rifat/" />
 
-                <!--  Error text  -->
+                <!--  Message text  -->
                 <TextBlock
-                    x:Name="ErrorText"
+                    x:Name="ProgressBarMessageBlock"
                     Margin="5"
                     FontWeight="SemiBold"
                     Foreground="Crimson"
@@ -278,24 +248,14 @@
                         <Button
                             x:Name="CookieDeclineButton"
                             Height="35"
-                            BorderThickness="2"
                             Click="CookieDeclineButton_Click"
                             Content="Decline"
-                            CornerRadius="50"
-                            FontWeight="SemiBold"
-                            IsFocusEngagementEnabled="False"
-                            IsTabStop="False"
                             Style="{StaticResource DefaultButton}" />
                         <Button
                             x:Name="CookieAcceptButton"
                             Height="35"
-                            BorderThickness="2"
                             Click="CookieAcceptButton_Click"
                             Content="Accept"
-                            CornerRadius="50"
-                            FontWeight="SemiBold"
-                            IsFocusEngagementEnabled="False"
-                            IsTabStop="False"
                             Style="{StaticResource DefaultButton}" />
                     </WrapPanel>
                 </Grid>
