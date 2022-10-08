@@ -58,12 +58,12 @@
                     HorizontalAlignment="Stretch"
                     Click="LoginButton_Click"
                     Content="Login"
-                    IsEnabled="False" />
+                    IsEnabled="False"
+                    Tag="ActionButton" />
 
                 <!--  Register Button  -->
                 <Button
                     x:Name="RegisterButton"
-                    x:Uid="RegisterButton"
                     Height="40"
                     Margin="5,0,5,5"
                     HorizontalAlignment="Center"
@@ -73,7 +73,8 @@
                     Click="RegisterButton_Click"
                     Content="No account yet?"
                     FontWeight="SemiBold"
-                    Foreground="White" />
+                    Foreground="White"
+                    Tag="ActionButton" />
 
                 <!--  Brand logo  -->
                 <!--<HyperlinkButton

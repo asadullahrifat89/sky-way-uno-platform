@@ -99,7 +99,8 @@
                     HorizontalAlignment="Stretch"
                     Click="SignupButton_Click"
                     Content="Signup"
-                    IsEnabled="False" />
+                    IsEnabled="False"
+                    Tag="ActionButton" />
 
                 <!--  Login Button  -->
                 <Button
@@ -113,7 +114,8 @@
                     Click="LoginButton_Click"
                     Content="Already have an account?"
                     FontSize="18"
-                    Foreground="White" />
+                    Foreground="White"
+                    Tag="ActionButton" />
 
                 <!--  Message text  -->
                 <TextBlock

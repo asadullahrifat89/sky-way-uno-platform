@@ -31,11 +31,35 @@ namespace SkyWay
         {
             this.InitializeComponent();
             _backendService = (Application.Current as App).Host.Services.GetRequiredService<IBackendService>();
+            this.Loaded += LoginPage_Loaded;
         }
 
         #endregion
 
         #region Events
+
+        #region Page
+
+        private void LoginPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //TODO: set localization
+
+            // if user was already logged in or came here after sign up
+            if (PlayerCredentialsHelper.GetCachedPlayerCredentials() is PlayerCredentials authCredentials 
+                && !authCredentials.UserName.IsNullOrBlank()
+                && !authCredentials.Password.IsNullOrBlank())
+            {
+                UserNameBox.Text = authCredentials.UserName;
+                PasswordBox.Text = authCredentials.Password;
+            }
+            else
+            {
+                UserNameBox.Text = null;
+                PasswordBox.Text = null;
+            }
+        }
+
+        #endregion
 
         #region Buttons
 
@@ -45,9 +69,8 @@ namespace SkyWay
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: navigate to sign up page
-            //NavigateToPage(typeof(SignUpPage));
+        {            
+            NavigateToPage(typeof(SignUpPage));
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -96,12 +119,8 @@ namespace SkyWay
                         PlayerScoreHelper.GameScoreSubmissionPending = false;
                 }
 
-                this.StopProgressBar();
-
-                //TODO: navigate to leaderboard page
-                //NavigateToPage(typeof(LeaderboardPage));
-
-                NavigateToPage(typeof(StartPage));
+                this.StopProgressBar();                
+                NavigateToPage(typeof(LeaderboardPage));
             }           
         }
 

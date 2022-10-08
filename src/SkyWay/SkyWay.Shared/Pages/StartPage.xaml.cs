@@ -117,7 +117,7 @@ namespace SkyWay
 
         private void LeaderboardButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigateToPage(typeof(LeaderboardPage));
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -223,7 +223,7 @@ namespace SkyWay
             SessionHelper.RemoveCachedSession();
             AuthTokenHelper.AuthToken = null;
             GameProfileHelper.GameProfile = null;
-            //TODO: set player socre to null
+            PlayerScoreHelper.PlayerScore = null;
         }
 
         private void ShowCookieToast()
