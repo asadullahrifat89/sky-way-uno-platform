@@ -16,7 +16,7 @@ using Windows.System;
 
 namespace SkyWay
 {
-    public sealed partial class GamePlayPage : Page
+    public sealed partial class GamePage : Page
     {
         #region Fields
 
@@ -59,7 +59,7 @@ namespace SkyWay
 
         private bool _isRecoveringFromDamage;
         private bool _isPointerActivated;
-        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(18);
+        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private int _accelerationCounter;
 
@@ -76,14 +76,11 @@ namespace SkyWay
         private Uri[] _islands;
         private Uri[] _clouds;
 
-        private Sound[] _sounds;
-        private List<Sound> _playingSounds;
-
         #endregion
 
         #region Ctor
 
-        public GamePlayPage()
+        public GamePage()
         {
             InitializeComponent();
 
@@ -93,11 +90,11 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            LoadGameSounds();
+            SoundHelper.LoadGameSounds();
             InitializeGameViews();
 
-            Loaded += GamePlayPage_Loaded;
-            Unloaded += GamePlayPage_Unloaded;
+            Loaded += GamePage_Loaded;
+            Unloaded += GamePage_Unloaded;
         }
 
         #endregion
@@ -106,17 +103,17 @@ namespace SkyWay
 
         #region Page
 
-        private void GamePlayPage_Loaded(object sender, RoutedEventArgs e)
+        private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged += GamePlayPage_SizeChanged;
+            SizeChanged += GamePage_SizeChanged;
         }
 
-        private void GamePlayPage_Unloaded(object sender, RoutedEventArgs e)
+        private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged -= GamePlayPage_SizeChanged;
+            SizeChanged -= GamePage_SizeChanged;
         }
 
-        private void GamePlayPage_SizeChanged(object sender, SizeChangedEventArgs args)
+        private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
         {
             _windowWidth = args.NewSize.Width;
             _windowHeight = args.NewSize.Height;
@@ -124,23 +121,6 @@ namespace SkyWay
             SetViewSize();
 
             Console.WriteLine($"WINDOWS SIZE: {_windowWidth}x{_windowHeight}");
-        }
-
-        private void SetViewSize()
-        {
-            _scale = GetGameObjectScale();
-
-            SeaView.Width = _windowWidth;
-            SeaView.Height = _windowHeight;
-
-            UnderView.Width = _windowWidth;
-            UnderView.Height = _windowHeight;
-
-            GameView.Width = _windowWidth;
-            GameView.Height = _windowHeight;
-
-            OverView.Width = _windowWidth;
-            OverView.Height = _windowHeight;
         }
 
         #endregion
@@ -243,24 +223,35 @@ namespace SkyWay
 
         private void QuitGameButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_isGameQuitting)
-            {
-                //TODO: quit game
-            }
+            QuitGame();
+        }     
 
-            _isGameQuitting = true;
-
-            PlaySound(SoundType.MENU_SELECT);
-            PauseGame();
-
-            //TODO: show game quitting content
-        }
-
-        #endregion    
+        #endregion
 
         #endregion
 
         #region Methods
+
+        #region Page
+
+        private void SetViewSize()
+        {
+            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
+
+            SeaView.Width = _windowWidth;
+            SeaView.Height = _windowHeight;
+
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+
+            GameView.Width = _windowWidth;
+            GameView.Height = _windowHeight;
+
+            OverView.Width = _windowWidth;
+            OverView.Height = _windowHeight;
+        }
+
+        #endregion
 
         #region Game
 
@@ -277,7 +268,7 @@ namespace SkyWay
 
         private void InitializeUnderView()
         {
-            // TODO: add some cars underneath
+            // add some cars underneath
             for (int i = 0; i < 10; i++)
             {
                 var car = new Car()
@@ -296,7 +287,7 @@ namespace SkyWay
                 UnderView.Children.Add(car);
             }
 
-            // TODO: add some clouds underneath
+            // add some clouds underneath
             for (int i = 0; i < 15; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);
@@ -350,7 +341,7 @@ namespace SkyWay
 
         private void InitializeOverView()
         {
-            //TODO: add some clouds above
+            // add some clouds above
             for (int i = 0; i < 5; i++)
             {
                 var scaleFactor = _rand.Next(1, 4);
@@ -383,14 +374,10 @@ namespace SkyWay
         {
             Console.WriteLine("GAME STARTED");
 
-            PlayStartGameSounds();
-
             _lives = _maxLives;
             SetLives();
 
             _gameSpeed = _defaultGameSpeed;
-            RunGame();
-
             _player.Opacity = 1;
 
             ResetControls();
@@ -410,6 +397,17 @@ namespace SkyWay
                 SeaView.AddDestroyableGameObject(x);
             }
 
+            RecycleGameObjects();
+            RemoveGameObjects();
+
+            App.EnterFullScreen(true);
+
+            StartGameSounds();
+            RunGame();
+        }
+
+        private void RecycleGameObjects()
+        {
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
                 switch ((ElementType)x.Tag)
@@ -469,22 +467,6 @@ namespace SkyWay
                         break;
                 }
             }
-
-            RemoveGameObjects();
-
-            App.EnterFullScreen(true);
-        }
-
-        private async void PlayStartGameSounds()
-        {
-            PlaySound(SoundType.CAR_START);
-
-            await Task.Delay(TimeSpan.FromSeconds(1));
-
-            PlaySound(SoundType.CAR_ENGINE);
-
-            RandomizeBackgroundSound();
-            PlaySound(SoundType.BACKGROUND);
         }
 
         private void ResetControls()
@@ -494,23 +476,7 @@ namespace SkyWay
             _moveUp = false;
             _moveDown = false;
             _isPointerActivated = false;
-        }
-
-        private double GetGameObjectScale()
-        {
-            return _windowWidth switch
-            {
-                <= 300 => 0.60,
-                <= 400 => 0.65,
-                <= 500 => 0.70,
-                <= 700 => 0.75,
-                <= 900 => 0.80,
-                <= 1000 => 0.85,
-                <= 1400 => 0.90,
-                <= 2000 => 0.95,
-                _ => 1,
-            };
-        }
+        }     
 
         private async void RunGame()
         {
@@ -686,10 +652,9 @@ namespace SkyWay
         {
             StopGame();
             _isGameOver = true;
-            StopSound(SoundType.BACKGROUND);
-            StopSound(SoundType.CAR_ENGINE);
-            PlaySound(SoundType.GAME_OVER);
-        }
+            StopGameSounds();
+            SoundHelper.PlaySound(SoundType.GAME_OVER);
+        }      
 
         private void PauseGame()
         {
@@ -698,9 +663,9 @@ namespace SkyWay
             StopGame();
             ResetControls();
 
-            PlaySound(SoundType.MENU_SELECT);
-            PauseSound(SoundType.BACKGROUND);
-            PauseSound(SoundType.CAR_ENGINE);
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            SoundHelper.PauseSound(SoundType.BACKGROUND);
+            SoundHelper.PauseSound(SoundType.CAR_ENGINE);
 
             InputView.Focus(FocusState.Programmatic);
         }
@@ -711,9 +676,9 @@ namespace SkyWay
 
             _isGamePaused = false;
 
-            PlaySound(SoundType.MENU_SELECT);
-            ResumeSound(SoundType.BACKGROUND);
-            ResumeSound(SoundType.CAR_ENGINE);
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            SoundHelper.ResumeSound(SoundType.BACKGROUND);
+            SoundHelper.ResumeSound(SoundType.CAR_ENGINE);
 
             RunGame();
         }
@@ -721,6 +686,30 @@ namespace SkyWay
         private void StopGame()
         {
             _gameViewTimer.Dispose();
+        }
+
+        private void QuitGame()
+        {
+            if (_isGameQuitting)
+            {
+                //TODO: quit game
+                NavigateToPage(typeof(StartPage));
+            }
+            else
+            {
+                _isGameQuitting = true;
+                PauseGame();
+            }            
+
+            //TODO: show game quitting content
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            StopGame();
+            StopGameSounds();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);
         }
 
         #endregion
@@ -772,7 +761,7 @@ namespace SkyWay
                             _damageRecoveryCounter = _damageRecoveryDelay;
                             _isRecoveringFromDamage = true;
                             SetLives();
-                            PlaySound(SoundType.HEALTH_LOSS);
+                            SoundHelper.PlaySound(SoundType.HEALTH_LOSS);
 
                             if (_lives == 0)
                                 GameOver();
@@ -865,7 +854,7 @@ namespace SkyWay
         {
             _score++;
             _collectiblesCollected++;
-            PlaySound(SoundType.COLLECTIBLE_COLLECTED);
+            SoundHelper.PlaySound(SoundType.COLLECTIBLE_COLLECTED);
         }
 
         #endregion
@@ -1056,7 +1045,7 @@ namespace SkyWay
 
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
 
-            PlaySound(SoundType.POWER_UP);
+            SoundHelper.PlaySound(SoundType.POWER_UP);
         }
 
         private void PowerUpCoolDown()
@@ -1078,7 +1067,7 @@ namespace SkyWay
 
             powerUpText.Visibility = Visibility.Collapsed;
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
-            PlaySound(SoundType.POWER_DOWN);
+            SoundHelper.PlaySound(SoundType.POWER_DOWN);
         }
 
         #endregion
@@ -1132,7 +1121,7 @@ namespace SkyWay
         {
             _lives++;
             SetLives();
-            PlaySound(SoundType.HEALTH_GAIN);
+            SoundHelper.PlaySound(SoundType.HEALTH_GAIN);
         }
 
         #endregion
@@ -1208,77 +1197,22 @@ namespace SkyWay
 
         #region Sound
 
-        private void LoadGameSounds()
+        private async void StartGameSounds()
         {
-            _sounds = Constants.SOUND_TEMPLATES.Select(x =>
-            {
-                Sound sound = null;
+            SoundHelper.PlaySound(SoundType.CAR_START);
 
-                switch (x.Key)
-                {
-                    case SoundType.BACKGROUND:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.4, loop: true);
-                        }
-                        break;
-                    case SoundType.CAR_ENGINE:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.2, loop: true);
-                        }
-                        break;
-                    case SoundType.COLLECTIBLE_COLLECTED:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.6);
-                        }
-                        break;
-                    default:
-                        {
-                            sound = new Sound(soundType: x.Key, soundSource: x.Value);
-                        }
-                        break;
-                }
+            await Task.Delay(TimeSpan.FromSeconds(1));
 
-                return sound;
+            SoundHelper.PlaySound(SoundType.CAR_ENGINE);
 
-            }).ToArray();
-
-            _playingSounds = new List<Sound>();
-            _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and not SoundType.INTRO));
-
-            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count);
+            SoundHelper.RandomizeBackgroundSound();
+            SoundHelper.PlaySound(SoundType.BACKGROUND);
         }
 
-        private void RandomizeBackgroundSound()
+        private void StopGameSounds()
         {
-            var backgroundSounds = _sounds.Where(x => x.SoundType == SoundType.BACKGROUND).ToArray();
-            var backgroundSound = backgroundSounds[_rand.Next(0, backgroundSounds.Length)];
-
-            _playingSounds.RemoveAll(x => x.SoundType == SoundType.BACKGROUND);
-            _playingSounds.Add(backgroundSound);
-        }
-
-        private void PlaySound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType) is Sound playingSound)
-                playingSound.Play();
-        }
-
-        private void StopSound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType) is Sound playingSound)
-                playingSound.Stop();
-        }
-
-        private void PauseSound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType && x.IsPlaying) is Sound playingSound)
-                playingSound.Pause();
-        }
-
-        private void ResumeSound(SoundType soundType)
-        {
-            if (_playingSounds.FirstOrDefault(x => x.SoundType == soundType && x.IsPaused) is Sound playingSound)
-                playingSound.Resume();
+            SoundHelper.StopSound(SoundType.BACKGROUND);
+            SoundHelper.StopSound(SoundType.CAR_ENGINE);
         }
 
         #endregion

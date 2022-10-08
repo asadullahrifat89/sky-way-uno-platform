@@ -6,6 +6,9 @@ namespace SkyWay
 {
     public static class Constants
     {
+        public const string GAME_ID = "sky-way";
+        public const double DEFAULT_FRAME_TIME = 18;
+
         #region Measurements
 
         public const double CAR_WIDTH = 60 * 1.5;
@@ -78,7 +81,7 @@ namespace SkyWay
             new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background2.mp3"),
             new KeyValuePair<SoundType, string>(SoundType.BACKGROUND, "Assets/Sounds/background3.mp3"),
 
-                       
+
             new KeyValuePair<SoundType, string>(SoundType.GAME_OVER, "Assets/Sounds/game-over.mp3"),
 
             new KeyValuePair<SoundType, string>(SoundType.POWER_UP, "Assets/Sounds/power-up.mp3"),
@@ -94,5 +97,42 @@ namespace SkyWay
         };
 
         #endregion
+
+        #region Api Base Urls
+
+#if DEBUG
+        public const string GAME_API_BASEURL = "https://localhost:7238";
+#else
+        public const string GAME_API_BASEURL = "https://astro-odyssey-web-api.herokuapp.com";
+#endif
+
+        #endregion
+
+        #region Api Endpoints
+
+        public const string Action_Ping = "/api/Query/Ping";
+
+        public const string Action_Authenticate = "/api/Command/Authenticate";
+        public const string Action_SignUp = "/api/Command/SignUp";
+        public const string Action_SubmitGameScore = "/api/Command/SubmitGameScore";
+        public const string Action_GenerateSession = "/api/Command/GenerateSession";
+        public const string Action_ValidateSession = "/api/Command/ValidateSession";
+
+        public const string Action_GetGameProfile = "/api/Query/GetGameProfile";
+        public const string Action_GetGameProfiles = "/api/Query/GetGameProfiles";
+        public const string Action_GetGameScores = "/api/Query/GetGameScores";
+        public const string Action_GetUser = "/api/Query/GetUser";
+
+        #endregion
+
+        #region Cache Keys
+
+        public const string CACHE_SESSION_KEY = "Session";
+        public const string CACHE_LANGUAGE_KEY = "Language";
+
+        public const string COOKIE_KEY = "Cookie";
+        public const string COOKIE_ACCEPTED_KEY = "Accepted";
+
+        #endregion              
     }
 }

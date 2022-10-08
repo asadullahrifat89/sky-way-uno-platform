@@ -31,11 +31,36 @@
     <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HttpServiceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\PageExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml.cs">
-      <DependentUpon>GamePlayPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ScalingHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SoundHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AssetHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GameProfileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LocalizationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Peripherals\LocalizationKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IBackendService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CookieHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ErrorResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\QueryRecordResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\QueryRecordsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ServiceResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\HttpRequestService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerCredentialsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SessionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AttachedUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\AuthToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entities\EntityBase.cs" />
@@ -47,9 +72,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Global\PlayerScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Contextual\SkyWayScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Peripherals\AudioPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\HttpService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IHttpRequestService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Contracts\IHttpService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Implementations\BackendService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)GamePlayPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Pages\GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,10 +117,12 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\collectible.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island1.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\logo_game.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player-power-mode.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\localization.json" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-engine.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-start.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />
@@ -107,12 +142,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </_Globbled_Page>
-    <Page Include="@(_Globbled_Page)" />
+    <Page Include="@(_Globbled_Page)">
+      <SubType>Designer</SubType>
+    </Page>
     <_Globbed_Compile Include="$(MSBuildThisFileDirectory)**/*.xaml.cs" Exclude="@(Compile)">
       <DependentUpon>%(Filename)</DependentUpon>
     </_Globbed_Compile>
     <_Globbed_Compile Include="$(MSBuildThisFileDirectory)**/*.cs" Exclude="@(Compile);@(_Globbed_Compile)" />
-    <Compile Include="@(_Globbed_Compile)" />
     <_Globbed_PRIResource Include="$(MSBuildThisFileDirectory)**/*.resw" Exclude="@(PRIResource)" />
     <PRIResource Include="@(_Globbed_PRIResource)" />
     <_Globbed_Content Include="$(MSBuildThisFileDirectory)Assets/**/*.*" Exclude="@(Content)" />
@@ -124,6 +160,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Contextual\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>
