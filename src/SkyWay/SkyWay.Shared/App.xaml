@@ -14,14 +14,14 @@
 
             <Style x:Key="DefaultButton" TargetType="Button" />
             <Style TargetType="Button">
-                <Setter Property="Background" Value="Goldenrod" />
+                <Setter Property="Background" Value="#ff6852" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="BorderBrush" Value="White" />
             </Style>
 
             <Style x:Key="GameUIContainer" TargetType="Border">
-                <Setter Property="Background" Value="#27223f" />
-                <Setter Property="BorderBrush" Value="#4d437d" />
+                <Setter Property="Background" Value="#6ba3c6" />
+                <Setter Property="BorderBrush" Value="White" />
             </Style>
 
             <!--#region Colors-->

@@ -126,23 +126,6 @@ namespace SkyWay
             Console.WriteLine($"WINDOWS SIZE: {_windowWidth}x{_windowHeight}");
         }
 
-        private void SetViewSize()
-        {
-            _scale = GetGameObjectScale();
-
-            SeaView.Width = _windowWidth;
-            SeaView.Height = _windowHeight;
-
-            UnderView.Width = _windowWidth;
-            UnderView.Height = _windowHeight;
-
-            GameView.Width = _windowWidth;
-            GameView.Height = _windowHeight;
-
-            OverView.Width = _windowWidth;
-            OverView.Height = _windowHeight;
-        }
-
         #endregion
 
         #region Input
@@ -256,11 +239,32 @@ namespace SkyWay
             //TODO: show game quitting content
         }
 
-        #endregion    
+        #endregion
 
         #endregion
 
         #region Methods
+
+        #region Page
+
+        private void SetViewSize()
+        {
+            _scale = GetGameObjectScale();
+
+            SeaView.Width = _windowWidth;
+            SeaView.Height = _windowHeight;
+
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+
+            GameView.Width = _windowWidth;
+            GameView.Height = _windowHeight;
+
+            OverView.Width = _windowWidth;
+            OverView.Height = _windowHeight;
+        }
+
+        #endregion
 
         #region Game
 
@@ -473,18 +477,6 @@ namespace SkyWay
             RemoveGameObjects();
 
             App.EnterFullScreen(true);
-        }
-
-        private async void PlayStartGameSounds()
-        {
-            PlaySound(SoundType.CAR_START);
-
-            await Task.Delay(TimeSpan.FromSeconds(1));
-
-            PlaySound(SoundType.CAR_ENGINE);
-
-            RandomizeBackgroundSound();
-            PlaySound(SoundType.BACKGROUND);
         }
 
         private void ResetControls()
@@ -1255,6 +1247,18 @@ namespace SkyWay
 
             _playingSounds.RemoveAll(x => x.SoundType == SoundType.BACKGROUND);
             _playingSounds.Add(backgroundSound);
+        }
+
+        private async void PlayStartGameSounds()
+        {
+            PlaySound(SoundType.CAR_START);
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            PlaySound(SoundType.CAR_ENGINE);
+
+            RandomizeBackgroundSound();
+            PlaySound(SoundType.BACKGROUND);
         }
 
         private void PlaySound(SoundType soundType)
