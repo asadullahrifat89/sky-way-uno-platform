@@ -376,7 +376,7 @@ namespace SkyWay
             }
 
             RecycleGameObjects();
-            RemoveGameObjects();          
+            RemoveGameObjects();
 
             StartGameSounds();
             RunGame();
@@ -840,6 +840,12 @@ namespace SkyWay
                     default:
                         break;
                 }
+
+                if (left < 0)
+                    left = 0;
+
+                if (left + collectible.Width >= GameView.Width)
+                    left = GameView.Width - collectible.Width;
 
                 top += collectible.Height;
             }
