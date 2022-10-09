@@ -10,6 +10,41 @@
 
     <Grid x:Name="RootGrid">
 
+        <Border Style="{StaticResource GameUIContainer}">
+
+            <StackPanel
+                x:Name="ActionStack"
+                Width="315"
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+                <!--  Tag line  -->
+                <TextBlock
+                    x:Name="HowToPlayPage_Tagline"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="How To Play"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords" />
+
+                <!--  Start game button  -->
+                <Button
+                    x:Name="PlayButton"
+                    Height="50"
+                    Margin="30,10,30,5"
+                    HorizontalAlignment="Stretch"
+                    Click="PlayButton_Click"
+                    Content="Start Game"
+                    Tag="ActionButton" />
+
+            </StackPanel>
+
+        </Border>
+
         <!--#region Go back-->
         <Button
             x:Name="GoBackButton"

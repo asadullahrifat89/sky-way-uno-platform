@@ -34,6 +34,11 @@ namespace SkyWay
 
         #region Buttons
 
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage(typeof(GamePage));
+        }
+
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(StartPage));
@@ -55,6 +60,9 @@ namespace SkyWay
 
         private void NavigateToPage(Type pageType)
         {
+            if (pageType == typeof(GamePage))
+                SoundHelper.StopSound(SoundType.INTRO);
+
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
         }
