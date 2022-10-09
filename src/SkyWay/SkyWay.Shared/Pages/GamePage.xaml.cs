@@ -946,29 +946,17 @@ namespace SkyWay
 
         private void SpawnPowerUp()
         {
+            _markNum = _random.Next(1, Enum.GetNames<PowerUpType>().Length);
+            var powerUpTemplates = Constants.ELEMENT_TEMPLATES.Where(x => x.Key is ElementType.POWERUP).ToArray();
+
             PowerUp powerUp = new()
             {
                 Height = Constants.POWERUP_HEIGHT * _scale,
                 Width = Constants.POWERUP_WIDTH * _scale,
-                PowerUpType = (PowerUpType)_random.Next(1, Enum.GetNames<PowerUpType>().Length)
+                PowerUpType = (PowerUpType)_markNum,
             };
 
-            var powerUpTemplates = Constants.ELEMENT_TEMPLATES.Where(x => x.Key is ElementType.POWERUP).ToArray();
-
-            switch (powerUp.PowerUpType)
-            {
-                case PowerUpType.FORCE_SHIELD:
-                    powerUp.SetContent(powerUpTemplates[0].Value);
-                    break;
-                case PowerUpType.SLOW_DOWN_TIME:
-                    powerUp.SetContent(powerUpTemplates[1].Value);
-                    break;
-                case PowerUpType.DOUBLE_SCORE:
-                    powerUp.SetContent(powerUpTemplates[2].Value);
-                    break;
-                default:
-                    break;
-            }
+            powerUp.SetContent(powerUpTemplates[_markNum].Value);
 
             powerUp.SetPosition(
                 left: _random.Next(0, (int)(GameView.Width - 55)),
@@ -1156,8 +1144,20 @@ namespace SkyWay
 
         private void AddScore(double score)
         {
-            if (_isPowerMode && _powerUpType == PowerUpType.DOUBLE_SCORE)
-                score *= 2;
+            if (_isPowerMode)
+            {
+                switch (_powerUpType)
+                {
+                    case PowerUpType.DOUBLE_SCORE:
+                        score *= 2;
+                        break;
+                    case PowerUpType.QUAD_SCORE:
+                        score *= 4;
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             _score += score;
         }

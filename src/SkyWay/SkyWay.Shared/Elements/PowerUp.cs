@@ -18,6 +18,7 @@ namespace SkyWay
         FORCE_SHIELD,
         SLOW_DOWN_TIME,
         DOUBLE_SCORE,
+        QUAD_SCORE,
     }
 }
 
