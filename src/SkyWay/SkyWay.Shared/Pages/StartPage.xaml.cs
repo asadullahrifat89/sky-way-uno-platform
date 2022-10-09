@@ -126,7 +126,7 @@ namespace SkyWay
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             PerformLogout();
         }
 
@@ -463,17 +463,10 @@ namespace SkyWay
 
         private void StartGameSounds()
         {
-            if (!SoundHelper.IsSoundPlaying(SoundType.INTRO))
-            {
-                SoundHelper.RandomizeIntroSound();
-                SoundHelper.PlaySound(SoundType.INTRO);
-            }
+            SoundHelper.RandomizeIntroSound();
+            SoundHelper.PlaySound(SoundType.INTRO);
         }
 
-        private void StopGameSounds()
-        {
-            SoundHelper.StopSound(SoundType.INTRO);
-        }
         #endregion
 
         #region Page

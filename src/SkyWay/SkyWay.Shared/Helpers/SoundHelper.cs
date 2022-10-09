@@ -23,41 +23,41 @@ namespace SkyWay
             if (_sounds is null)
             {
                 _sounds = Constants.SOUND_TEMPLATES.Select(x =>
+                {
+                    Sound sound = null;
+
+                    switch (x.Key)
                     {
-                        Sound sound = null;
+                        case SoundType.BACKGROUND:
+                            {
+                                sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.8, loop: true);
+                            }
+                            break;
+                        case SoundType.INTRO:
+                            {
+                                sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.9, loop: true);
+                            }
+                            break;
+                        case SoundType.CAR_ENGINE:
+                            {
+                                sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.3, loop: true);
+                            }
+                            break;
+                        case SoundType.COLLECTIBLE_COLLECTED:
+                            {
+                                sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.7);
+                            }
+                            break;
+                        default:
+                            {
+                                sound = new Sound(soundType: x.Key, soundSource: x.Value);
+                            }
+                            break;
+                    }
 
-                        switch (x.Key)
-                        {
-                            case SoundType.BACKGROUND:
-                                {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.8, loop: true);
-                                }
-                                break;
-                            case SoundType.INTRO:
-                                {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.9, loop: true);
-                                }
-                                break;
-                            case SoundType.CAR_ENGINE:
-                                {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.3, loop: true);
-                                }
-                                break;
-                            case SoundType.COLLECTIBLE_COLLECTED:
-                                {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value, volume: 0.7);
-                                }
-                                break;
-                            default:
-                                {
-                                    sound = new Sound(soundType: x.Key, soundSource: x.Value);
-                                }
-                                break;
-                        }
+                    return sound;
 
-                        return sound;
-
-                    }).ToArray();
+                }).ToArray();
 
                 _playingSounds = new List<Sound>();
 
