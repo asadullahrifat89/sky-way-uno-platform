@@ -167,7 +167,7 @@
                             HorizontalAlignment="Stretch"
                             Click="PlayAgainButton_Click"
                             Content="Play Again"
-                            Tag="PlayAgainButton.Content" />
+                            Tag="ActionButton" />
 
                         <!--  Leaderboard button  -->
                         <Button
