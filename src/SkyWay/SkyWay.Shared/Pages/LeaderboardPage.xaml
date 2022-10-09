@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SkyWay"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource SeaBackgroundColor}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -91,7 +91,7 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
+    <Grid x:Name="RootGrid">
 
         <!--#region Animation-->
         <!--  This hosts clouds and cars that do not collide  -->
@@ -109,7 +109,6 @@
         <!--#endregion-->
 
         <!--#region UI Controls-->
-
         <Border
             MaxWidth="650"
             Margin="20,55,20,10"
