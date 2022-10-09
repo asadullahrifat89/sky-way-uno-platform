@@ -46,6 +46,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthTokenHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GameProfileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LocalizationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\HowToPlayPage.xaml.cs">
+      <DependentUpon>HowToPlayPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\LeaderboardPage.xaml.cs">
       <DependentUpon>LeaderboardPage.xaml</DependentUpon>
     </Compile>
@@ -119,7 +122,6 @@
 		 explicitly included in the projitem, so files can be added from vscode
 		 without manipulating the projitem file.
 	-->
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Icon192x192.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\game-over.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\health.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car1.png" />
@@ -147,6 +149,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup3.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup4.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\localization.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\logo_game_192x192.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-engine.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-start.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\health-gain.mp3" />
@@ -161,7 +164,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\intro1.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\intro2.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\coin-pickup.mp3" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\splash_screen.gif" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\splash_screen.gif" />
     <_Globbled_Page Include="$(MSBuildThisFileDirectory)**/*.xaml" Exclude="@(Page);@(ApplicationDefinition)">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

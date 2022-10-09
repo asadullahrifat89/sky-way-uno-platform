@@ -110,6 +110,11 @@ namespace SkyWay
             }
         }
 
+        private void HowToPlayButton_Click(object sender, RoutedEventArgs e) 
+        {
+            NavigateToPage(typeof(HowToPlayPage));
+        }
+
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(GamePage));
