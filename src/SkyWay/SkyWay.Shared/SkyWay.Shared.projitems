@@ -27,8 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Island.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Player.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\PowerUp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadDivider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\HttpServiceExtensions.cs" />
@@ -122,6 +120,7 @@
 		 without manipulating the projitem file.
 	-->
     <Content Include="$(MSBuildThisFileDirectory)Assets\Icon192x192.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\game-over.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\health.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car1.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car10.png" />

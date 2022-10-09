@@ -74,12 +74,12 @@
             <!--#endregion-->
 
             <!--#region Colors-->
-            <SolidColorBrush x:Key="SystemAccentColorLight2" Color="Goldenrod" />
-            <SolidColorBrush x:Key="SystemAccentColorDark1" Color="Goldenrod" />
+            <SolidColorBrush x:Key="SystemAccentColorLight2" Color="#ff6852" />
+            <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#ff6852" />
 
-            <SolidColorBrush x:Key="FrameBackgroundColor" Color="#27223f" />
+            <SolidColorBrush x:Key="FrameBackgroundColor" Color="#ff6852" />
             <SolidColorBrush x:Key="ProgressBarErrorColor" Color="Yellow" />
-            <SolidColorBrush x:Key="ProgressBarForegroundColor" Color="Goldenrod" />
+            <SolidColorBrush x:Key="ProgressBarForegroundColor" Color="#ff6852" />
             <SolidColorBrush x:Key="ProgressBarOkColor" Color="LightGreen" />
 
             <SolidColorBrush x:Key="SeaBackgroundColor" Color="LightSkyBlue" />

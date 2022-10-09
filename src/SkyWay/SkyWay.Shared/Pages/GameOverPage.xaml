@@ -22,7 +22,7 @@
             Opacity="0.5" />
         <!--#endregion-->
 
-        <!--#region Login Prompt-->
+        <!--#region Login Prompt & Score-->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
             <!--  Login prompt  -->
@@ -84,11 +84,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock
+                    <!--<TextBlock
                         FontSize="45"
                         FontWeight="Bold"
                         Text="☠️"
-                        TextAlignment="Center" />
+                        TextAlignment="Center" />-->
+
+                    <!--  Game over logo  -->
+                    <Image Height="100" Source="ms-appx:///Assets/Images/game-over.png" />
 
                     <!--  Tagline  -->
                     <TextBlock
@@ -106,7 +109,7 @@
                             x:Name="ScoreNumberText"
                             FontSize="30"
                             FontWeight="Bold"
-                            Foreground="Goldenrod"
+                            Foreground="White"
                             TextAlignment="Center" />
 
                         <!--  Your score  -->
@@ -120,8 +123,8 @@
                         <!--  Border  -->
                         <Border
                             Margin="10"
-                            Background="Goldenrod"
-                            BorderBrush="DarkGoldenrod"
+                            Background="#ff6852"
+                            BorderBrush="#ff6852"
                             BorderThickness="3"
                             CornerRadius="50" />
 

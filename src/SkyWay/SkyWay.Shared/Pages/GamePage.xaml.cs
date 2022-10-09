@@ -28,7 +28,9 @@ namespace SkyWay
 
         private int _gameSpeed;
         private readonly int _defaultGameSpeed = 5;
-        private readonly int _playerSpeed = 9;
+
+        private int _playerSpeed = 9;
+        private int _defaultPlayerSpeed = 9;
         private int _markNum;
 
         private int _powerUpSpawnCounter = 30;
@@ -39,7 +41,7 @@ namespace SkyWay
         private int _lives;
         private readonly int _maxLives = 5;
         private int _healthSpawnCounter = 500;
-        int _damageRecoveryOpacityFrameSkip;
+        private int _damageRecoveryOpacityFrameSkip;
 
         private int _collectibleSpawnCounter = 200;
 
@@ -360,6 +362,7 @@ namespace SkyWay
             SetLives();
 
             _gameSpeed = _defaultGameSpeed;
+            _playerSpeed = _defaultPlayerSpeed;
             _player.Opacity = 1;
 
             ResetControls();
@@ -1171,83 +1174,152 @@ namespace SkyWay
             if (_score >= 10 && _score < 20)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 1;
+                _playerSpeed = _defaultPlayerSpeed + (1 / 2);
             }
-
             if (_score >= 20 && _score < 30)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 2;
+                _playerSpeed = _defaultPlayerSpeed + (2 / 2);
             }
             if (_score >= 30 && _score < 40)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 3;
+                _playerSpeed = _defaultPlayerSpeed + (3 / 2);
             }
             if (_score >= 40 && _score < 50)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 4;
+                _playerSpeed = _defaultPlayerSpeed + (4 / 2);
             }
             if (_score >= 50 && _score < 80)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 5;
+                _playerSpeed = _defaultPlayerSpeed + (5 / 2);
             }
             if (_score >= 80 && _score < 100)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 6;
+                _playerSpeed = _defaultPlayerSpeed + (6 / 2);
             }
             if (_score >= 100 && _score < 130)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 7;
+                _playerSpeed = _defaultPlayerSpeed + (7 / 2);
             }
             if (_score >= 130 && _score < 150)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 8;
+                _playerSpeed = _defaultPlayerSpeed + (8 / 2);
             }
             if (_score >= 150 && _score < 180)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 9;
+                _playerSpeed = _defaultPlayerSpeed + (9 / 2);
             }
             if (_score >= 180 && _score < 200)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 10;
+                _playerSpeed = _defaultPlayerSpeed + (10 / 2);
             }
             if (_score >= 200 && _score < 220)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 11;
+                _playerSpeed = _defaultPlayerSpeed + (11 / 2);
             }
             if (_score >= 220 && _score < 250)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 12;
+                _playerSpeed = _defaultPlayerSpeed + (12 / 2);
             }
             if (_score >= 250 && _score < 300)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 13;
+                _playerSpeed = _defaultPlayerSpeed + (13 / 2);
             }
             if (_score >= 300 && _score < 350)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 14;
+                _playerSpeed = _defaultPlayerSpeed + (14 / 2);
             }
             if (_score >= 350 && _score < 400)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 15;
+                _playerSpeed = _defaultPlayerSpeed + (15 / 2);
             }
             if (_score >= 400 && _score < 500)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 16;
+                _playerSpeed = _defaultPlayerSpeed + (16 / 2);
             }
             if (_score >= 500 && _score < 600)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 17;
+                _playerSpeed = _defaultPlayerSpeed + (17 / 2);
             }
             if (_score >= 600 && _score < 700)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 18;
+                _playerSpeed = _defaultPlayerSpeed + (18 / 2);
             }
             if (_score >= 700 && _score < 800)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 19;
+                _playerSpeed = _defaultPlayerSpeed + (19 / 2);
             }
             if (_score >= 800 && _score < 900)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 20;
+                _playerSpeed = _defaultPlayerSpeed + (20 / 2);
+            }
+            if (_score >= 900 && _score < 1000)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 21;
+                _playerSpeed = _defaultPlayerSpeed + (21 / 2);
+            }
+            if (_score >= 1000 && _score < 1200)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 22;
+                _playerSpeed = _defaultPlayerSpeed + (22 / 2);
+            }
+            if (_score >= 1200 && _score < 1400)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 23;
+                _playerSpeed = _defaultPlayerSpeed + (23 / 2);
+            }
+            if (_score >= 1400 && _score < 1600)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 24;
+                _playerSpeed = _defaultPlayerSpeed + (24 / 2);
+            }
+            if (_score >= 1600 && _score < 1800)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 25;
+                _playerSpeed = _defaultPlayerSpeed + (25 / 2);
+            }
+            if (_score >= 1800 && _score < 2000)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 26;
+                _playerSpeed = _defaultPlayerSpeed + (26 / 2);
+            }
+            if (_score >= 2000 && _score < 2200)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 27;
+                _playerSpeed = _defaultPlayerSpeed + (27 / 2);
+            }
+            if (_score >= 2200 && _score < 2400)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 28;
+                _playerSpeed = _defaultPlayerSpeed + (28 / 2);
+            }
+            if (_score >= 2400 && _score < 2600)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 29;
+                _playerSpeed = _defaultPlayerSpeed + (29 / 2);
+            }
+            if (_score >= 2600 && _score < 2800)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 30;
+                _playerSpeed = _defaultPlayerSpeed + (30 / 2);
             }
         }
 
