@@ -27,8 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Island.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Player.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\PowerUp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadDivider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Elements\RoadMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Elements\Sound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\HttpServiceExtensions.cs" />
@@ -122,6 +120,7 @@
 		 without manipulating the projitem file.
 	-->
     <Content Include="$(MSBuildThisFileDirectory)Assets\Icon192x192.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\game-over.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\health.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car1.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\car10.png" />
@@ -142,8 +141,11 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\logo_game.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player-power-mode.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\player.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup1.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Images\island3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Images\powerup4.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\localization.json" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-engine.mp3" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Sounds\car-start.mp3" />

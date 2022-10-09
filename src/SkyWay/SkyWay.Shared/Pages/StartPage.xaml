@@ -5,15 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SkyWay"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource SeaBackgroundColor}"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
+    <Grid x:Name="RootGrid">
 
+        <!--#region Animation-->
         <!--  This hosts clouds and cars that do not collide  -->
         <GameEnvironment x:Name="UnderView" Background="Transparent" />
 
-        <!--#region Fog-->
+        <!--  Fog  -->
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
@@ -30,31 +31,31 @@
             Orientation="Horizontal">
 
             <!--  English  -->
-            <Button
+            <!--<Button
                 x:Name="EnglishButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="English"
                 Style="{StaticResource DefaultButton}"
-                Tag="en" />
+                Tag="en" />-->
 
             <!--  French  -->
-            <Button
+            <!--<Button
                 x:Name="FrenchButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="French"
                 Style="{StaticResource DefaultButton}"
-                Tag="fr" />
+                Tag="fr" />-->
 
             <!--  German  -->
-            <Button
+            <!--<Button
                 x:Name="DeutschButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="Deutsch"
                 Style="{StaticResource DefaultButton}"
-                Tag="de" />
+                Tag="de" />-->
 
         </StackPanel>
         <!--#endregion-->
@@ -134,6 +135,7 @@
                         BorderThickness="0"
                         Click="LogoutButton_Click"
                         Content="Logout"
+                        FontSize="18"
                         Tag="ActionButton"
                         Visibility="Collapsed" />
 
@@ -150,6 +152,7 @@
                     BorderThickness="0"
                     Click="RegisterButton_Click"
                     Content="No account yet?"
+                    FontSize="18"
                     Tag="ActionButton"
                     Visibility="Collapsed" />
 

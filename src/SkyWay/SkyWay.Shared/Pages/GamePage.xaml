@@ -6,11 +6,12 @@
     xmlns:local="using:SkyWay"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource SeaBackgroundColor}"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
+    <Grid x:Name="RootGrid">
 
+        <!--#region Animation-->
         <!--  This hosts the islands  -->
         <GameEnvironment x:Name="SeaView" Background="Transparent" />
 
@@ -29,6 +30,7 @@
 
         <!--  This hosts clouds and cars that do not collide  -->
         <GameEnvironment x:Name="OverView" Background="Transparent" />
+        <!--#endregion-->
 
         <!--#region Game Score-->
         <Border
@@ -94,7 +96,6 @@
                     FontSize="20"
                     FontWeight="Bold"
                     Foreground="White"
-                    Text="❤️❤️❤️"
                     TextAlignment="Left" />
                 <TextBlock
                     Name="powerUpText"
@@ -103,7 +104,6 @@
                     FontSize="20"
                     FontWeight="Bold"
                     Foreground="White"
-                    Text=""
                     TextAlignment="Left"
                     Visibility="Collapsed" />
             </StackPanel>

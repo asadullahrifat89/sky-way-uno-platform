@@ -22,24 +22,26 @@ namespace SkyWay
 
         private PeriodicTimer _gameViewTimer;
 
-        private readonly Random _rand = new();
+        private readonly Random _random = new();
 
         private Rect _playerHitBox;
 
         private int _gameSpeed;
         private readonly int _defaultGameSpeed = 5;
-        private readonly int _playerSpeed = 9;
+
+        private int _playerSpeed = 9;
+        private int _defaultPlayerSpeed = 9;
         private int _markNum;
 
         private int _powerUpSpawnCounter = 30;
 
-        private int _powerModeCounter = 250;
-        private readonly int _powerModeDelay = 250;
+        private int _powerModeCounter = 500;
+        private readonly int _powerModeDelay = 500;
 
         private int _lives;
         private readonly int _maxLives = 5;
         private int _healthSpawnCounter = 500;
-        int _damageRecoveryOpacityFrameSkip;
+        private int _damageRecoveryOpacityFrameSkip;
 
         private int _collectibleSpawnCounter = 200;
 
@@ -76,6 +78,8 @@ namespace SkyWay
         private Uri[] _islands;
         private Uri[] _clouds;
 
+        private PowerUpType _powerUpType;
+
         #endregion
 
         #region Ctor
@@ -90,7 +94,7 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            InitializeGameViews();
+            PopulateGameViews();
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -105,6 +109,7 @@ namespace SkyWay
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeChanged += GamePage_SizeChanged;
+            StartGame();
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
@@ -128,15 +133,15 @@ namespace SkyWay
 
         private void InputView_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (_isGameOver)
-            {
-                InputView.Focus(FocusState.Programmatic);
-                StartGame();
-            }
-            else
-            {
-                _isPointerActivated = true;
-            }
+            //if (_isGameOver)
+            //{
+            //    InputView.Focus(FocusState.Programmatic);
+            //    StartGame();
+            //}
+            //else
+            //{
+            _isPointerActivated = true;
+            //}
         }
 
         private void InputView_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -202,10 +207,10 @@ namespace SkyWay
                 _accelerationCounter = 0;
 
             // in this case we will listen for the enter key aswell but for this to execute we will need the game over boolean to be true
-            if (e.Key == VirtualKey.Enter && _isGameOver == true)
-            {
-                StartGame();
-            }
+            //if (e.Key == VirtualKey.Enter && _isGameOver == true)
+            //{
+            //    StartGame();
+            //}
         }
 
         #endregion
@@ -231,20 +236,22 @@ namespace SkyWay
 
         #region Methods
 
+        #region Animation
+
         #region Game
 
-        private void InitializeGameViews()
+        private void PopulateGameViews()
         {
             Console.WriteLine("INITIALIZING GAME");
 
             SetViewSize();
 
-            InitializeUnderView();
-            InitializeGameView();
-            InitializeOverView();
+            PopulateUnderView();
+            PopulateGameView();
+            PopulateOverView();
         }
 
-        private void InitializeUnderView()
+        private void PopulateUnderView()
         {
             // add some cars underneath
             for (int i = 0; i < 10; i++)
@@ -268,8 +275,8 @@ namespace SkyWay
             // add some clouds underneath
             for (int i = 0; i < 15; i++)
             {
-                var scaleFactor = _rand.Next(1, 4);
-                var scaleReverseFactor = _rand.Next(-1, 2);
+                var scaleFactor = _random.Next(1, 4);
+                var scaleReverseFactor = _random.Next(-1, 2);
 
                 var cloud = new Cloud()
                 {
@@ -287,7 +294,7 @@ namespace SkyWay
             }
         }
 
-        private void InitializeGameView()
+        private void PopulateGameView()
         {
             // add 5 cars
             for (int i = 0; i < 5; i++)
@@ -317,13 +324,13 @@ namespace SkyWay
             GameView.Children.Add(_player);
         }
 
-        private void InitializeOverView()
+        private void PopulateOverView()
         {
             // add some clouds above
             for (int i = 0; i < 5; i++)
             {
-                var scaleFactor = _rand.Next(1, 4);
-                var scaleReverseFactor = _rand.Next(-1, 2);
+                var scaleFactor = _random.Next(1, 4);
+                var scaleReverseFactor = _random.Next(-1, 2);
 
                 var cloud = new Cloud()
                 {
@@ -350,19 +357,25 @@ namespace SkyWay
 
         private void StartGame()
         {
+#if DEBUG
             Console.WriteLine("GAME STARTED");
+#endif
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
 
             _lives = _maxLives;
             SetLives();
 
             _gameSpeed = _defaultGameSpeed;
+            _playerSpeed = _defaultPlayerSpeed;
             _player.Opacity = 1;
 
             ResetControls();
 
             _isGameOver = false;
             _isPowerMode = false;
+            _powerUpType = 0;
             _powerModeCounter = _powerModeDelay;
+
             _isRecoveringFromDamage = false;
             _damageRecoveryCounter = _damageRecoveryDelay;
 
@@ -466,7 +479,7 @@ namespace SkyWay
 
         private void GameViewLoop()
         {
-            _score += .05; // increase the score by .5 each tick of the timer
+            AddScore(0.05d); // increase the score by .5 each tick of the timer
             scoreText.Text = _score.ToString("#");
 
             _playerHitBox = _player.GetHitBox(_scale);
@@ -501,19 +514,19 @@ namespace SkyWay
             if (_powerUpSpawnCounter < 1)
             {
                 SpawnPowerUp();
-                _powerUpSpawnCounter = _rand.Next(500, 800);
+                _powerUpSpawnCounter = _random.Next(500, 800);
             }
 
             if (_collectibleSpawnCounter < 1)
             {
                 SpawnCollectible();
-                _collectibleSpawnCounter = _rand.Next(200, 300);
+                _collectibleSpawnCounter = _random.Next(200, 300);
             }
 
             if (_islandSpawnCounter < 1)
             {
                 SpawnIsland();
-                _islandSpawnCounter = _rand.Next(1500, 2000);
+                _islandSpawnCounter = _random.Next(1500, 2000);
             }
 
             if (_lives < _maxLives)
@@ -523,7 +536,7 @@ namespace SkyWay
                 if (_healthSpawnCounter < 0)
                 {
                     SpawnHealth();
-                    _healthSpawnCounter = _rand.Next(500, 800);
+                    _healthSpawnCounter = _random.Next(500, 800);
                 }
             }
         }
@@ -578,11 +591,6 @@ namespace SkyWay
                             UpdateHealth(x);
                         }
                         break;
-                    //case Constants.ROADMARK:
-                    //    {
-                    //        UpdateRoadMark(x);
-                    //    }
-                    //    break;
                     case ElementType.PLAYER:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
@@ -600,11 +608,6 @@ namespace SkyWay
             {
                 switch ((ElementType)x.Tag)
                 {
-                    case ElementType.CAR:
-                        {
-                            UpdateCar(x);
-                        }
-                        break;
                     case ElementType.CLOUD:
                         {
                             UpdateCloud(x);
@@ -691,14 +694,25 @@ namespace SkyWay
             //TODO: show game quitting content
         }
 
+        private double DecreaseSpeed(double speed)
+        {
+            if (_isPowerMode && _powerUpType == PowerUpType.SLOW_DOWN_TIME)
+                speed /= 3;
+
+            return speed;
+        }
+
         #endregion
 
         #region Car
 
         private void UpdateCar(GameObject car)
         {
+            var speed = car.Speed;
+            speed = DecreaseSpeed(speed);
+
             // move down vehicle
-            car.SetTop(car.GetTop() + car.Speed);
+            car.SetTop(car.GetTop() + speed);
 
             // if vechicle goes out of bounds
             if (car.GetTop() > GameView.Height)
@@ -731,10 +745,10 @@ namespace SkyWay
                 }
                 else
                 {
-                    // if car collides with player
-                    if (_playerHitBox.IntersectsWith(car.GetHitBox(_scale)))
+                    if (!_isPowerMode || _powerUpType != PowerUpType.FORCE_SHIELD)
                     {
-                        if (!_isPowerMode)
+                        // if car collides with player
+                        if (_playerHitBox.IntersectsWith(car.GetHitBox(_scale)))
                         {
                             _lives--;
                             _damageRecoveryCounter = _damageRecoveryDelay;
@@ -748,17 +762,17 @@ namespace SkyWay
                     }
                 }
             }
-
-            if (_isGameOver)
-                return;
         }
 
         private void RecyleCar(GameObject car)
         {
-            _markNum = _rand.Next(0, _cars.Length);
+            var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
+            speed = DecreaseSpeed(speed);
+
+            _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(1, 4);
+            car.Speed = speed;
 
             RandomizeCarPosition(car);
         }
@@ -766,8 +780,8 @@ namespace SkyWay
         private void RandomizeCarPosition(GameObject car)
         {
             car.SetPosition(
-                left: _rand.Next(100, (int)GameView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                left: _random.Next(100, (int)GameView.Width) - (100 * _scale),
+                top: _random.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -776,7 +790,10 @@ namespace SkyWay
 
         private void UpdateCloud(GameObject cloud)
         {
-            cloud.SetTop(cloud.GetTop() + cloud.Speed);
+            var speed = cloud.Speed;
+            speed = DecreaseSpeed(speed);
+
+            cloud.SetTop(cloud.GetTop() + speed);
 
             if (cloud.GetTop() > GameView.Height)
             {
@@ -786,11 +803,14 @@ namespace SkyWay
 
         private void RecyleCloud(GameObject cloud)
         {
-            _markNum = _rand.Next(0, _clouds.Length);
+            var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
+            speed = DecreaseSpeed(speed);
+
+            _markNum = _random.Next(0, _clouds.Length);
 
             cloud.SetContent(_clouds[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
-            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
+            cloud.Speed = speed;
 
             RandomizeCloudPosition(cloud);
         }
@@ -798,8 +818,8 @@ namespace SkyWay
         private void RandomizeCloudPosition(GameObject cloud)
         {
             cloud.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)GameView.Width) - (100 * _scale),
+                top: _random.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -809,9 +829,11 @@ namespace SkyWay
         private void SpawnCollectible()
         {
             double top = GameView.Height * -1;
-            double left = _rand.Next(0, (int)(GameView.Width - 55));
+            double left = _random.Next(0, (int)(GameView.Width - 55));
 
-            double xDir = _rand.Next(-1, 2);
+            double xDir = _random.Next(-1, 2);
+
+            var speed = (double)_gameSpeed - (double)_gameSpeed / 2;
 
             for (int i = 0; i < 5; i++)
             {
@@ -819,7 +841,7 @@ namespace SkyWay
                 {
                     Height = Constants.COLLECTIBLE_HEIGHT * _scale,
                     Width = Constants.COLLECTIBLE_WIDTH * _scale,
-                    Speed = _gameSpeed - _gameSpeed / 2,
+                    Speed = speed,
                 };
 
                 collectible.SetPosition(left: left, top: top);
@@ -853,7 +875,10 @@ namespace SkyWay
 
         private void UpdateCollectible(GameObject collectible)
         {
-            collectible.SetTop(collectible.GetTop() + collectible.Speed);
+            var speed = collectible.Speed;
+            speed = DecreaseSpeed(speed);
+
+            collectible.SetTop(collectible.GetTop() + speed);
 
             if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
             {
@@ -869,7 +894,7 @@ namespace SkyWay
 
         private void Collectible()
         {
-            _score++;
+            AddScore(1); // increase the score by 1 if collectible is collected
             _collectiblesCollected++;
             SoundHelper.PlaySound(SoundType.COLLECTIBLE_COLLECTED);
         }
@@ -890,10 +915,10 @@ namespace SkyWay
             {
                 CenterX = 0.5,
                 CenterY = 0.5,
-                Rotation = _rand.Next(0, 360),
+                Rotation = _random.Next(0, 360),
             };
 
-            _markNum = _rand.Next(0, _islands.Length);
+            _markNum = _random.Next(0, _islands.Length);
             island.SetContent(_islands[_markNum]);
 
             RandomizeIslandPosition(island);
@@ -904,37 +929,45 @@ namespace SkyWay
 
         private void UpdateIsland(GameObject island)
         {
-            island.SetTop(island.GetTop() + _gameSpeed / 6);
+            var speed = (double)_gameSpeed / 6;
+            speed = DecreaseSpeed(speed);
+
+            island.SetTop(island.GetTop() + speed);
 
             if (island.GetTop() > SeaView.Height)
             {
                 SeaView.AddDestroyableGameObject(island);
-
             }
         }
 
         private void RandomizeIslandPosition(GameObject island)
         {
             island.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - 100 * _scale,
-                top: _rand.Next(0, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)GameView.Width) - 100 * _scale,
+                top: _random.Next(0, (int)GameView.Height) * -1);
         }
 
         #endregion      
 
-        #region Power Up
+        #region PowerUp
 
         private void SpawnPowerUp()
         {
+            var _markNum = _random.Next(1, Enum.GetNames<PowerUpType>().Length);
+            var powerUpTemplates = Constants.ELEMENT_TEMPLATES.Where(x => x.Key is ElementType.POWERUP).ToArray();
+
             PowerUp powerUp = new()
             {
                 Height = Constants.POWERUP_HEIGHT * _scale,
                 Width = Constants.POWERUP_WIDTH * _scale,
+                PowerUpType = (PowerUpType)_markNum,
             };
 
+            powerUp.SetContent(powerUpTemplates[_markNum - 1].Value);
+
             powerUp.SetPosition(
-                left: _rand.Next(0, (int)(GameView.Width - 55)),
-                top: _rand.Next(100, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)(GameView.Width - 55)),
+                top: _random.Next(100, (int)GameView.Height) * -1);
 
             GameView.Children.Add(powerUp);
         }
@@ -946,7 +979,7 @@ namespace SkyWay
             if (_playerHitBox.IntersectsWith(powerUp.GetHitBox(_scale)))
             {
                 GameView.AddDestroyableGameObject(powerUp);
-                PowerUp();
+                PowerUp(powerUp as PowerUp);
             }
 
             if (powerUp.GetTop() > GameView.Height)
@@ -955,15 +988,16 @@ namespace SkyWay
             }
         }
 
-        private void PowerUp()
+        private void PowerUp(PowerUp powerUp)
         {
             powerUpText.Visibility = Visibility.Visible;
 
             _isPowerMode = true;
-
+            _powerUpType = powerUp.PowerUpType;
             _powerModeCounter = _powerModeDelay;
 
-            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
+            if (_powerUpType == PowerUpType.FORCE_SHIELD)
+                _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
 
             SoundHelper.PlaySound(SoundType.POWER_UP);
         }
@@ -984,8 +1018,10 @@ namespace SkyWay
         private void PowerDown()
         {
             _isPowerMode = false;
+            _powerUpType = 0;
 
             powerUpText.Visibility = Visibility.Collapsed;
+
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
             SoundHelper.PlaySound(SoundType.POWER_DOWN);
         }
@@ -1014,8 +1050,8 @@ namespace SkyWay
             };
 
             health.SetPosition(
-                left: _rand.Next(0, (int)(GameView.Width - 55)),
-                top: _rand.Next(100, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)(GameView.Width - 55)),
+                top: _random.Next(100, (int)GameView.Height) * -1);
 
             GameView.Children.Add(health);
         }
@@ -1055,8 +1091,6 @@ namespace SkyWay
             // increase acceleration and stop when player speed is reached
             if (_accelerationCounter <= _playerSpeed)
                 _accelerationCounter++;
-
-            //Console.WriteLine("ACC:" + _accelerationCounter);            
 
             double left = _player.GetLeft();
             double top = _player.GetTop();
@@ -1111,70 +1145,190 @@ namespace SkyWay
 
         #endregion
 
-        #region Road Marks
+        #endregion
 
-        private void UpdateRoadMark(GameObject roadMark)
+        #region Score
+
+        private void AddScore(double score)
         {
-            roadMark.SetTop(roadMark.GetTop() + _gameSpeed);
-
-            if (roadMark.GetTop() > GameView.Height)
+            if (_isPowerMode)
             {
-                RecyleRoadMark(roadMark);
+                switch (_powerUpType)
+                {
+                    case PowerUpType.DOUBLE_SCORE:
+                        score *= 2;
+                        break;
+                    case PowerUpType.QUAD_SCORE:
+                        score *= 4;
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
 
-        private void RecyleRoadMark(GameObject roadMark)
-        {
-            roadMark.SetSize(Constants.ROADMARK_WIDTH * _scale, Constants.ROADMARK_HEIGHT * _scale);
-            roadMark.SetTop((int)roadMark.Height * 2 * -25);
+            _score += score;
         }
 
         #endregion
 
-        #region Game Difficulty
+        #region Difficulty
 
         private void ScaleDifficulty()
         {
             if (_score >= 10 && _score < 20)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 1;
+                _playerSpeed = _defaultPlayerSpeed + (1 / 2);
             }
-
             if (_score >= 20 && _score < 30)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 2;
+                _playerSpeed = _defaultPlayerSpeed + (2 / 2);
             }
             if (_score >= 30 && _score < 40)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 3;
+                _playerSpeed = _defaultPlayerSpeed + (3 / 2);
             }
             if (_score >= 40 && _score < 50)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 4;
+                _playerSpeed = _defaultPlayerSpeed + (4 / 2);
             }
             if (_score >= 50 && _score < 80)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 5;
+                _playerSpeed = _defaultPlayerSpeed + (5 / 2);
             }
             if (_score >= 80 && _score < 100)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 6;
+                _playerSpeed = _defaultPlayerSpeed + (6 / 2);
             }
             if (_score >= 100 && _score < 130)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 7;
+                _playerSpeed = _defaultPlayerSpeed + (7 / 2);
             }
             if (_score >= 130 && _score < 150)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 8;
+                _playerSpeed = _defaultPlayerSpeed + (8 / 2);
             }
             if (_score >= 150 && _score < 180)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 9;
+                _playerSpeed = _defaultPlayerSpeed + (9 / 2);
             }
             if (_score >= 180 && _score < 200)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 10;
+                _playerSpeed = _defaultPlayerSpeed + (10 / 2);
+            }
+            if (_score >= 200 && _score < 220)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 11;
+                _playerSpeed = _defaultPlayerSpeed + (11 / 2);
+            }
+            if (_score >= 220 && _score < 250)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 12;
+                _playerSpeed = _defaultPlayerSpeed + (12 / 2);
+            }
+            if (_score >= 250 && _score < 300)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 13;
+                _playerSpeed = _defaultPlayerSpeed + (13 / 2);
+            }
+            if (_score >= 300 && _score < 350)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 14;
+                _playerSpeed = _defaultPlayerSpeed + (14 / 2);
+            }
+            if (_score >= 350 && _score < 400)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 15;
+                _playerSpeed = _defaultPlayerSpeed + (15 / 2);
+            }
+            if (_score >= 400 && _score < 500)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 16;
+                _playerSpeed = _defaultPlayerSpeed + (16 / 2);
+            }
+            if (_score >= 500 && _score < 600)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 17;
+                _playerSpeed = _defaultPlayerSpeed + (17 / 2);
+            }
+            if (_score >= 600 && _score < 700)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 18;
+                _playerSpeed = _defaultPlayerSpeed + (18 / 2);
+            }
+            if (_score >= 700 && _score < 800)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 19;
+                _playerSpeed = _defaultPlayerSpeed + (19 / 2);
+            }
+            if (_score >= 800 && _score < 900)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 20;
+                _playerSpeed = _defaultPlayerSpeed + (20 / 2);
+            }
+            if (_score >= 900 && _score < 1000)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 21;
+                _playerSpeed = _defaultPlayerSpeed + (21 / 2);
+            }
+            if (_score >= 1000 && _score < 1200)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 22;
+                _playerSpeed = _defaultPlayerSpeed + (22 / 2);
+            }
+            if (_score >= 1200 && _score < 1400)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 23;
+                _playerSpeed = _defaultPlayerSpeed + (23 / 2);
+            }
+            if (_score >= 1400 && _score < 1600)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 24;
+                _playerSpeed = _defaultPlayerSpeed + (24 / 2);
+            }
+            if (_score >= 1600 && _score < 1800)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 25;
+                _playerSpeed = _defaultPlayerSpeed + (25 / 2);
+            }
+            if (_score >= 1800 && _score < 2000)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 26;
+                _playerSpeed = _defaultPlayerSpeed + (26 / 2);
+            }
+            if (_score >= 2000 && _score < 2200)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 27;
+                _playerSpeed = _defaultPlayerSpeed + (27 / 2);
+            }
+            if (_score >= 2200 && _score < 2400)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 28;
+                _playerSpeed = _defaultPlayerSpeed + (28 / 2);
+            }
+            if (_score >= 2400 && _score < 2600)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 29;
+                _playerSpeed = _defaultPlayerSpeed + (29 / 2);
+            }
+            if (_score >= 2600 && _score < 2800)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 30;
+                _playerSpeed = _defaultPlayerSpeed + (30 / 2);
+            }
+            if (_score >= 2800 && _score < 3000)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 31;
+                _playerSpeed = _defaultPlayerSpeed + (31 / 2);
             }
         }
 

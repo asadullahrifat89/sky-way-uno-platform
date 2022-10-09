@@ -25,7 +25,7 @@ namespace SkyWay
         private PeriodicTimer _gameViewTimer;
         private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
-        private readonly Random _rand = new();
+        private readonly Random _random = new();
 
         private double _windowHeight, _windowWidth;
         private double _scale;
@@ -52,7 +52,7 @@ namespace SkyWay
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            InitializeGameViews();
+            PopulateGameViews();
 
             LocalizationHelper.LoadLocalizationKeys();
             AssetHelper.PreloadAssets(ProgressBar);
@@ -71,7 +71,7 @@ namespace SkyWay
         private async void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeChanged += GamePage_SizeChanged;
-            StartGame();
+            StartAnimation();
             LocalizationHelper.CheckLocalizationCache();
 
             //TODO: set localization
@@ -81,7 +81,7 @@ namespace SkyWay
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
             SizeChanged -= GamePage_SizeChanged;
-            StopGame();
+            StopAnimation();
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -126,7 +126,7 @@ namespace SkyWay
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             PerformLogout();
         }
 
@@ -224,6 +224,8 @@ namespace SkyWay
             AuthTokenHelper.AuthToken = null;
             GameProfileHelper.GameProfile = null;
             PlayerScoreHelper.PlayerScore = null;
+
+            SetLoginContext();
         }
 
         private void ShowCookieToast()
@@ -260,15 +262,41 @@ namespace SkyWay
 
         #endregion
 
+        #region Page
+
+        private void SetViewSize()
+        {
+            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
+
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            if (pageType == typeof(GamePage))
+                SoundHelper.StopSound(SoundType.INTRO);
+
+            StopAnimation();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);
+
+            App.EnterFullScreen(true);
+        }
+
+        #endregion
+
+        #region Animation
+
         #region Game
 
-        private void InitializeGameViews()
+        private void PopulateGameViews()
         {
 #if DEBUG
             Console.WriteLine("INITIALIZING GAME");
 #endif
             SetViewSize();
-            InitializeUnderView();
+            PopulateUnderView();
         }
 
         private void LoadGameElements()
@@ -277,7 +305,7 @@ namespace SkyWay
             _clouds = Constants.ELEMENT_TEMPLATES.Where(x => x.Key == ElementType.CLOUD).Select(x => x.Value).ToArray();
         }
 
-        private void InitializeUnderView()
+        private void PopulateUnderView()
         {
             // add some cars underneath
             for (int i = 0; i < 10; i++)
@@ -301,8 +329,8 @@ namespace SkyWay
             // add some clouds underneath
             for (int i = 0; i < 15; i++)
             {
-                var scaleFactor = _rand.Next(1, 4);
-                var scaleReverseFactor = _rand.Next(-1, 2);
+                var scaleFactor = _random.Next(1, 4);
+                var scaleReverseFactor = _random.Next(-1, 2);
 
                 var cloud = new Cloud()
                 {
@@ -320,7 +348,7 @@ namespace SkyWay
             }
         }
 
-        private void StartGame()
+        private void StartAnimation()
         {
 #if DEBUG
             Console.WriteLine("GAME STARTED");
@@ -389,7 +417,7 @@ namespace SkyWay
             }
         }
 
-        private void StopGame()
+        private void StopAnimation()
         {
             _gameViewTimer?.Dispose();
         }
@@ -410,10 +438,10 @@ namespace SkyWay
 
         private void RecyleCar(GameObject car)
         {
-            _markNum = _rand.Next(0, _cars.Length);
+            _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(1, 4);
+            car.Speed = _gameSpeed - _random.Next(1, 4);
 
             RandomizeCarPosition(car);
         }
@@ -421,8 +449,8 @@ namespace SkyWay
         private void RandomizeCarPosition(GameObject car)
         {
             car.SetPosition(
-                left: _rand.Next(100, (int)UnderView.Width) - (100 * _scale),
-                top: (int)UnderView.Height);
+                left: _random.Next(100, (int)UnderView.Width) - (100 * _scale),
+                top: _random.Next((int)UnderView.Height, ((int)UnderView.Height) * 2));
         }
 
         #endregion
@@ -441,11 +469,11 @@ namespace SkyWay
 
         private void RecyleCloud(GameObject cloud)
         {
-            _markNum = _rand.Next(0, _clouds.Length);
+            _markNum = _random.Next(0, _clouds.Length);
 
             cloud.SetContent(_clouds[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
-            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
+            cloud.Speed = _gameSpeed - _random.Next(1, 4);
 
             RandomizeCloudPosition(cloud);
         }
@@ -453,8 +481,8 @@ namespace SkyWay
         private void RandomizeCloudPosition(GameObject cloud)
         {
             cloud.SetPosition(
-                left: _rand.Next(0, (int)UnderView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
+                left: _random.Next(0, (int)UnderView.Width) - (100 * _scale),
+                top: _random.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
         }
 
         #endregion
@@ -463,42 +491,13 @@ namespace SkyWay
 
         private void StartGameSounds()
         {
-            if (!SoundHelper.IsSoundPlaying(SoundType.INTRO))
-            {
-                SoundHelper.RandomizeIntroSound();
-                SoundHelper.PlaySound(SoundType.INTRO);
-            }
-        }
-
-        private void StopGameSounds()
-        {
-            SoundHelper.StopSound(SoundType.INTRO);
-        }
-        #endregion
-
-        #region Page
-
-        private void SetViewSize()
-        {
-            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
-
-            UnderView.Width = _windowWidth;
-            UnderView.Height = _windowHeight;
-        }
-
-        private void NavigateToPage(Type pageType)
-        {
-            if (pageType == typeof(GamePage))
-                SoundHelper.StopSound(SoundType.INTRO);
-
-            StopGame();
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);
-
-            App.EnterFullScreen(true);
+            SoundHelper.RandomizeIntroSound();
+            SoundHelper.PlaySound(SoundType.INTRO);
         }
 
         #endregion        
+
+        #endregion
 
         #endregion
     }

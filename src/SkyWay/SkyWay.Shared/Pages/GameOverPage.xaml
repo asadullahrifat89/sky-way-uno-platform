@@ -5,11 +5,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SkyWay"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource SeaBackgroundColor}"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
+    <Grid x:Name="RootGrid">
 
+        <!--#region Animation-->
+        <!--  This hosts clouds and cars that do not collide  -->
+        <GameEnvironment x:Name="UnderView" Background="Transparent" />
+
+        <!--  Fog  -->
+        <Border
+            Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
+            Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
+            Background="{StaticResource SeaBackgroundColor}"
+            Opacity="0.5" />
+        <!--#endregion-->
+
+        <!--#region Login Prompt & Score-->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
             <!--  Login prompt  -->
@@ -71,11 +84,14 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <TextBlock
+                    <!--<TextBlock
                         FontSize="45"
                         FontWeight="Bold"
                         Text="☠️"
-                        TextAlignment="Center" />
+                        TextAlignment="Center" />-->
+
+                    <!--  Game over logo  -->
+                    <Image Height="100" Source="ms-appx:///Assets/Images/game-over.png" />
 
                     <!--  Tagline  -->
                     <TextBlock
@@ -93,7 +109,7 @@
                             x:Name="ScoreNumberText"
                             FontSize="30"
                             FontWeight="Bold"
-                            Foreground="Goldenrod"
+                            Foreground="White"
                             TextAlignment="Center" />
 
                         <!--  Your score  -->
@@ -107,8 +123,8 @@
                         <!--  Border  -->
                         <Border
                             Margin="10"
-                            Background="Goldenrod"
-                            BorderBrush="DarkGoldenrod"
+                            Background="#ff6852"
+                            BorderBrush="#ff6852"
                             BorderThickness="3"
                             CornerRadius="50" />
 
@@ -198,6 +214,7 @@
             </Border>
 
         </StackPanel>
+        <!--#endregion-->
 
         <!--#region  User Picture & Name-->
         <Border
