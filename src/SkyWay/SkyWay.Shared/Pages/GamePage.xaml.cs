@@ -231,6 +231,8 @@ namespace SkyWay
 
         #region Methods
 
+        #region Animation
+
         #region Game
 
         private void PopulateGameViews()
@@ -1129,9 +1131,11 @@ namespace SkyWay
             roadMark.SetTop((int)roadMark.Height * 2 * -25);
         }
 
+        #endregion 
+
         #endregion
 
-        #region Game Difficulty
+        #region Difficulty
 
         private void ScaleDifficulty()
         {
@@ -1175,6 +1179,46 @@ namespace SkyWay
             if (_score >= 180 && _score < 200)
             {
                 _gameSpeed = _defaultGameSpeed + 1 * 10;
+            }
+            if (_score >= 200 && _score < 220)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 11;
+            }
+            if (_score >= 220 && _score < 250)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 12;
+            }
+            if (_score >= 250 && _score < 300)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 13;
+            }
+            if (_score >= 300 && _score < 350)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 14;
+            }
+            if (_score >= 350 && _score < 400)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 15;
+            }
+            if (_score >= 400 && _score < 500)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 16;
+            }
+            if (_score >= 500 && _score < 600)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 17;
+            }
+            if (_score >= 600 && _score < 700)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 18;
+            }
+            if (_score >= 700 && _score < 800)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 19;
+            }
+            if (_score >= 800 && _score < 900)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 20;
             }
         }
 
