@@ -55,8 +55,6 @@
                 <TextBox
                     x:Name="UserFullNameBox"
                     Margin="5"
-                    CornerRadius="50"
-                    FontWeight="SemiBold"
                     Header="Enter your full name"
                     TextChanged="UserFullNameBox_TextChanged" />
 
@@ -64,8 +62,6 @@
                 <TextBox
                     x:Name="UserEmailBox"
                     Margin="5"
-                    CornerRadius="50"
-                    FontWeight="SemiBold"
                     Header="Enter email"
                     TextChanged="UserEmailBox_TextChanged" />
 
@@ -73,8 +69,6 @@
                 <TextBox
                     x:Name="UserNameBox"
                     Margin="5"
-                    CornerRadius="50"
-                    FontWeight="SemiBold"
                     Header="Set a username"
                     TextChanged="UserNameBox_TextChanged" />
 
@@ -82,7 +76,6 @@
                 <PasswordBox
                     x:Name="PasswordBox"
                     Margin="5"
-                    CornerRadius="50"
                     Header="Set a password"
                     KeyDown="PasswordBox_KeyDown"
                     TextChanged="PasswordBox_TextChanged" />
@@ -91,7 +84,6 @@
                 <PasswordBox
                     x:Name="ConfirmPasswordBox"
                     Margin="5"
-                    CornerRadius="50"
                     Header="Confirm password"
                     KeyDown="PasswordBox_KeyDown"
                     TextChanged="ConfirmPasswordBox_TextChanged" />

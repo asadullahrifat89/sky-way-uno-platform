@@ -16,6 +16,7 @@
             <!--  Add resources here  -->
 
             <!--#region Buttons-->
+
             <Style
                 x:Key="DefaultButton"
                 BasedOn="{StaticResource DefaultButtonStyle}"
@@ -36,6 +37,25 @@
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
             </Style>
+
+            <Style BasedOn="{StaticResource DefaultToggleButtonStyle}" TargetType="ToggleButton">
+                <Setter Property="CornerRadius" Value="50" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+            </Style>
+
+            <!--#endregion-->
+
+            <!--#region Input Fields-->
+
+            <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                <Setter Property="CornerRadius" Value="50" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+            </Style>
+
+            <Style BasedOn="{StaticResource DefaultPasswordBoxStyle}" TargetType="PasswordBox">
+                <Setter Property="CornerRadius" Value="50" />
+            </Style>
+
             <!--#endregion-->
 
             <!--#region Game UI Container Style-->
@@ -65,9 +85,7 @@
             <SolidColorBrush x:Key="ProgressBarErrorColor" Color="Yellow" />
             <SolidColorBrush x:Key="ProgressBarForegroundColor" Color="Goldenrod" />
             <SolidColorBrush x:Key="ProgressBarOkColor" Color="LightGreen" />
-            <!--#endregion-->
 
-            <!--#region Road Colors-->
             <SolidColorBrush x:Key="SeaBackgroundColor" Color="LightSkyBlue" />
             <!--#endregion-->
 

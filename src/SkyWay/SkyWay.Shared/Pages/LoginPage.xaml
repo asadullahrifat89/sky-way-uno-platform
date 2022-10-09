@@ -51,15 +51,15 @@
                 <TextBox
                     x:Name="UserNameBox"
                     Margin="5"
-                    CornerRadius="50"
-                    FontWeight="SemiBold"
+                    
+                  
                     Header="Username or Email"
                     TextChanged="UserNameBox_TextChanged" />
 
                 <PasswordBox
                     x:Name="PasswordBox"
                     Margin="5"
-                    CornerRadius="50"
+                  
                     Header="Password"
                     KeyDown="PasswordBox_KeyDown"
                     TextChanged="PasswordBox_TextChanged" />
