@@ -31,13 +31,13 @@
             Orientation="Horizontal">
 
             <!--  English  -->
-            <Button
+            <!--<Button
                 x:Name="EnglishButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="English"
                 Style="{StaticResource DefaultButton}"
-                Tag="en" />
+                Tag="en" />-->
 
             <!--  French  -->
             <!--<Button
