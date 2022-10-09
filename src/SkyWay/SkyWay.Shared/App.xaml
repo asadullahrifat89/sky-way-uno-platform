@@ -16,13 +16,16 @@
             <!--  Add resources here  -->
 
             <!--#region Buttons-->
-            <Style x:Key="DefaultButton" TargetType="Button">
+            <Style
+                x:Key="DefaultButton"
+                BasedOn="{StaticResource DefaultButtonStyle}"
+                TargetType="Button">
                 <Setter Property="CornerRadius" Value="50" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
             </Style>
 
-            <Style TargetType="Button">
+            <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
                 <Setter Property="Background" Value="#ff6852" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="BorderBrush" Value="White" />
