@@ -124,7 +124,7 @@
                     <!--  Tagline  -->
                     <TextBlock
                         x:Name="LeaderboardPage_Tagline"
-                        Margin="5"
+                        Margin="5,10,5,5"
                         FontSize="35"
                         FontWeight="Bold"
                         Text="Leaderboard"

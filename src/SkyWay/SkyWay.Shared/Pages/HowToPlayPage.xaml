@@ -32,13 +32,6 @@
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
 
-                <!--  Border  -->
-                <Border
-                    Margin="60,10,60,0"
-                    Background="{StaticResource FrameBackgroundColor}"
-                    BorderBrush="{StaticResource FrameBackgroundColor}"
-                    BorderThickness="3"
-                    CornerRadius="50" />
 
                 <FlipView
                     x:Name="InstructionsContainer"
@@ -217,7 +210,7 @@
                 <Button
                     x:Name="NextButton"
                     Height="50"
-                    Margin="30,0,30,5"
+                    Margin="30,0,30,10"
                     HorizontalAlignment="Stretch"
                     Click="NextButton_Click"
                     Content="Next"
@@ -227,7 +220,7 @@
                 <Button
                     x:Name="PlayButton"
                     Height="50"
-                    Margin="30,0,30,5"
+                    Margin="30,0,30,10"
                     HorizontalAlignment="Stretch"
                     Click="PlayButton_Click"
                     Content="Start Game"

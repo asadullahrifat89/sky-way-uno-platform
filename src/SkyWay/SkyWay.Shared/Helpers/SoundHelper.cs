@@ -66,7 +66,7 @@ namespace SkyWay
             }
 
 #if DEBUG
-            Console.WriteLine("LOADED SOUDS: " + _playingSounds.Count);
+            Console.WriteLine("LOADED SOUNDS: " + _playingSounds.Count);
 #endif
         }
 
