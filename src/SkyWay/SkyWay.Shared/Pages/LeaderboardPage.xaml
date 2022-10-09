@@ -140,8 +140,8 @@
                             TextWrapping="WrapWholeWords" />
                         <Border
                             Margin="10"
-                            Background="#ff6852"
-                            BorderBrush="#ff6852"
+                            Background="{StaticResource FrameBackgroundColor}"
+                            BorderBrush="{StaticResource FrameBackgroundColor}"
                             BorderThickness="3"
                             CornerRadius="50" />
                     </StackPanel>
@@ -210,8 +210,8 @@
                     <!--  Border before for personal best score  -->
                     <Border
                         Margin="10"
-                        Background="#ff6852"
-                        BorderBrush="#ff6852"
+                        Background="{StaticResource FrameBackgroundColor}"
+                        BorderBrush="{StaticResource FrameBackgroundColor}"
                         BorderThickness="3"
                         CornerRadius="50" />
 

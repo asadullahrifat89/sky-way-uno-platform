@@ -32,22 +32,35 @@
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
 
-                <FlipView MinHeight="280" Background="Transparent">
+                <!--  Border  -->
+                <Border
+                    Margin="60,10,60,0"
+                    Background="{StaticResource FrameBackgroundColor}"
+                    BorderBrush="{StaticResource FrameBackgroundColor}"
+                    BorderThickness="3"
+                    CornerRadius="50" />
+
+                <FlipView
+                    x:Name="InstructionsContainer"
+                    MinHeight="290"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    SelectedIndex="0">
 
                     <!--  Player  -->
                     <StackPanel Margin="10" VerticalAlignment="Center">
-                        <TextBlock
-                            x:Name="PlayerInstructionsHeader"
-                            Margin="5"
-                            FontSize="18"
-                            FontWeight="SemiBold"
-                            Text="Player"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
                         <Image
                             Height="150"
                             Margin="5"
                             Source="ms-appx:///Assets/Images/player.png" />
+                        <TextBlock
+                            x:Name="PlayerInstructionsHeader"
+                            Margin="5"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Text="Player"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
                         <TextBlock
                             x:Name="PlayerInstructionsDetail"
                             Margin="5"
@@ -60,14 +73,6 @@
 
                     <!--  Cars  -->
                     <StackPanel Margin="10" VerticalAlignment="Center">
-                        <TextBlock
-                            x:Name="CarsInstructionsHeader"
-                            Margin="5"
-                            FontSize="18"
-                            FontWeight="SemiBold"
-                            Text="Cars"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <Image
                                 Width="50"
@@ -86,6 +91,14 @@
                                 Source="ms-appx:///Assets/Images/car3.png" />
                         </StackPanel>
                         <TextBlock
+                            x:Name="CarsInstructionsHeader"
+                            Margin="5"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Text="Cars"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <TextBlock
                             x:Name="CarsInstructionsDetail"
                             Margin="5"
                             FontSize="16"
@@ -97,14 +110,6 @@
 
                     <!--  Collectibles  -->
                     <StackPanel Margin="10" VerticalAlignment="Center">
-                        <TextBlock
-                            x:Name="CollectiblesInstructionsHeader"
-                            Margin="5"
-                            FontSize="18"
-                            FontWeight="SemiBold"
-                            Text="Collectibles"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <Image
                                 Width="50"
@@ -123,6 +128,14 @@
                                 Source="ms-appx:///Assets/Images/collectible.png" />
                         </StackPanel>
                         <TextBlock
+                            x:Name="CollectiblesInstructionsHeader"
+                            Margin="5"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Text="Collectibles"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <TextBlock
                             x:Name="CollectiblesInstructionsDetail"
                             Margin="5"
                             FontSize="16"
@@ -134,14 +147,6 @@
 
                     <!--  PowerUps  -->
                     <StackPanel Margin="10" VerticalAlignment="Center">
-                        <TextBlock
-                            x:Name="PowerUpsInstructionsHeader"
-                            Margin="5"
-                            FontSize="18"
-                            FontWeight="SemiBold"
-                            Text="Power Ups"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <Image
                                 Width="50"
@@ -165,6 +170,14 @@
                                 Source="ms-appx:///Assets/Images/powerup4.png" />
                         </StackPanel>
                         <TextBlock
+                            x:Name="PowerUpsInstructionsHeader"
+                            Margin="5"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Text="Power Ups"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <TextBlock
                             x:Name="PowerUpsInstructionsDetail"
                             Margin="5"
                             FontSize="16"
@@ -176,18 +189,18 @@
 
                     <!--  Health  -->
                     <StackPanel Margin="10" VerticalAlignment="Center">
-                        <TextBlock
-                            x:Name="HealthInstructionsHeader"
-                            Margin="5"
-                            FontSize="18"
-                            FontWeight="SemiBold"
-                            Text="Health"
-                            TextAlignment="Center"
-                            TextWrapping="WrapWholeWords" />
                         <Image
                             Height="150"
                             Margin="5"
                             Source="ms-appx:///Assets/Images/health.png" />
+                        <TextBlock
+                            x:Name="HealthInstructionsHeader"
+                            Margin="5"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Text="Health"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
                         <TextBlock
                             x:Name="HealthInstructionsDetail"
                             Margin="5"
@@ -200,15 +213,26 @@
 
                 </FlipView>
 
+                <!--  Next button  -->
+                <Button
+                    x:Name="NextButton"
+                    Height="50"
+                    Margin="30,0,30,5"
+                    HorizontalAlignment="Stretch"
+                    Click="NextButton_Click"
+                    Content="Next"
+                    Tag="ActionButton" />
+
                 <!--  Start game button  -->
                 <Button
                     x:Name="PlayButton"
                     Height="50"
-                    Margin="30,0,30,10"
+                    Margin="30,0,30,5"
                     HorizontalAlignment="Stretch"
                     Click="PlayButton_Click"
                     Content="Start Game"
-                    Tag="ActionButton" />
+                    Tag="ActionButton"
+                    Visibility="Collapsed" />
 
             </StackPanel>
 

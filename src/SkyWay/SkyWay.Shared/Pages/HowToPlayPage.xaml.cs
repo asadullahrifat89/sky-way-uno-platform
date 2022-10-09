@@ -39,6 +39,26 @@ namespace SkyWay
             NavigateToPage(typeof(GamePage));
         }
 
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            var itemsCount = InstructionsContainer.Items.Count - 1;
+            
+            if (InstructionsContainer.SelectedIndex == itemsCount)
+            {
+                for (int i = 0; i < itemsCount; i++)
+                {
+                    InstructionsContainer.SelectedIndex--;
+                }
+
+                NextButton.Visibility = Visibility.Collapsed;
+                PlayButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                InstructionsContainer.SelectedIndex++;
+            }
+        }
+
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(StartPage));
