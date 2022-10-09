@@ -998,6 +998,8 @@ namespace SkyWay
 
             if (_powerUpType == PowerUpType.FORCE_SHIELD)
                 _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
+            else
+                _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
 
             SoundHelper.PlaySound(SoundType.POWER_UP);
         }
