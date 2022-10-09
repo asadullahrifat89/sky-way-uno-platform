@@ -38,6 +38,9 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
 
+                <!--  Game logo  -->
+                <Image Height="100" Source="ms-appx:///Assets/Images/logo_game.png" />
+
                 <!--  Game name  -->
                 <TextBlock
                     x:Name="GameName"
