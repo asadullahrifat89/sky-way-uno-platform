@@ -16,7 +16,8 @@ namespace SkyWay
     {
         NONE,
         FORCE_SHIELD,
-        SLOW_DOWN_TIME
+        SLOW_DOWN_TIME,
+        DOUBLE_SCORE,
     }
 }
 

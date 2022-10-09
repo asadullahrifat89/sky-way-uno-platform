@@ -472,7 +472,7 @@ namespace SkyWay
 
         private void GameViewLoop()
         {
-            _score += .05; // increase the score by .5 each tick of the timer
+            AddScore(0.05d); // increase the score by .5 each tick of the timer
             scoreText.Text = _score.ToString("#");
 
             _playerHitBox = _player.GetHitBox(_scale);
@@ -687,7 +687,7 @@ namespace SkyWay
             //TODO: show game quitting content
         }
 
-        private double SlowDownTime(double speed)
+        private double DecreaseSpeed(double speed)
         {
             if (_isPowerMode && _powerUpType == PowerUpType.SLOW_DOWN_TIME)
                 speed /= 3;
@@ -702,7 +702,7 @@ namespace SkyWay
         private void UpdateCar(GameObject car)
         {
             var speed = car.Speed;
-            speed = SlowDownTime(speed);
+            speed = DecreaseSpeed(speed);
 
             // move down vehicle
             car.SetTop(car.GetTop() + speed);
@@ -760,7 +760,7 @@ namespace SkyWay
         private void RecyleCar(GameObject car)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = SlowDownTime(speed);
+            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
@@ -784,7 +784,7 @@ namespace SkyWay
         private void UpdateCloud(GameObject cloud)
         {
             var speed = cloud.Speed;
-            speed = SlowDownTime(speed);
+            speed = DecreaseSpeed(speed);
 
             cloud.SetTop(cloud.GetTop() + speed);
 
@@ -797,7 +797,7 @@ namespace SkyWay
         private void RecyleCloud(GameObject cloud)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = SlowDownTime(speed);
+            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _clouds.Length);
 
@@ -826,7 +826,7 @@ namespace SkyWay
 
             double xDir = _random.Next(-1, 2);
 
-            var speed = (double)_gameSpeed - (double)_gameSpeed / 2;            
+            var speed = (double)_gameSpeed - (double)_gameSpeed / 2;
 
             for (int i = 0; i < 5; i++)
             {
@@ -869,7 +869,7 @@ namespace SkyWay
         private void UpdateCollectible(GameObject collectible)
         {
             var speed = collectible.Speed;
-            speed = SlowDownTime(speed);
+            speed = DecreaseSpeed(speed);
 
             collectible.SetTop(collectible.GetTop() + speed);
 
@@ -887,7 +887,7 @@ namespace SkyWay
 
         private void Collectible()
         {
-            _score++;
+            AddScore(1); // increase the score by 1 if collectible is collected
             _collectiblesCollected++;
             SoundHelper.PlaySound(SoundType.COLLECTIBLE_COLLECTED);
         }
@@ -923,7 +923,7 @@ namespace SkyWay
         private void UpdateIsland(GameObject island)
         {
             var speed = (double)_gameSpeed / 6;
-            speed = SlowDownTime(speed);
+            speed = DecreaseSpeed(speed);
 
             island.SetTop(island.GetTop() + speed);
 
@@ -963,6 +963,9 @@ namespace SkyWay
                 case PowerUpType.SLOW_DOWN_TIME:
                     powerUp.SetContent(powerUpTemplates[1].Value);
                     break;
+                case PowerUpType.DOUBLE_SCORE:
+                    powerUp.SetContent(powerUpTemplates[2].Value);
+                    break;
                 default:
                     break;
             }
@@ -998,16 +1001,8 @@ namespace SkyWay
             _powerUpType = powerUp.PowerUpType;
             _powerModeCounter = _powerModeDelay;
 
-            switch (_powerUpType)
-            {
-                case PowerUpType.FORCE_SHIELD:
-                    {
-                        _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            if (_powerUpType == PowerUpType.FORCE_SHIELD)
+                _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
 
             SoundHelper.PlaySound(SoundType.POWER_UP);
         }
@@ -1031,6 +1026,7 @@ namespace SkyWay
             _powerUpType = 0;
 
             powerUpText.Visibility = Visibility.Collapsed;
+
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
             SoundHelper.PlaySound(SoundType.POWER_DOWN);
         }
@@ -1153,6 +1149,18 @@ namespace SkyWay
         }
 
         #endregion
+
+        #endregion
+
+        #region Score
+
+        private void AddScore(double score)
+        {
+            if (_isPowerMode && _powerUpType == PowerUpType.DOUBLE_SCORE)
+                score *= 2;
+
+            _score += score;
+        }
 
         #endregion
 

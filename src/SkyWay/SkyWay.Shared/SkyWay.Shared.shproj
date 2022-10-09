@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <_Globbed_Content Remove="Assets\Images\logo_game.png" />
+    <_Globbed_Content Remove="Assets\Images\powerup3.png" />
   </ItemGroup>
   <ItemGroup>
     <_Globbled_Page Remove="Pages\GameOverPage.xaml" />
