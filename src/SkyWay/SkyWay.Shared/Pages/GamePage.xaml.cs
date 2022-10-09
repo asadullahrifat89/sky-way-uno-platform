@@ -601,11 +601,6 @@ namespace SkyWay
             {
                 switch ((ElementType)x.Tag)
                 {
-                    case ElementType.CAR:
-                        {
-                            UpdateCar(x);
-                        }
-                        break;
                     case ElementType.CLOUD:
                         {
                             UpdateCloud(x);
@@ -695,7 +690,7 @@ namespace SkyWay
         private double SlowDownTime(double speed)
         {
             if (_isPowerMode && _powerUpType == PowerUpType.SLOW_DOWN_TIME)
-                speed /= 2;
+                speed /= 3;
 
             return speed;
         }
@@ -791,7 +786,7 @@ namespace SkyWay
             var speed = cloud.Speed;
             speed = SlowDownTime(speed);
 
-            cloud.SetTop(cloud.GetTop() + cloud.Speed);
+            cloud.SetTop(cloud.GetTop() + speed);
 
             if (cloud.GetTop() > GameView.Height)
             {
@@ -1004,62 +999,7 @@ namespace SkyWay
                     {
                         _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
                     }
-                    break;
-                case PowerUpType.SLOW_DOWN_TIME:
-                    {
-                        //foreach (GameObject x in UnderView.Children.OfType<GameObject>())
-                        //{
-                        //    switch ((ElementType)x.Tag)
-                        //    {
-                        //        case ElementType.CLOUD:
-                        //            {
-                        //                x.Speed -= 4;
-                        //            }
-                        //            break;
-                        //        case ElementType.CAR:
-                        //            {
-                        //                x.Speed -= 4;
-                        //            }
-                        //            break;
-                        //        default:
-                        //            break;
-                        //    }
-                        //}
-
-                        //foreach (GameObject x in GameView.Children.OfType<GameObject>())
-                        //{
-                        //    switch ((ElementType)x.Tag)
-                        //    {
-                        //        case ElementType.CLOUD:
-                        //            {
-                        //                x.Speed -= 4;
-                        //            }
-                        //            break;
-                        //        case ElementType.CAR:
-                        //            {
-                        //                x.Speed -= 4;
-                        //            }
-                        //            break;
-                        //        default:
-                        //            break;
-                        //    }
-                        //}
-
-                        //foreach (GameObject x in OverView.Children.OfType<GameObject>())
-                        //{
-                        //    switch ((ElementType)x.Tag)
-                        //    {
-                        //        case ElementType.CLOUD:
-                        //            {
-                        //                x.Speed -= 4;
-                        //            }
-                        //            break;
-                        //        default:
-                        //            break;
-                        //    }
-                        //}
-                    }
-                    break;
+                    break;               
                 default:
                     break;
             }
