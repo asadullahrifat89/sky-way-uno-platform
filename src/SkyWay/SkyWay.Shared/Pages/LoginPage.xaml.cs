@@ -30,7 +30,7 @@ namespace SkyWay
         private double _windowHeight, _windowWidth;
         private double _scale;
 
-        private int _gameSpeed = 5;
+        private int _gameSpeed = 8;
 
         private int _markNum;
 
@@ -56,7 +56,7 @@ namespace SkyWay
 
             this.Loaded += LoginPage_Loaded;
             this.Unloaded += LoginPage_Unloaded;
-        }      
+        }
 
         #endregion
 
@@ -281,11 +281,6 @@ namespace SkyWay
                     Width = Constants.CAR_WIDTH * _scale,
                     Height = Constants.CAR_HEIGHT * _scale,
                     IsCollidable = false,
-                    RenderTransform = new CompositeTransform()
-                    {
-                        ScaleX = 0.5,
-                        ScaleY = 0.5,
-                    }
                 };
 
                 RandomizeCarPosition(car);
