@@ -42,9 +42,11 @@ namespace SkyWay
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             var itemsCount = InstructionsContainer.Items.Count - 1;
-            
+
+            // once the last instruction is reached, make the start game button visible and hide the next button
             if (InstructionsContainer.SelectedIndex == itemsCount)
             {
+                // traverse back to first instruction
                 for (int i = 0; i < itemsCount; i++)
                 {
                     InstructionsContainer.SelectedIndex--;
@@ -57,6 +59,8 @@ namespace SkyWay
             {
                 InstructionsContainer.SelectedIndex++;
             }
+
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
@@ -69,12 +73,6 @@ namespace SkyWay
         #endregion
 
         #region Methods
-
-        #region Logic
-
-
-
-        #endregion
 
         #region Page
 
