@@ -1321,6 +1321,11 @@ namespace SkyWay
                 _gameSpeed = _defaultGameSpeed + 1 * 30;
                 _playerSpeed = _defaultPlayerSpeed + (30 / 2);
             }
+            if (_score >= 2800 && _score < 3000)
+            {
+                _gameSpeed = _defaultGameSpeed + 1 * 31;
+                _playerSpeed = _defaultPlayerSpeed + (31 / 2);
+            }
         }
 
         #endregion
