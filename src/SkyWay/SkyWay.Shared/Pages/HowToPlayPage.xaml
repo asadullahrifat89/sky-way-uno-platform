@@ -23,19 +23,188 @@
                 <!--  Tag line  -->
                 <TextBlock
                     x:Name="HowToPlayPage_Tagline"
-                    Margin="10"
+                    Margin="10,10,10,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    FontSize="20"
+                    FontSize="30"
+                    FontWeight="Bold"
                     Text="How To Play"
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
+
+                <FlipView MinHeight="270" Background="Transparent">
+
+                    <!--  Player  -->
+                    <StackPanel Margin="10" VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="PlayerInstructionsHeader"
+                            Margin="5"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Player"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <Image
+                            Height="150"
+                            Margin="5"
+                            Source="ms-appx:///Assets/Images/player.png" />
+                        <TextBlock
+                            x:Name="PlayerInstructionsDetail"
+                            Margin="5"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="Move your car across the screen with your mouse, keyboard or touch screen."
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                    </StackPanel>
+
+                    <!--  Cars  -->
+                    <StackPanel Margin="10" VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="CarsInstructionsHeader"
+                            Margin="5"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Cars"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/car1.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/car2.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/car3.png" />
+                        </StackPanel>
+                        <TextBlock
+                            x:Name="CarsInstructionsDetail"
+                            Margin="5"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="Avoid colliding with other cars and loosing health."
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                    </StackPanel>
+
+                    <!--  Collectibles  -->
+                    <StackPanel Margin="10" VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="CollectiblesInstructionsHeader"
+                            Margin="5"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Collectibles"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/collectible.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/collectible.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/collectible.png" />
+                        </StackPanel>
+                        <TextBlock
+                            x:Name="CollectiblesInstructionsDetail"
+                            Margin="5"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="Collect these as much as you can to add to your score."
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                    </StackPanel>
+
+                    <!--  PowerUps  -->
+                    <StackPanel Margin="10" VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="PowerUpsInstructionsHeader"
+                            Margin="5"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Power Ups"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/powerup1.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/powerup2.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/powerup3.png" />
+                            <Image
+                                Width="50"
+                                Height="150"
+                                Margin="5"
+                                Source="ms-appx:///Assets/Images/powerup4.png" />
+                        </StackPanel>
+                        <TextBlock
+                            x:Name="PowerUpsInstructionsDetail"
+                            Margin="5"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="Collect these to enable force shield, time lapse, 2x, and 4x score multiplier."
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                    </StackPanel>
+
+                    <!--  Health  -->
+                    <StackPanel Margin="10" VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="HealthInstructionsHeader"
+                            Margin="5"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Health"
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                        <Image
+                            Height="150"
+                            Margin="5"
+                            Source="ms-appx:///Assets/Images/health.png" />
+                        <TextBlock
+                            x:Name="HealthInstructionsDetail"
+                            Margin="5"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="Collect these to replenish your cars health."
+                            TextAlignment="Center"
+                            TextWrapping="WrapWholeWords" />
+                    </StackPanel>
+
+                </FlipView>
 
                 <!--  Start game button  -->
                 <Button
                     x:Name="PlayButton"
                     Height="50"
-                    Margin="30,10,30,5"
+                    Margin="30,0,30,10"
                     HorizontalAlignment="Stretch"
                     Click="PlayButton_Click"
                     Content="Start Game"
