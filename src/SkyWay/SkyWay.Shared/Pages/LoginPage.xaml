@@ -10,17 +10,18 @@
 
     <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
 
-        <!--#region Background animation-->
+        <!--#region Animation-->
+
         <!--  This hosts clouds and cars that do not collide  -->
         <GameEnvironment x:Name="UnderView" Background="Transparent" />
 
-        <!--#region Fog-->
+        <!--  Fog  -->
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
             Background="{StaticResource SeaBackgroundColor}"
             Opacity="0.5" />
-        <!--#endregion-->
+
         <!--#endregion-->
 
         <!--#region UI controls-->
