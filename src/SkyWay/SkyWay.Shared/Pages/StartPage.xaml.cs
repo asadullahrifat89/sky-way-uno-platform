@@ -71,7 +71,7 @@ namespace SkyWay
         private async void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeChanged += GamePage_SizeChanged;
-            StartGame();
+            StartAnimation();
             LocalizationHelper.CheckLocalizationCache();
 
             //TODO: set localization
@@ -81,7 +81,7 @@ namespace SkyWay
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
             SizeChanged -= GamePage_SizeChanged;
-            StopGame();
+            StopAnimation();
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -224,6 +224,8 @@ namespace SkyWay
             AuthTokenHelper.AuthToken = null;
             GameProfileHelper.GameProfile = null;
             PlayerScoreHelper.PlayerScore = null;
+
+            SetLoginContext();
         }
 
         private void ShowCookieToast()
@@ -259,6 +261,32 @@ namespace SkyWay
         }
 
         #endregion
+
+        #region Page
+
+        private void SetViewSize()
+        {
+            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
+
+            UnderView.Width = _windowWidth;
+            UnderView.Height = _windowHeight;
+        }
+
+        private void NavigateToPage(Type pageType)
+        {
+            if (pageType == typeof(GamePage))
+                SoundHelper.StopSound(SoundType.INTRO);
+
+            StopAnimation();
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            App.NavigateToPage(pageType);
+
+            App.EnterFullScreen(true);
+        }
+
+        #endregion
+
+        #region Animation
 
         #region Game
 
@@ -320,7 +348,7 @@ namespace SkyWay
             }
         }
 
-        private void StartGame()
+        private void StartAnimation()
         {
 #if DEBUG
             Console.WriteLine("GAME STARTED");
@@ -389,7 +417,7 @@ namespace SkyWay
             }
         }
 
-        private void StopGame()
+        private void StopAnimation()
         {
             _gameViewTimer?.Dispose();
         }
@@ -467,31 +495,9 @@ namespace SkyWay
             SoundHelper.PlaySound(SoundType.INTRO);
         }
 
-        #endregion
-
-        #region Page
-
-        private void SetViewSize()
-        {
-            _scale = ScalingHelper.GetGameObjectScale(_windowWidth);
-
-            UnderView.Width = _windowWidth;
-            UnderView.Height = _windowHeight;
-        }
-
-        private void NavigateToPage(Type pageType)
-        {
-            if (pageType == typeof(GamePage))
-                SoundHelper.StopSound(SoundType.INTRO);
-
-            StopGame();
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            App.NavigateToPage(pageType);
-
-            App.EnterFullScreen(true);
-        }
-
         #endregion        
+
+        #endregion
 
         #endregion
     }
