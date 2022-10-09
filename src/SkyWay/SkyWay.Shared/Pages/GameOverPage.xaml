@@ -55,7 +55,7 @@
                             VerticalAlignment="Center"
                             FontSize="15"
                             FontWeight="SemiBold"
-                            Text="You could win an exciting prize if you login."
+                            Text="You could earn a place on the leaderboard if you login."
                             TextWrapping="WrapWholeWords" />
 
                     </Grid>
