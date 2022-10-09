@@ -410,7 +410,7 @@ namespace SkyWay
         {
             car.SetPosition(
                 left: _rand.Next(100, (int)UnderView.Width) - (100 * _scale),
-                top: (int)UnderView.Height);
+                top: _rand.Next((int)UnderView.Height, ((int)UnderView.Height) * 2));
         }
 
         #endregion
