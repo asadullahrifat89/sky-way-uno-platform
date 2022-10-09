@@ -274,6 +274,9 @@ namespace SkyWay
 
             UnderView.Width = _windowWidth;
             UnderView.Height = _windowHeight;
+
+            OverView.Width = _windowWidth;
+            OverView.Height = _windowHeight;
         }
 
         private void NavigateToPage(Type pageType)
@@ -295,6 +298,7 @@ namespace SkyWay
 #endif
             SetViewSize();
             PopulateUnderView();
+            PopulateOverView();
         }
 
         private void LoadGameElements()
@@ -341,6 +345,21 @@ namespace SkyWay
             }
         }
 
+        private void PopulateOverView()
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                var car = new Player()
+                {
+                    Width = Constants.PLAYER_WIDTH * _scale,
+                    Height = Constants.PLAYER_HEIGHT * _scale,
+                };
+
+                RandomizeCarPosition(car);
+                OverView.Children.Add(car);
+            }
+        }
+
         private void StartAnimation()
         {
 #if DEBUG
@@ -364,6 +383,20 @@ namespace SkyWay
                     case ElementType.CAR:
                         {
                             RecyleCar(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (GameObject x in OverView.Children.OfType<GameObject>())
+            {
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.PLAYER:
+                        {
+                            RecylePlayer(x);
                         }
                         break;
                     default:
@@ -407,6 +440,20 @@ namespace SkyWay
                         break;
                 }
             }
+
+            foreach (GameObject x in OverView.Children.OfType<GameObject>())
+            {
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.PLAYER:
+                        {
+                            UpdatePlayer(x);
+                        }
+                        break;                  
+                    default:
+                        break;
+                }
+            }
         }
 
         private void StopAnimation()
@@ -443,6 +490,29 @@ namespace SkyWay
             car.SetPosition(
                 left: _rand.Next(100, (int)UnderView.Width) - (100 * _scale),
                 top: _rand.Next((int)UnderView.Height, ((int)UnderView.Height) * 2));
+        }
+
+        #endregion
+
+        #region Player
+
+        private void UpdatePlayer(GameObject player)
+        {
+            player.SetTop(player.GetTop() - player.Speed);
+
+            if (player.GetTop() < 0 - player.Height)
+            {
+                RecylePlayer(player);
+            }
+        }
+
+        private void RecylePlayer(GameObject player)
+        {
+            player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER).Value);
+            player.SetSize(Constants.CAR_WIDTH * _scale, Constants.PLAYER_HEIGHT * _scale);
+            player.Speed = _gameSpeed - _rand.Next(1, 4);
+
+            RandomizeCarPosition(player);
         }
 
         #endregion

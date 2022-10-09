@@ -22,6 +22,9 @@
             Background="{StaticResource SeaBackgroundColor}"
             Opacity="0.5" />
 
+        <!--  This hosts clouds and cars that do not collide  -->
+        <GameEnvironment x:Name="OverView" Background="Transparent" />
+
         <!--#endregion-->
 
         <!--#region UI controls-->
