@@ -32,31 +32,31 @@
                 <Setter Property="BorderThickness" Value="3" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="FontSize" Value="24" />
-                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
             </Style>
 
             <Style BasedOn="{StaticResource DefaultToggleButtonStyle}" TargetType="ToggleButton">
-                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="FontWeight" Value="SemiBold" />
             </Style>
             <!--#endregion-->
 
             <!--#region Input Fields-->
             <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="FontWeight" Value="SemiBold" />
             </Style>
 
             <Style BasedOn="{StaticResource DefaultPasswordBoxStyle}" TargetType="PasswordBox">
-                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="CornerRadius" Value="15" />
             </Style>
             <!--#endregion-->
 
             <!--#region Game UI Container Style-->
             <Style x:Key="GameUIContainer" TargetType="Border">
-                <Setter Property="Background" Value="#6ba3c6" />
+                <Setter Property="Background" Value="#5b317e" />
                 <Setter Property="BorderBrush" Value="White" />
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="BorderThickness" Value="0,3,0,3" />

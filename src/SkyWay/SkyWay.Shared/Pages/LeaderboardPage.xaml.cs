@@ -123,6 +123,8 @@ namespace SkyWay
 
         private async void AllTimeScoreboardToggle_Click(object sender, RoutedEventArgs e)
         {
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+
             this.RunProgressBar();
 
             DailyScoreboardToggle.IsChecked = false;
@@ -133,6 +135,8 @@ namespace SkyWay
 
         private async void DailyScoreboardToggle_Click(object sender, RoutedEventArgs e)
         {
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+
             this.RunProgressBar();
 
             AllTimeScoreboardToggle.IsChecked = false;

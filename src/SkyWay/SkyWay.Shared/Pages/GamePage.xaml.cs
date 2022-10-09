@@ -109,6 +109,7 @@ namespace SkyWay
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeChanged += GamePage_SizeChanged;
+            StartGame();
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
@@ -132,15 +133,15 @@ namespace SkyWay
 
         private void InputView_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (_isGameOver)
-            {
-                InputView.Focus(FocusState.Programmatic);
-                StartGame();
-            }
-            else
-            {
-                _isPointerActivated = true;
-            }
+            //if (_isGameOver)
+            //{
+            //    InputView.Focus(FocusState.Programmatic);
+            //    StartGame();
+            //}
+            //else
+            //{
+            _isPointerActivated = true;
+            //}
         }
 
         private void InputView_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -206,10 +207,10 @@ namespace SkyWay
                 _accelerationCounter = 0;
 
             // in this case we will listen for the enter key aswell but for this to execute we will need the game over boolean to be true
-            if (e.Key == VirtualKey.Enter && _isGameOver == true)
-            {
-                StartGame();
-            }
+            //if (e.Key == VirtualKey.Enter && _isGameOver == true)
+            //{
+            //    StartGame();
+            //}
         }
 
         #endregion
@@ -356,7 +357,10 @@ namespace SkyWay
 
         private void StartGame()
         {
+#if DEBUG
             Console.WriteLine("GAME STARTED");
+#endif
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
 
             _lives = _maxLives;
             SetLives();
