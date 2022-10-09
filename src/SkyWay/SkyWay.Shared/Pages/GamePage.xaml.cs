@@ -946,7 +946,7 @@ namespace SkyWay
 
         private void SpawnPowerUp()
         {
-            _markNum = _random.Next(1, Enum.GetNames<PowerUpType>().Length);
+            var _markNum = _random.Next(1, Enum.GetNames<PowerUpType>().Length);
             var powerUpTemplates = Constants.ELEMENT_TEMPLATES.Where(x => x.Key is ElementType.POWERUP).ToArray();
 
             PowerUp powerUp = new()
@@ -956,7 +956,7 @@ namespace SkyWay
                 PowerUpType = (PowerUpType)_markNum,
             };
 
-            powerUp.SetContent(powerUpTemplates[_markNum].Value);
+            powerUp.SetContent(powerUpTemplates[_markNum - 1].Value);
 
             powerUp.SetPosition(
                 left: _random.Next(0, (int)(GameView.Width - 55)),
