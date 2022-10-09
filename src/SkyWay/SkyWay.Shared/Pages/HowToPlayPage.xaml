@@ -32,7 +32,7 @@
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
 
-                <FlipView MinHeight="270" Background="Transparent">
+                <FlipView MinHeight="280" Background="Transparent">
 
                     <!--  Player  -->
                     <StackPanel Margin="10" VerticalAlignment="Center">
