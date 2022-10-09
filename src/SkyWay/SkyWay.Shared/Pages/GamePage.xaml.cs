@@ -33,8 +33,8 @@ namespace SkyWay
 
         private int _powerUpSpawnCounter = 30;
 
-        private int _powerModeCounter = 250;
-        private readonly int _powerModeDelay = 250;
+        private int _powerModeCounter = 500;
+        private readonly int _powerModeDelay = 500;
 
         private int _lives;
         private readonly int _maxLives = 5;
@@ -826,13 +826,15 @@ namespace SkyWay
 
             double xDir = _random.Next(-1, 2);
 
+            var speed = (double)_gameSpeed - (double)_gameSpeed / 2;            
+
             for (int i = 0; i < 5; i++)
             {
                 Collectible collectible = new()
                 {
                     Height = Constants.COLLECTIBLE_HEIGHT * _scale,
                     Width = Constants.COLLECTIBLE_WIDTH * _scale,
-                    Speed = _gameSpeed - _gameSpeed / 2,
+                    Speed = speed,
                 };
 
                 collectible.SetPosition(left: left, top: top);
@@ -866,7 +868,10 @@ namespace SkyWay
 
         private void UpdateCollectible(GameObject collectible)
         {
-            collectible.SetTop(collectible.GetTop() + collectible.Speed);
+            var speed = collectible.Speed;
+            speed = SlowDownTime(speed);
+
+            collectible.SetTop(collectible.GetTop() + speed);
 
             if (_playerHitBox.IntersectsWith(collectible.GetHitBox(_scale)))
             {
@@ -999,7 +1004,7 @@ namespace SkyWay
                     {
                         _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
                     }
-                    break;               
+                    break;
                 default:
                     break;
             }
