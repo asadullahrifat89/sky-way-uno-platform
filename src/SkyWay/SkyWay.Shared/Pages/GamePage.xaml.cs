@@ -22,7 +22,7 @@ namespace SkyWay
 
         private PeriodicTimer _gameViewTimer;
 
-        private readonly Random _rand = new();
+        private readonly Random _random = new();
 
         private Rect _playerHitBox;
 
@@ -75,6 +75,8 @@ namespace SkyWay
         private Uri[] _cars;
         private Uri[] _islands;
         private Uri[] _clouds;
+
+        private PowerUpType _powerUpType;
 
         #endregion
 
@@ -270,8 +272,8 @@ namespace SkyWay
             // add some clouds underneath
             for (int i = 0; i < 15; i++)
             {
-                var scaleFactor = _rand.Next(1, 4);
-                var scaleReverseFactor = _rand.Next(-1, 2);
+                var scaleFactor = _random.Next(1, 4);
+                var scaleReverseFactor = _random.Next(-1, 2);
 
                 var cloud = new Cloud()
                 {
@@ -324,8 +326,8 @@ namespace SkyWay
             // add some clouds above
             for (int i = 0; i < 5; i++)
             {
-                var scaleFactor = _rand.Next(1, 4);
-                var scaleReverseFactor = _rand.Next(-1, 2);
+                var scaleFactor = _random.Next(1, 4);
+                var scaleReverseFactor = _random.Next(-1, 2);
 
                 var cloud = new Cloud()
                 {
@@ -364,7 +366,9 @@ namespace SkyWay
 
             _isGameOver = false;
             _isPowerMode = false;
+            _powerUpType = 0;
             _powerModeCounter = _powerModeDelay;
+
             _isRecoveringFromDamage = false;
             _damageRecoveryCounter = _damageRecoveryDelay;
 
@@ -503,19 +507,19 @@ namespace SkyWay
             if (_powerUpSpawnCounter < 1)
             {
                 SpawnPowerUp();
-                _powerUpSpawnCounter = _rand.Next(500, 800);
+                _powerUpSpawnCounter = _random.Next(500, 800);
             }
 
             if (_collectibleSpawnCounter < 1)
             {
                 SpawnCollectible();
-                _collectibleSpawnCounter = _rand.Next(200, 300);
+                _collectibleSpawnCounter = _random.Next(200, 300);
             }
 
             if (_islandSpawnCounter < 1)
             {
                 SpawnIsland();
-                _islandSpawnCounter = _rand.Next(1500, 2000);
+                _islandSpawnCounter = _random.Next(1500, 2000);
             }
 
             if (_lives < _maxLives)
@@ -525,7 +529,7 @@ namespace SkyWay
                 if (_healthSpawnCounter < 0)
                 {
                     SpawnHealth();
-                    _healthSpawnCounter = _rand.Next(500, 800);
+                    _healthSpawnCounter = _random.Next(500, 800);
                 }
             }
         }
@@ -580,11 +584,6 @@ namespace SkyWay
                             UpdateHealth(x);
                         }
                         break;
-                    //case Constants.ROADMARK:
-                    //    {
-                    //        UpdateRoadMark(x);
-                    //    }
-                    //    break;
                     case ElementType.PLAYER:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
@@ -693,14 +692,25 @@ namespace SkyWay
             //TODO: show game quitting content
         }
 
+        private double SlowDownTime(double speed)
+        {
+            if (_isPowerMode && _powerUpType == PowerUpType.SLOW_DOWN_TIME)
+                speed /= 2;
+
+            return speed;
+        }
+
         #endregion
 
         #region Car
 
         private void UpdateCar(GameObject car)
         {
+            var speed = car.Speed;
+            speed = SlowDownTime(speed);
+
             // move down vehicle
-            car.SetTop(car.GetTop() + car.Speed);
+            car.SetTop(car.GetTop() + speed);
 
             // if vechicle goes out of bounds
             if (car.GetTop() > GameView.Height)
@@ -733,10 +743,10 @@ namespace SkyWay
                 }
                 else
                 {
-                    // if car collides with player
-                    if (_playerHitBox.IntersectsWith(car.GetHitBox(_scale)))
+                    if (!_isPowerMode || _powerUpType != PowerUpType.FORCE_SHIELD)
                     {
-                        if (!_isPowerMode)
+                        // if car collides with player
+                        if (_playerHitBox.IntersectsWith(car.GetHitBox(_scale)))
                         {
                             _lives--;
                             _damageRecoveryCounter = _damageRecoveryDelay;
@@ -750,17 +760,17 @@ namespace SkyWay
                     }
                 }
             }
-
-            if (_isGameOver)
-                return;
         }
 
         private void RecyleCar(GameObject car)
         {
-            _markNum = _rand.Next(0, _cars.Length);
+            var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
+            speed = SlowDownTime(speed);
+
+            _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(1, 4);
+            car.Speed = speed;
 
             RandomizeCarPosition(car);
         }
@@ -768,8 +778,8 @@ namespace SkyWay
         private void RandomizeCarPosition(GameObject car)
         {
             car.SetPosition(
-                left: _rand.Next(100, (int)GameView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                left: _random.Next(100, (int)GameView.Width) - (100 * _scale),
+                top: _random.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -778,6 +788,9 @@ namespace SkyWay
 
         private void UpdateCloud(GameObject cloud)
         {
+            var speed = cloud.Speed;
+            speed = SlowDownTime(speed);
+
             cloud.SetTop(cloud.GetTop() + cloud.Speed);
 
             if (cloud.GetTop() > GameView.Height)
@@ -788,11 +801,14 @@ namespace SkyWay
 
         private void RecyleCloud(GameObject cloud)
         {
-            _markNum = _rand.Next(0, _clouds.Length);
+            var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
+            speed = SlowDownTime(speed);
+
+            _markNum = _random.Next(0, _clouds.Length);
 
             cloud.SetContent(_clouds[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
-            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
+            cloud.Speed = speed;
 
             RandomizeCloudPosition(cloud);
         }
@@ -800,8 +816,8 @@ namespace SkyWay
         private void RandomizeCloudPosition(GameObject cloud)
         {
             cloud.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)GameView.Width) - (100 * _scale),
+                top: _random.Next(100 * (int)_scale, (int)GameView.Height) * -1);
         }
 
         #endregion
@@ -811,9 +827,9 @@ namespace SkyWay
         private void SpawnCollectible()
         {
             double top = GameView.Height * -1;
-            double left = _rand.Next(0, (int)(GameView.Width - 55));
+            double left = _random.Next(0, (int)(GameView.Width - 55));
 
-            double xDir = _rand.Next(-1, 2);
+            double xDir = _random.Next(-1, 2);
 
             for (int i = 0; i < 5; i++)
             {
@@ -892,10 +908,10 @@ namespace SkyWay
             {
                 CenterX = 0.5,
                 CenterY = 0.5,
-                Rotation = _rand.Next(0, 360),
+                Rotation = _random.Next(0, 360),
             };
 
-            _markNum = _rand.Next(0, _islands.Length);
+            _markNum = _random.Next(0, _islands.Length);
             island.SetContent(_islands[_markNum]);
 
             RandomizeIslandPosition(island);
@@ -906,25 +922,27 @@ namespace SkyWay
 
         private void UpdateIsland(GameObject island)
         {
-            island.SetTop(island.GetTop() + _gameSpeed / 6);
+            var speed = (double)_gameSpeed / 6;
+            speed = SlowDownTime(speed);
+
+            island.SetTop(island.GetTop() + speed);
 
             if (island.GetTop() > SeaView.Height)
             {
                 SeaView.AddDestroyableGameObject(island);
-
             }
         }
 
         private void RandomizeIslandPosition(GameObject island)
         {
             island.SetPosition(
-                left: _rand.Next(0, (int)GameView.Width) - 100 * _scale,
-                top: _rand.Next(0, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)GameView.Width) - 100 * _scale,
+                top: _random.Next(0, (int)GameView.Height) * -1);
         }
 
         #endregion      
 
-        #region Power Up
+        #region PowerUp
 
         private void SpawnPowerUp()
         {
@@ -932,11 +950,26 @@ namespace SkyWay
             {
                 Height = Constants.POWERUP_HEIGHT * _scale,
                 Width = Constants.POWERUP_WIDTH * _scale,
+                PowerUpType = (PowerUpType)_random.Next(1, Enum.GetNames<PowerUpType>().Length)
             };
 
+            var powerUpTemplates = Constants.ELEMENT_TEMPLATES.Where(x => x.Key is ElementType.POWERUP).ToArray();
+
+            switch (powerUp.PowerUpType)
+            {
+                case PowerUpType.FORCE_SHIELD:
+                    powerUp.SetContent(powerUpTemplates[0].Value);
+                    break;
+                case PowerUpType.SLOW_DOWN_TIME:
+                    powerUp.SetContent(powerUpTemplates[1].Value);
+                    break;
+                default:
+                    break;
+            }
+
             powerUp.SetPosition(
-                left: _rand.Next(0, (int)(GameView.Width - 55)),
-                top: _rand.Next(100, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)(GameView.Width - 55)),
+                top: _random.Next(100, (int)GameView.Height) * -1);
 
             GameView.Children.Add(powerUp);
         }
@@ -948,7 +981,7 @@ namespace SkyWay
             if (_playerHitBox.IntersectsWith(powerUp.GetHitBox(_scale)))
             {
                 GameView.AddDestroyableGameObject(powerUp);
-                PowerUp();
+                PowerUp(powerUp as PowerUp);
             }
 
             if (powerUp.GetTop() > GameView.Height)
@@ -957,15 +990,79 @@ namespace SkyWay
             }
         }
 
-        private void PowerUp()
+        private void PowerUp(PowerUp powerUp)
         {
             powerUpText.Visibility = Visibility.Visible;
 
             _isPowerMode = true;
-
+            _powerUpType = powerUp.PowerUpType;
             _powerModeCounter = _powerModeDelay;
 
-            _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
+            switch (_powerUpType)
+            {
+                case PowerUpType.FORCE_SHIELD:
+                    {
+                        _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key == ElementType.PLAYER_POWER_MODE).Value);
+                    }
+                    break;
+                case PowerUpType.SLOW_DOWN_TIME:
+                    {
+                        //foreach (GameObject x in UnderView.Children.OfType<GameObject>())
+                        //{
+                        //    switch ((ElementType)x.Tag)
+                        //    {
+                        //        case ElementType.CLOUD:
+                        //            {
+                        //                x.Speed -= 4;
+                        //            }
+                        //            break;
+                        //        case ElementType.CAR:
+                        //            {
+                        //                x.Speed -= 4;
+                        //            }
+                        //            break;
+                        //        default:
+                        //            break;
+                        //    }
+                        //}
+
+                        //foreach (GameObject x in GameView.Children.OfType<GameObject>())
+                        //{
+                        //    switch ((ElementType)x.Tag)
+                        //    {
+                        //        case ElementType.CLOUD:
+                        //            {
+                        //                x.Speed -= 4;
+                        //            }
+                        //            break;
+                        //        case ElementType.CAR:
+                        //            {
+                        //                x.Speed -= 4;
+                        //            }
+                        //            break;
+                        //        default:
+                        //            break;
+                        //    }
+                        //}
+
+                        //foreach (GameObject x in OverView.Children.OfType<GameObject>())
+                        //{
+                        //    switch ((ElementType)x.Tag)
+                        //    {
+                        //        case ElementType.CLOUD:
+                        //            {
+                        //                x.Speed -= 4;
+                        //            }
+                        //            break;
+                        //        default:
+                        //            break;
+                        //    }
+                        //}
+                    }
+                    break;
+                default:
+                    break;
+            }
 
             SoundHelper.PlaySound(SoundType.POWER_UP);
         }
@@ -986,6 +1083,7 @@ namespace SkyWay
         private void PowerDown()
         {
             _isPowerMode = false;
+            _powerUpType = 0;
 
             powerUpText.Visibility = Visibility.Collapsed;
             _player.SetContent(Constants.ELEMENT_TEMPLATES.FirstOrDefault(x => x.Key is ElementType.PLAYER).Value);
@@ -1016,8 +1114,8 @@ namespace SkyWay
             };
 
             health.SetPosition(
-                left: _rand.Next(0, (int)(GameView.Width - 55)),
-                top: _rand.Next(100, (int)GameView.Height) * -1);
+                left: _random.Next(0, (int)(GameView.Width - 55)),
+                top: _random.Next(100, (int)GameView.Height) * -1);
 
             GameView.Children.Add(health);
         }
@@ -1057,8 +1155,6 @@ namespace SkyWay
             // increase acceleration and stop when player speed is reached
             if (_accelerationCounter <= _playerSpeed)
                 _accelerationCounter++;
-
-            //Console.WriteLine("ACC:" + _accelerationCounter);            
 
             double left = _player.GetLeft();
             double top = _player.GetTop();
@@ -1112,26 +1208,6 @@ namespace SkyWay
         }
 
         #endregion
-
-        #region Road Marks
-
-        private void UpdateRoadMark(GameObject roadMark)
-        {
-            roadMark.SetTop(roadMark.GetTop() + _gameSpeed);
-
-            if (roadMark.GetTop() > GameView.Height)
-            {
-                RecyleRoadMark(roadMark);
-            }
-        }
-
-        private void RecyleRoadMark(GameObject roadMark)
-        {
-            roadMark.SetSize(Constants.ROADMARK_WIDTH * _scale, Constants.ROADMARK_HEIGHT * _scale);
-            roadMark.SetTop((int)roadMark.Height * 2 * -25);
-        }
-
-        #endregion 
 
         #endregion
 

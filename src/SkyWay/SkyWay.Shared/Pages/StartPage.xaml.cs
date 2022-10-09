@@ -25,7 +25,7 @@ namespace SkyWay
         private PeriodicTimer _gameViewTimer;
         private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
-        private readonly Random _rand = new();
+        private readonly Random _random = new();
 
         private double _windowHeight, _windowWidth;
         private double _scale;
@@ -329,8 +329,8 @@ namespace SkyWay
             // add some clouds underneath
             for (int i = 0; i < 15; i++)
             {
-                var scaleFactor = _rand.Next(1, 4);
-                var scaleReverseFactor = _rand.Next(-1, 2);
+                var scaleFactor = _random.Next(1, 4);
+                var scaleReverseFactor = _random.Next(-1, 2);
 
                 var cloud = new Cloud()
                 {
@@ -438,10 +438,10 @@ namespace SkyWay
 
         private void RecyleCar(GameObject car)
         {
-            _markNum = _rand.Next(0, _cars.Length);
+            _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
             car.SetSize(Constants.CAR_WIDTH * _scale, Constants.CAR_HEIGHT * _scale);
-            car.Speed = _gameSpeed - _rand.Next(1, 4);
+            car.Speed = _gameSpeed - _random.Next(1, 4);
 
             RandomizeCarPosition(car);
         }
@@ -449,8 +449,8 @@ namespace SkyWay
         private void RandomizeCarPosition(GameObject car)
         {
             car.SetPosition(
-                left: _rand.Next(100, (int)UnderView.Width) - (100 * _scale),
-                top: _rand.Next((int)UnderView.Height, ((int)UnderView.Height) * 2));
+                left: _random.Next(100, (int)UnderView.Width) - (100 * _scale),
+                top: _random.Next((int)UnderView.Height, ((int)UnderView.Height) * 2));
         }
 
         #endregion
@@ -469,11 +469,11 @@ namespace SkyWay
 
         private void RecyleCloud(GameObject cloud)
         {
-            _markNum = _rand.Next(0, _clouds.Length);
+            _markNum = _random.Next(0, _clouds.Length);
 
             cloud.SetContent(_clouds[_markNum]);
             cloud.SetSize(Constants.CLOUD_WIDTH * _scale, Constants.CLOUD_HEIGHT * _scale);
-            cloud.Speed = _gameSpeed - _rand.Next(1, 4);
+            cloud.Speed = _gameSpeed - _random.Next(1, 4);
 
             RandomizeCloudPosition(cloud);
         }
@@ -481,8 +481,8 @@ namespace SkyWay
         private void RandomizeCloudPosition(GameObject cloud)
         {
             cloud.SetPosition(
-                left: _rand.Next(0, (int)UnderView.Width) - (100 * _scale),
-                top: _rand.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
+                left: _random.Next(0, (int)UnderView.Width) - (100 * _scale),
+                top: _random.Next(100 * (int)_scale, (int)UnderView.Height) * -1);
         }
 
         #endregion

@@ -9,7 +9,7 @@ namespace SkyWay
     {
         #region Fields
 
-        private static readonly Random _rand = new();
+        private static readonly Random _random = new();
 
         private static Sound[] _sounds;
         private static List<Sound> _playingSounds;
@@ -78,7 +78,7 @@ namespace SkyWay
             }
 
             var backgroundSounds = _sounds.Where(x => x.SoundType == SoundType.BACKGROUND).ToArray();
-            var backgroundSound = backgroundSounds[_rand.Next(0, backgroundSounds.Length)];
+            var backgroundSound = backgroundSounds[_random.Next(0, backgroundSounds.Length)];
 
             _playingSounds.RemoveAll(x => x.SoundType == SoundType.BACKGROUND);
             _playingSounds.Add(backgroundSound);
@@ -92,7 +92,7 @@ namespace SkyWay
             }
 
             var introSounds = _sounds.Where(x => x.SoundType == SoundType.INTRO).ToArray();
-            var introSound = introSounds[_rand.Next(0, introSounds.Length)];
+            var introSound = introSounds[_random.Next(0, introSounds.Length)];
 
             _playingSounds.RemoveAll(x => x.SoundType == SoundType.INTRO);
             _playingSounds.Add(introSound);
