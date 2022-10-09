@@ -11,7 +11,6 @@
     <Grid x:Name="RootGrid" Background="{StaticResource SeaBackgroundColor}">
 
         <!--#region Animation-->
-
         <!--  This hosts clouds and cars that do not collide  -->
         <GameEnvironment x:Name="UnderView" Background="Transparent" />
 
@@ -24,7 +23,6 @@
 
         <!--  This hosts players that do not collide  -->
         <GameEnvironment x:Name="OverView" Background="Transparent" />
-
         <!--#endregion-->
 
         <!--#region UI controls-->
