@@ -67,7 +67,7 @@ namespace SkyWay
 
         private void SignUpPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //TODO: set localization
+            this.SetLocalization();
 
             SizeChanged += GamePage_SizeChanged;
             StartAnimation();
@@ -101,7 +101,7 @@ namespace SkyWay
                 await PerformSignup();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginToExistingAccountButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(LoginPage));
         }

@@ -54,7 +54,11 @@ namespace SkyWay
             LoadGameElements();
             PopulateGameViews();
 
-            LocalizationHelper.LoadLocalizationKeys();
+            LocalizationHelper.LoadLocalizationKeys(() =>
+            {
+                this.SetLocalization();
+            });
+
             AssetHelper.PreloadAssets(ProgressBar);
             SoundHelper.LoadGameSounds();
 
@@ -72,9 +76,9 @@ namespace SkyWay
         {
             SizeChanged += GamePage_SizeChanged;
             StartAnimation();
+
             LocalizationHelper.CheckLocalizationCache();
 
-            //TODO: set localization
             await CheckUserSession();
         }
 
@@ -105,12 +109,15 @@ namespace SkyWay
             if ((sender as Button)?.Tag is string tag)
             {
                 LocalizationHelper.CurrentCulture = tag;
-                LocalizationHelper.SaveLocalizationCache(tag);
-                //TODO: change localization
+
+                if (CookieHelper.IsCookieAccepted())
+                    LocalizationHelper.SaveLocalizationCache(tag);
+
+                this.SetLocalization();
             }
         }
 
-        private void HowToPlayButton_Click(object sender, RoutedEventArgs e) 
+        private void HowToPlayButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(HowToPlayPage));
         }

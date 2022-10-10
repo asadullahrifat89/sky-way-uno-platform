@@ -114,7 +114,7 @@
 
                         <!--  Your score  -->
                         <TextBlock
-                            x:Name="ScoreText"
+                            x:Name="YourScoreText"
                             FontSize="15"
                             FontWeight="SemiBold"
                             TextAlignment="Center"
@@ -196,6 +196,7 @@
                         Margin="5"
                         FontWeight="SemiBold"
                         Foreground="Crimson"
+                        TextWrapping="WrapWholeWords"
                         Visibility="Collapsed" />
 
                     <!--  Progress bar  -->

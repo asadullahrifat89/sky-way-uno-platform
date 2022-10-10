@@ -69,7 +69,8 @@ namespace SkyWay
             SizeChanged += GamePage_SizeChanged;
             StartAnimation();
 
-            //TODO: set localization
+            this.SetLocalization();
+
             SetGameResults();
             ShowUserName();
 
@@ -155,10 +156,9 @@ namespace SkyWay
         }
 
         private void SetGameResults()
-        {
-            ScoreText.Text = LocalizationHelper.GetLocalizedResource("YOUR_SCORE");
+        {            
             ScoreNumberText.Text = PlayerScoreHelper.PlayerScore.Score.ToString("#");         
-            CollectiblesCollectedText.Text = $"{LocalizationHelper.GetLocalizedResource("COLLECTIBLES_COLLECTED")} x " + PlayerScoreHelper.PlayerScore.CollectiblesCollected;
+            CollectiblesCollectedText.Text = $"{LocalizationHelper.GetLocalizedResource("CollectiblesCollectedText")} x " + PlayerScoreHelper.PlayerScore.CollectiblesCollected;
         }
 
         private void SetLeaderboardContext()

@@ -79,7 +79,7 @@ namespace SkyWay
 
         private async void LeaderboardPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //TODO: set localization            
+            this.SetLocalization();
 
             this.RunProgressBar();
 
@@ -282,8 +282,8 @@ namespace SkyWay
 
         private void SetGameScores(double personalBestScore, double lastGameScore)
         {
-            PersonalBestScoreText.Text = LocalizationHelper.GetLocalizedResource("PERSONAL_BEST_SCORE") + ": " + personalBestScore;
-            ScoreText.Text = LocalizationHelper.GetLocalizedResource("LAST_GAME_SCORE") + ": " + lastGameScore;
+            PersonalBestScoreText.Text = LocalizationHelper.GetLocalizedResource("PersonalBestScoreText") + ": " + personalBestScore;
+            LastGameScoreText.Text = LocalizationHelper.GetLocalizedResource("LastGameScoreText") + ": " + lastGameScore;
         }
 
 

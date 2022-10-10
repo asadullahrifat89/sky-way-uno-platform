@@ -37,7 +37,17 @@
                 Orientation="Vertical">
 
                 <!--  Game logo  -->
-                <Image Height="100" Source="ms-appx:///Assets/Images/logo_game.png" />
+                <!--<Image Height="100" Source="ms-appx:///Assets/Images/logo_game.png" />-->
+
+                <!--  Header  -->
+                <TextBlock
+                    x:Name="SignupPage_Header"
+                    Margin="5,10,5,5"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Text="Welcome to"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords" />
 
                 <!--  Game name  -->
                 <TextBlock
@@ -115,14 +125,14 @@
 
                 <!--  Login Button  -->
                 <Button
-                    x:Name="LoginButton"
+                    x:Name="LoginToExistingAccountButton"
                     Height="40"
                     Margin="5,0,5,5"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderThickness="0"
-                    Click="LoginButton_Click"
+                    Click="LoginToExistingAccountButton_Click"
                     Content="Already have an account?"
                     FontSize="18"
                     Foreground="White"
@@ -134,6 +144,7 @@
                     Margin="5"
                     FontWeight="SemiBold"
                     Foreground="Crimson"
+                    TextWrapping="WrapWholeWords"
                     Visibility="Collapsed" />
 
                 <!--  Progress bar  -->

@@ -26,7 +26,12 @@ namespace SkyWay
 
         #region Methods
 
-        public static async void LoadLocalizationKeys()
+        public static bool HasLocalizationKey(string resourceKey)
+        {
+            return resourceKey.IsNullOrBlank() ? false : LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
+        }
+
+        public static async void LoadLocalizationKeys(Action completed = null)
         {
             if (_localizationJson.IsNullOrBlank())
             {
@@ -34,11 +39,16 @@ namespace SkyWay
                 _localizationJson = await FileIO.ReadTextAsync(file);
                 LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
 
+                completed?.Invoke();
 #if DEBUG
                 Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
 #endif
+            }
+            else
+            {
+                completed?.Invoke();
             }
         }
 

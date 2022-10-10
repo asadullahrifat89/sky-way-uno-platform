@@ -10,6 +10,19 @@
 
     <Grid x:Name="RootGrid">
 
+        <!--#region Animation-->
+        <!--  This hosts clouds and cars that do not collide  -->
+        <GameEnvironment x:Name="UnderView" Background="Transparent" />
+
+        <!--  Fog  -->
+        <Border
+            Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
+            Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
+            Background="{StaticResource SeaBackgroundColor}"
+            Opacity="0.5" />
+        <!--#endregion-->
+
+        <!--#region UI Controls-->
         <Border Style="{StaticResource GameUIContainer}">
 
             <StackPanel
@@ -31,7 +44,6 @@
                     Text="How To Play"
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
-
 
                 <FlipView
                     x:Name="InstructionsContainer"
@@ -167,7 +179,7 @@
                             Margin="5"
                             FontSize="20"
                             FontWeight="SemiBold"
-                            Text="Power Ups"
+                            Text="Power-ups"
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                         <TextBlock
@@ -187,19 +199,19 @@
                             Margin="5"
                             Source="ms-appx:///Assets/Images/health.png" />
                         <TextBlock
-                            x:Name="HealthInstructionsHeader"
+                            x:Name="HealthsInstructionsHeader"
                             Margin="5"
                             FontSize="20"
                             FontWeight="SemiBold"
-                            Text="Health"
+                            Text="Healths"
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                         <TextBlock
-                            x:Name="HealthInstructionsDetail"
+                            x:Name="HealthsInstructionsDetail"
                             Margin="5"
                             FontSize="16"
                             FontWeight="SemiBold"
-                            Text="Collect these to replenish your cars health."
+                            Text="Collect them to repair your car."
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                     </StackPanel>
@@ -230,6 +242,7 @@
             </StackPanel>
 
         </Border>
+        <!--#endregion-->
 
         <!--#region Go back-->
         <Button
