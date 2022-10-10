@@ -59,11 +59,12 @@ namespace SkyWay
                 this.SetLocalization();
             });
 
-            AssetHelper.PreloadAssets(ProgressBar, () =>
+            SoundHelper.LoadGameSounds(() =>
             {
-                SoundHelper.LoadGameSounds();
-            });
+                StartGameSounds();
 
+                AssetHelper.PreloadAssets(ProgressBar);
+            });           
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -81,6 +82,8 @@ namespace SkyWay
             StartAnimation();
 
             LocalizationHelper.CheckLocalizationCache();
+
+            await Task.Delay(1000);
 
             await CheckUserSession();
         }
@@ -292,7 +295,6 @@ namespace SkyWay
             if (pageType == typeof(GamePage))
                 SoundHelper.StopSound(SoundType.INTRO);
 
-            StopAnimation();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
 
@@ -367,8 +369,7 @@ namespace SkyWay
         {
 #if DEBUG
             Console.WriteLine("GAME STARTED");
-#endif
-            StartGameSounds();
+#endif      
             RecycleGameObjects();
             RunGame();
         }

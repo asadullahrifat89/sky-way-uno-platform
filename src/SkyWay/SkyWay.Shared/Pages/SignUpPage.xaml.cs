@@ -58,7 +58,6 @@ namespace SkyWay
             this.Unloaded += SignUpPage_Unloaded;
         }
 
-
         #endregion
 
         #region Events
@@ -449,7 +448,7 @@ namespace SkyWay
                         {
                             UpdatePlayer(x);
                         }
-                        break;                  
+                        break;
                     default:
                         break;
                 }

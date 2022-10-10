@@ -833,6 +833,24 @@
     ]
   },
   {
+    "Key": "ConfirmQuitGameButton",
+    "CultureValues": [
+      {
+        "Culture": "en",
+        "Value": "Quit Game?"
+      },
+      {
+        "Culture": "de",
+        "Value": "Spiel Verlassen?"
+      },
+      {
+        "Culture": "fr",
+        "Value": "Quitter Le Jeu?"
+      }
+    ]
+  },
+
+  {
     "Key": "LOADING_DATA",
     "CultureValues": [
       {
@@ -880,160 +898,6 @@
       {
         "Culture": "fr",
         "Value": "Chargement des actifs de jeu..."
-      }
-    ]
-  },
-  {
-    "Key": "GAME_PAUSED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "GAME PAUSED"
-      },
-      {
-        "Culture": "de",
-        "Value": "SPIEL PAUSIERT"
-      },
-      {
-        "Culture": "fr",
-        "Value": "JEU PAUSÉ"
-      }
-    ]
-  },
-  {
-    "Key": "LEVEL",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "LEVEL"
-      },
-      {
-        "Culture": "de",
-        "Value": "EBENE"
-      },
-      {
-        "Culture": "fr",
-        "Value": "NIVEAU"
-      }
-    ]
-  },
-  {
-    "Key": "POWER_DOWN",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "POWER DOWN"
-      },
-      {
-        "Culture": "de",
-        "Value": "LEISTUNGSVERRINGERUNG"
-      },
-      {
-        "Culture": "fr",
-        "Value": "DIMINUTION DE LA PUISSANCE"
-      }
-    ]
-  },
-  {
-    "Key": "QUIT_GAME",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "QUIT GAME?"
-      },
-      {
-        "Culture": "de",
-        "Value": "SPIEL VERLASSEN?"
-      },
-      {
-        "Culture": "fr",
-        "Value": "QUITTER LE JEU?"
-      }
-    ]
-  },
-  {
-    "Key": "SCORE",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "Score"
-      },
-      {
-        "Culture": "de",
-        "Value": "Punktzahl"
-      },
-      {
-        "Culture": "fr",
-        "Value": "Score"
-      }
-    ]
-  },
-
-  {
-    "Key": "SHIP_REPAIRED",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "SHIP REPAIRED"
-      },
-      {
-        "Culture": "de",
-        "Value": "SCHIFF REPARIERT"
-      },
-      {
-        "Culture": "fr",
-        "Value": "NAVIRE RÉPARÉ"
-      }
-    ]
-  },
-  {
-    "Key": "TAP_ON_SCREEN_TO_BEGIN",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "TAP ON THE SCREEN TO BEGIN"
-      },
-      {
-        "Culture": "de",
-        "Value": "TIPPEN SIE AUF DEN BILDSCHIRM, UM ZU BEGINNEN"
-      },
-      {
-        "Culture": "fr",
-        "Value": "APPUYEZ SUR L'ÉCRAN POUR COMMENCER"
-      }
-    ]
-  },
-  {
-    "Key": "TAP_TO_QUIT",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "TAP TO QUIT"
-      },
-      {
-        "Culture": "de",
-        "Value": "TIPPEN SIE ZUM BEENDEN"
-      },
-      {
-        "Culture": "fr",
-        "Value": "TAP POUR QUITTER"
-      }
-    ]
-  },
-  {
-    "Key": "TAP_TO_RESUME",
-    "CultureValues": [
-      {
-        "Culture": "en",
-        "Value": "TAP TO RESUME"
-      },
-      {
-        "Culture": "de",
-        "Value": "TIPPEN, UM WEITERZUFAHREN"
-      },
-      {
-        "Culture": "fr",
-        "Value": "APPUYER POUR REPRENDRE"
       }
     ]
   },
