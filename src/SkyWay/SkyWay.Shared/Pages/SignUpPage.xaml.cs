@@ -67,7 +67,7 @@ namespace SkyWay
 
         private void SignUpPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //TODO: set localization
+            this.SetLocalization();
 
             SizeChanged += GamePage_SizeChanged;
             StartAnimation();

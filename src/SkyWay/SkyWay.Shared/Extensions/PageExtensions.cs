@@ -16,6 +16,17 @@ namespace SkyWay
 
         #region Public
 
+        public static void SetLocalization(this Page page)
+        {
+            if (FindVisualChildren<UIElement>(page).Where(s => LocalizationHelper.HasLocalizationKey(s.Name)) is IEnumerable<UIElement> uiElements)
+            {
+                foreach (var uiElement in uiElements)
+                {
+                    LocalizationHelper.SetLocalizedResource(uiElement);
+                }
+            }
+        }
+
         public static void RunProgressBar(this Page page, string progressBarMessage = null)
         {
             if (FindChild<ProgressBar>(parent: page, childName: "ProgressBar") is ProgressBar progressBar)
@@ -37,8 +48,6 @@ namespace SkyWay
                 messageBlock.Visibility = progressBarMessage.IsNullOrBlank() ? Visibility.Collapsed : Visibility.Visible;
             }
 
-            //TODO: disable  Tag="ActionButton" tagged button
-
             if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
             {
                 DisableActionButtons(buttons);
@@ -53,8 +62,6 @@ namespace SkyWay
                 progressBar.ShowError = false;
                 progressBar.ShowPaused = true;
             }
-
-            //TODO: enable  Tag="ActionButton" tagged button
 
             if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
             {
@@ -77,8 +84,6 @@ namespace SkyWay
                 messageBlock.Text = "⚠️ " + progressBarMessage;
                 messageBlock.Visibility = progressBarMessage.IsNullOrBlank() ? Visibility.Collapsed : Visibility.Visible;
             }
-
-            //TODO: enable  Tag="ActionButton" tagged button
 
             if (FindVisualChildren<Button>(page).Where(s => (string)s.Tag == "ActionButton") is IEnumerable<Button> buttons)
             {

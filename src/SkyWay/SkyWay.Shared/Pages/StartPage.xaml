@@ -31,31 +31,31 @@
             Orientation="Horizontal">
 
             <!--  English  -->
-            <!--<Button
+            <Button
                 x:Name="EnglishButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="English"
                 Style="{StaticResource DefaultButton}"
-                Tag="en" />-->
+                Tag="en" />
 
             <!--  French  -->
-            <!--<Button
+            <Button
                 x:Name="FrenchButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="French"
                 Style="{StaticResource DefaultButton}"
-                Tag="fr" />-->
+                Tag="fr" />
 
             <!--  German  -->
-            <!--<Button
+            <Button
                 x:Name="DeutschButton"
                 Margin="2"
                 Click="LanguageButton_Click"
                 Content="Deutsch"
                 Style="{StaticResource DefaultButton}"
-                Tag="de" />-->
+                Tag="de" />
 
         </StackPanel>
         <!--#endregion-->

@@ -79,7 +79,7 @@ namespace SkyWay
 
         private async void LeaderboardPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //TODO: set localization            
+            this.SetLocalization();
 
             this.RunProgressBar();
 

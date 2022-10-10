@@ -52,7 +52,7 @@
                 <!--  Game name  -->
                 <TextBlock
                     x:Name="GameName"
-                    Margin="0,10,0,15"
+                    Margin="0,0,0,15"
                     FontSize="30"
                     FontWeight="Bold"
                     Text="Sky Way"
