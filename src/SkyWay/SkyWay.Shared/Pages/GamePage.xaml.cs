@@ -56,8 +56,6 @@ namespace SkyWay
         private bool _moveDown;
         private bool _isGameOver;
         private bool _isPowerMode;
-        private bool _isGamePaused;
-        private bool _isGameQuitting;
 
         private bool _isRecoveringFromDamage;
         private bool _isPointerActivated;
@@ -218,27 +216,13 @@ namespace SkyWay
 
         #region Button
 
-        private void PauseGameButton_Checked(object sender, RoutedEventArgs e)
-        {
-            PauseGame();
-        }
-
-        private void PauseGameButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ResumeGame();
-        }
-
         private void QuitGameButton_Checked(object sender, RoutedEventArgs e)
         {
-            _isGameQuitting = true;
-            PauseGameButton.IsEnabled = false;
             PauseGame();
         }
 
         private void QuitGameButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            _isGameQuitting = false;
-            PauseGameButton.IsEnabled = true;
             ResumeGame();
         }
 
@@ -660,7 +644,6 @@ namespace SkyWay
 
         private void PauseGame()
         {
-            _isGamePaused = true;
             _gameViewTimer?.Dispose();
 
             ResetControls();
@@ -674,9 +657,6 @@ namespace SkyWay
         private void ResumeGame()
         {
             InputView.Focus(FocusState.Programmatic);
-
-            _isGamePaused = false;
-            _isGameQuitting = false;
 
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             SoundHelper.ResumeSound(SoundType.BACKGROUND);

@@ -18,7 +18,7 @@ namespace SkyWay
 
         #region Methods
 
-        public static void LoadGameSounds()
+        public static void LoadGameSounds(Action completed = null)
         {
             if (_sounds is null)
             {
@@ -63,6 +63,12 @@ namespace SkyWay
 
                 // add all sounds except background and intro as these will be randomized before playing
                 _playingSounds.AddRange(_sounds.Where(x => x.SoundType is not SoundType.BACKGROUND and not SoundType.INTRO));
+
+                completed?.Invoke();
+            }
+            else
+            {
+                completed?.Invoke();
             }
 
 #if DEBUG
