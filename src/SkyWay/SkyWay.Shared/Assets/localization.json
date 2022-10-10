@@ -425,7 +425,7 @@
     ]
   },
   {
-    "Key": "HealthInstructionsHeader",
+    "Key": "HealthsInstructionsHeader",
     "CultureValues": [
       {
         "Culture": "en",
@@ -442,7 +442,7 @@
     ]
   },
   {
-    "Key": "HealthInstructionsDetail",
+    "Key": "HealthsInstructionsDetail",
     "CultureValues": [
       {
         "Culture": "en",

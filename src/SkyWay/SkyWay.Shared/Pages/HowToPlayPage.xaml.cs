@@ -63,6 +63,21 @@ namespace SkyWay
         {
             this.SetLocalization();
 
+            LocalizationHelper.SetLocalizedResource(PlayerInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(PlayerInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(CarsInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(CarsInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(CollectiblesInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(CollectiblesInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(PowerUpsInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(PowerUpsInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(HealthsInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(HealthsInstructionsDetail);
+
             SizeChanged += GamePage_SizeChanged;
             StartAnimation();
         }

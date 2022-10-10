@@ -45,7 +45,6 @@
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
 
-
                 <FlipView
                     x:Name="InstructionsContainer"
                     MinHeight="290"
@@ -200,7 +199,7 @@
                             Margin="5"
                             Source="ms-appx:///Assets/Images/health.png" />
                         <TextBlock
-                            x:Name="HealthInstructionsHeader"
+                            x:Name="HealthsInstructionsHeader"
                             Margin="5"
                             FontSize="20"
                             FontWeight="SemiBold"
@@ -208,7 +207,7 @@
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                         <TextBlock
-                            x:Name="HealthInstructionsDetail"
+                            x:Name="HealthsInstructionsDetail"
                             Margin="5"
                             FontSize="16"
                             FontWeight="SemiBold"
