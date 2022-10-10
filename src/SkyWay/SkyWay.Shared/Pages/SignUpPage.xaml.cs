@@ -101,7 +101,7 @@ namespace SkyWay
                 await PerformSignup();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginToExistingAccountButton_Click(object sender, RoutedEventArgs e)
         {
             NavigateToPage(typeof(LoginPage));
         }

@@ -180,7 +180,7 @@
                             Margin="5"
                             FontSize="20"
                             FontWeight="SemiBold"
-                            Text="Power Ups"
+                            Text="Power-ups"
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                         <TextBlock
@@ -204,7 +204,7 @@
                             Margin="5"
                             FontSize="20"
                             FontWeight="SemiBold"
-                            Text="Health"
+                            Text="Healths"
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                         <TextBlock
@@ -212,7 +212,7 @@
                             Margin="5"
                             FontSize="16"
                             FontWeight="SemiBold"
-                            Text="Collect these to replenish your cars health."
+                            Text="Collect them to repair your car."
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
                     </StackPanel>

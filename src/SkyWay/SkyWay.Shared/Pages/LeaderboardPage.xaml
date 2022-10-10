@@ -133,7 +133,7 @@
                     <!--  Score  -->
                     <StackPanel Margin="30,10,30,0">
                         <TextBlock
-                            x:Name="ScoreText"
+                            x:Name="LastGameScoreText"
                             FontSize="20"
                             FontWeight="Bold"
                             TextAlignment="Center"

@@ -282,8 +282,8 @@ namespace SkyWay
 
         private void SetGameScores(double personalBestScore, double lastGameScore)
         {
-            PersonalBestScoreText.Text = LocalizationHelper.GetLocalizedResource("PERSONAL_BEST_SCORE") + ": " + personalBestScore;
-            ScoreText.Text = LocalizationHelper.GetLocalizedResource("LAST_GAME_SCORE") + ": " + lastGameScore;
+            PersonalBestScoreText.Text = LocalizationHelper.GetLocalizedResource("PersonalBestScoreText") + ": " + personalBestScore;
+            LastGameScoreText.Text = LocalizationHelper.GetLocalizedResource("LastGameScoreText") + ": " + lastGameScore;
         }
 
 
