@@ -233,7 +233,7 @@ namespace SkyWay
 
             return true;
         }
-       
+
         private void SetLeaderboardPlacements(dynamic leaderboardPlacements)
         {
             if (leaderboardPlacements.Count > 0)

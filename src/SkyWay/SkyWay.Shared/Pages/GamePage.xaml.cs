@@ -115,6 +115,7 @@ namespace SkyWay
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
         {
             SizeChanged -= GamePage_SizeChanged;
+            StopGame();
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs args)
@@ -629,9 +630,6 @@ namespace SkyWay
 
         private void GameOver()
         {
-            StopGame();
-            StopGameSounds();
-
             _isGameOver = true;
 
             PlayerScoreHelper.PlayerScore = new SkyWayScore()
@@ -647,13 +645,12 @@ namespace SkyWay
         private void PauseGame()
         {
             _isGamePaused = true;
+            _gameViewTimer?.Dispose();
 
-            StopGame();
             ResetControls();
 
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            SoundHelper.PauseSound(SoundType.BACKGROUND);
-            SoundHelper.PauseSound(SoundType.CAR_ENGINE);
+            PauseGameSounds();
 
             InputView.Focus(FocusState.Programmatic);
         }
@@ -675,14 +672,13 @@ namespace SkyWay
         private void StopGame()
         {
             _gameViewTimer?.Dispose();
+            StopGameSounds();
         }
 
         private void QuitGame()
         {
             if (_isGameQuitting)
             {
-                StopGame();
-                StopGameSounds();
                 NavigateToPage(typeof(StartPage));
             }
             else
@@ -1354,6 +1350,12 @@ namespace SkyWay
         {
             SoundHelper.StopSound(SoundType.BACKGROUND);
             SoundHelper.StopSound(SoundType.CAR_ENGINE);
+        }
+
+        private void PauseGameSounds()
+        {
+            SoundHelper.PauseSound(SoundType.BACKGROUND);
+            SoundHelper.PauseSound(SoundType.CAR_ENGINE);
         }
 
         #endregion

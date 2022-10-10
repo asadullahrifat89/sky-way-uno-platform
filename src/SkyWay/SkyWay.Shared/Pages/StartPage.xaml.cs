@@ -292,7 +292,6 @@ namespace SkyWay
             if (pageType == typeof(GamePage))
                 SoundHelper.StopSound(SoundType.INTRO);
 
-            StopAnimation();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
 
