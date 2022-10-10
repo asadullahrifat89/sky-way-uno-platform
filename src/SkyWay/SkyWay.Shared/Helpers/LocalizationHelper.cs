@@ -26,11 +26,6 @@ namespace SkyWay
 
         #region Methods
 
-        public static bool HasLocalizationKey(string resourceKey)
-        {
-            return resourceKey.IsNullOrBlank() ? false : LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
-        }
-
         public static async void LoadLocalizationKeys(Action completed = null)
         {
             if (_localizationJson.IsNullOrBlank())
@@ -93,6 +88,11 @@ namespace SkyWay
         {
             if (CacheHelper.GetCachedValue(Constants.COOKIE_KEY) is string cookie && cookie == "Accepted")
                 CacheHelper.SetCachedValue(Constants.CACHE_LANGUAGE_KEY, tag);
+        }
+
+        public static bool HasLocalizationKey(string resourceKey)
+        {
+            return !resourceKey.IsNullOrBlank() && LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
         }
 
         #endregion        

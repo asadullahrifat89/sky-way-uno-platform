@@ -33,7 +33,7 @@ namespace SkyWay
             return _baseUrl;
         }
 
-        public static async void PreloadAssets(ProgressBar progressBar)
+        public static async void PreloadAssets(ProgressBar progressBar, Action completed = null)
         {
             if (!_assetsPreloaded)
             {
@@ -53,7 +53,13 @@ namespace SkyWay
                     await GetFileAsync(new Uri($"ms-appx:///{uri}"), progressBar);
                 }
 
-                _assetsPreloaded = true; 
+                _assetsPreloaded = true;
+
+                completed?.Invoke();
+            }
+            else
+            {
+                completed?.Invoke();
             }
         }
 
