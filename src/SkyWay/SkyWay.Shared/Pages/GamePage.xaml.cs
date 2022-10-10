@@ -216,19 +216,35 @@ namespace SkyWay
 
         #endregion
 
-        #region Game
+        #region Button
 
-        private void PauseGameButton_Click(object sender, RoutedEventArgs e)
+        private void PauseGameButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (_isGamePaused)
-                ResumeGame();
-            else
-                PauseGame();
+            PauseGame();
         }
 
-        private void QuitGameButton_Click(object sender, RoutedEventArgs e)
+        private void PauseGameButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            QuitGame();
+            ResumeGame();
+        }
+
+        private void QuitGameButton_Checked(object sender, RoutedEventArgs e)
+        {
+            _isGameQuitting = true;
+            PauseGameButton.IsEnabled = false;
+            PauseGame();
+        }
+
+        private void QuitGameButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _isGameQuitting = false;
+            PauseGameButton.IsEnabled = true;
+            ResumeGame();
+        }
+
+        private void ConfirmQuitGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage(typeof(StartPage));
         }
 
         #endregion
@@ -673,21 +689,6 @@ namespace SkyWay
         {
             _gameViewTimer?.Dispose();
             StopGameSounds();
-        }
-
-        private void QuitGame()
-        {
-            if (_isGameQuitting)
-            {
-                NavigateToPage(typeof(StartPage));
-            }
-            else
-            {
-                _isGameQuitting = true;
-                PauseGame();
-            }
-
-            //TODO: show game quitting content
         }
 
         private double DecreaseSpeed(double speed)
