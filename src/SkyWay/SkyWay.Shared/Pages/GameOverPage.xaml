@@ -114,7 +114,7 @@
 
                         <!--  Your score  -->
                         <TextBlock
-                            x:Name="ScoreText"
+                            x:Name="YourScoreText"
                             FontSize="15"
                             FontWeight="SemiBold"
                             TextAlignment="Center"

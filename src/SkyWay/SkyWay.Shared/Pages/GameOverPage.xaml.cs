@@ -156,7 +156,7 @@ namespace SkyWay
 
         private void SetGameResults()
         {
-            LocalizationHelper.SetLocalizedResource(ScoreText);
+            LocalizationHelper.SetLocalizedResource(YourScoreText);
             ScoreNumberText.Text = PlayerScoreHelper.PlayerScore.Score.ToString("#");         
             CollectiblesCollectedText.Text = $"{LocalizationHelper.GetLocalizedResource("CollectiblesCollectedText")} x " + PlayerScoreHelper.PlayerScore.CollectiblesCollected;
         }

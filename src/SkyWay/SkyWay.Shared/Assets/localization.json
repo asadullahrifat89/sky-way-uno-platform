@@ -510,7 +510,7 @@
     ]
   },
   {
-    "Key": "ScoreText",
+    "Key": "YourScoreText",
     "CultureValues": [
       {
         "Culture": "en",
