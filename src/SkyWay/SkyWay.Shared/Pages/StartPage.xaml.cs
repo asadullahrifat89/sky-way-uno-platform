@@ -58,6 +58,7 @@ namespace SkyWay
             {
                 this.SetLocalization();
             });
+
             AssetHelper.PreloadAssets(ProgressBar);
             SoundHelper.LoadGameSounds();
 
