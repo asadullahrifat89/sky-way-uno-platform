@@ -33,7 +33,6 @@ namespace SkyWay
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
                 _localizationJson = await FileIO.ReadTextAsync(file);
                 LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
-
 #if DEBUG
                 Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
