@@ -53,12 +53,12 @@ namespace SkyWay
 
             LoadGameElements();
             PopulateGameViews();
-          
+
             SoundHelper.LoadGameSounds(() =>
             {
                 StartGameSounds();
                 AssetHelper.PreloadAssets(ProgressBar);
-            });           
+            });
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -76,7 +76,7 @@ namespace SkyWay
             StartAnimation();
 
             LocalizationHelper.CheckLocalizationCache();
-            LocalizationHelper.LoadLocalizationKeys(() =>
+            await LocalizationHelper.LoadLocalizationKeys(() =>
             {
                 this.SetLocalization();
             });
@@ -111,6 +111,8 @@ namespace SkyWay
         {
             if ((sender as Button)?.Tag is string tag)
             {
+                SoundHelper.PlaySound(SoundType.MENU_SELECT);
+
                 LocalizationHelper.CurrentCulture = tag;
 
                 if (CookieHelper.IsCookieAccepted())

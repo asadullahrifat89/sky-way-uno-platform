@@ -26,7 +26,7 @@ namespace SkyWay
 
         #region Methods
 
-        public static async void LoadLocalizationKeys(Action completed = null)
+        public static async Task LoadLocalizationKeys(Action completed = null)
         {
             if (_localizationJson.IsNullOrBlank())
             {
@@ -34,11 +34,14 @@ namespace SkyWay
                 _localizationJson = await FileIO.ReadTextAsync(file);
                 LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
 
+                if (LOCALIZATION_KEYS is null || LOCALIZATION_KEYS.Length == 0)
+                    Console.WriteLine("LOCALIZATION NOT LOADED.");
+
                 completed?.Invoke();
 #if DEBUG
-                Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
+                Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS?.Length);
 #endif
             }
             else
@@ -49,13 +52,13 @@ namespace SkyWay
 
         public static string GetLocalizedResource(string resourceKey)
         {
-            var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == resourceKey);
+            var localizationTemplate = LOCALIZATION_KEYS?.FirstOrDefault(x => x.Key == resourceKey);
             return localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == CurrentCulture).Value;
         }
 
         public static void SetLocalizedResource(UIElement uIElement)
         {
-            var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == uIElement.Name);
+            var localizationTemplate = LOCALIZATION_KEYS?.FirstOrDefault(x => x.Key == uIElement.Name);
 
             if (localizationTemplate is not null)
             {
@@ -92,7 +95,7 @@ namespace SkyWay
 
         public static bool HasLocalizationKey(string resourceKey)
         {
-            return !resourceKey.IsNullOrBlank() && LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
+            return !resourceKey.IsNullOrBlank() && LOCALIZATION_KEYS is not null && LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
         }
 
         #endregion        
