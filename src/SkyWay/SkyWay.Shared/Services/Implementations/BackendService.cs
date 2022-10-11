@@ -29,7 +29,11 @@ namespace SkyWay
 
         #region Public
 
-        public async Task<(bool IsSuccess, string Message)> SignupUser(string fullName, string userName, string email, string password)
+        public async Task<(bool IsSuccess, string Message)> SignupUser(
+            string fullName,
+            string userName,
+            string email,
+            string password)
         {
             ServiceResponse response = await Signup(
                    fullName: fullName,
@@ -50,7 +54,9 @@ namespace SkyWay
             return (true, "OK");
         }
 
-        public async Task<(bool IsSuccess, string Message)> AuthenticateUser(string userNameOrEmail, string password)
+        public async Task<(bool IsSuccess, string Message)> AuthenticateUser(
+            string userNameOrEmail,
+            string password)
         {
             // authenticate
             ServiceResponse response = await Authenticate(
@@ -140,7 +146,9 @@ namespace SkyWay
             return (true, "OK", gameProfile);
         }
 
-        public async Task<(bool IsSuccess, string Message, GameProfile[] GameProfiles)> GetUserGameProfiles(int pageIndex, int pageSize)
+        public async Task<(bool IsSuccess, string Message, GameProfile[] GameProfiles)> GetUserGameProfiles(
+            int pageIndex,
+            int pageSize)
         {
             var recordsResponse = await GetGameProfiles(pageIndex: pageIndex, pageSize: pageSize);
 
@@ -156,7 +164,9 @@ namespace SkyWay
             return count > 0 ? (true, "OK", result.Records) : (true, "OK", Array.Empty<GameProfile>());
         }
 
-        public async Task<(bool IsSuccess, string Message, GameScore[] GameScores)> GetUserGameScores(int pageIndex, int pageSize)
+        public async Task<(bool IsSuccess, string Message, GameScore[] GameScores)> GetUserGameScores(
+            int pageIndex,
+            int pageSize)
         {
             var recordsResponse = await GetGameScores(pageIndex: pageIndex, pageSize: pageSize);
 
@@ -182,7 +192,9 @@ namespace SkyWay
             return result;
         }
 
-        private async Task<ServiceResponse> GenerateSession(string gameId, string userId)
+        private async Task<ServiceResponse> GenerateSession(
+            string gameId,
+            string userId)
         {
             var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
@@ -200,7 +212,9 @@ namespace SkyWay
                 : response.ErrorResponse ?? new ServiceResponse() { HttpStatusCode = HttpStatusCode.InternalServerError, ExternalError = "Internal server error." };
         }
 
-        private async Task<ServiceResponse> ValidateSession(string gameId, string sessionId)
+        private async Task<ServiceResponse> ValidateSession(
+            string gameId,
+            string sessionId)
         {
             var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
@@ -218,7 +232,9 @@ namespace SkyWay
                 : response.ErrorResponse ?? new ServiceResponse() { HttpStatusCode = HttpStatusCode.InternalServerError, ExternalError = "Internal server error." };
         }
 
-        private async Task<ServiceResponse> Authenticate(string userNameOrEmail, string password)
+        private async Task<ServiceResponse> Authenticate(
+            string userNameOrEmail,
+            string password)
         {
             var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                 baseUrl: Constants.GAME_API_BASEURL,
@@ -290,7 +306,11 @@ namespace SkyWay
             return true;
         }
 
-        private async Task<ServiceResponse> Signup(string fullName, string userName, string email, string password)
+        private async Task<ServiceResponse> Signup(
+            string fullName,
+            string userName,
+            string email,
+            string password)
         {
             var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                  baseUrl: Constants.GAME_API_BASEURL,
@@ -358,7 +378,9 @@ namespace SkyWay
                 : response.ErrorResponse ?? new QueryRecordResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
         }
 
-        private async Task<QueryRecordsResponse<GameProfile>> GetGameProfiles(int pageIndex, int pageSize)
+        private async Task<QueryRecordsResponse<GameProfile>> GetGameProfiles(
+            int pageIndex,
+            int pageSize)
         {
             if (!await RefreshAuthToken())
                 new QueryRecordsResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });
@@ -380,7 +402,9 @@ namespace SkyWay
                 : response.ErrorResponse ?? new QueryRecordsResponse<GameProfile>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
         }
 
-        private async Task<QueryRecordsResponse<GameScore>> GetGameScores(int pageIndex, int pageSize)
+        private async Task<QueryRecordsResponse<GameScore>> GetGameScores(
+            int pageIndex,
+            int pageSize)
         {
             if (!await RefreshAuthToken())
                 new QueryRecordsResponse<GameScore>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "Failed to refresh token." } });

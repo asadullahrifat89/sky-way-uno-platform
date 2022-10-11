@@ -907,11 +907,7 @@
       {
         "Culture": "en",
         "Value": "Passwords didn't match"
-      },
-      {
-        "Culture": "bn",
-        "Value": "পাসওয়ার্ড মেলে না"
-      },
+      },     
       {
         "Culture": "de",
         "Value": "Passwörter stimmten nicht überein"
