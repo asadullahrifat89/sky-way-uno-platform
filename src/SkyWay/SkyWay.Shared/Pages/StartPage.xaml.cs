@@ -53,16 +53,10 @@ namespace SkyWay
 
             LoadGameElements();
             PopulateGameViews();
-
-            LocalizationHelper.LoadLocalizationKeys(() =>
-            {
-                this.SetLocalization();
-            });
-
+          
             SoundHelper.LoadGameSounds(() =>
             {
                 StartGameSounds();
-
                 AssetHelper.PreloadAssets(ProgressBar);
             });           
 
@@ -82,9 +76,12 @@ namespace SkyWay
             StartAnimation();
 
             LocalizationHelper.CheckLocalizationCache();
+            LocalizationHelper.LoadLocalizationKeys(() =>
+            {
+                this.SetLocalization();
+            });
 
             await Task.Delay(1000);
-
             await CheckUserSession();
         }
 
