@@ -80,8 +80,7 @@ namespace SkyWay
             {
                 this.SetLocalization();
             });
-
-            await Task.Delay(1000);
+            
             await CheckUserSession();
         }
 
