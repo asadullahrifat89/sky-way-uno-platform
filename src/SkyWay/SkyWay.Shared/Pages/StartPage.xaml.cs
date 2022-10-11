@@ -111,6 +111,8 @@ namespace SkyWay
         {
             if ((sender as Button)?.Tag is string tag)
             {
+                SoundHelper.PlaySound(SoundType.MENU_SELECT);
+
                 LocalizationHelper.CurrentCulture = tag;
 
                 if (CookieHelper.IsCookieAccepted())
