@@ -26,13 +26,16 @@ namespace SkyWay
 
         #region Methods
 
-        public static async void LoadLocalizationKeys(Action completed = null)
+        public static async Task LoadLocalizationKeys(Action completed = null)
         {
             if (_localizationJson.IsNullOrBlank())
             {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
                 _localizationJson = await FileIO.ReadTextAsync(file);
                 LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
+
+                if (LOCALIZATION_KEYS is null || LOCALIZATION_KEYS.Length == 0)
+                    Console.WriteLine("LOCALIZATION NOT LOADED.");
 
                 completed?.Invoke();
 #if DEBUG
