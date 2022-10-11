@@ -32,9 +32,7 @@ namespace SkyWay
 
         #region Properties
 
-        public IHost Host { get; }
-
-          
+        public IHost Host { get; }          
 
         #endregion
 
