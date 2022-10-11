@@ -38,7 +38,7 @@ namespace SkyWay
 #if DEBUG
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
-                Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS.Length);
+                Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS?.Length);
 #endif
             }
             else
@@ -49,13 +49,13 @@ namespace SkyWay
 
         public static string GetLocalizedResource(string resourceKey)
         {
-            var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == resourceKey);
+            var localizationTemplate = LOCALIZATION_KEYS?.FirstOrDefault(x => x.Key == resourceKey);
             return localizationTemplate?.CultureValues.FirstOrDefault(x => x.Culture == CurrentCulture).Value;
         }
 
         public static void SetLocalizedResource(UIElement uIElement)
         {
-            var localizationTemplate = LOCALIZATION_KEYS.FirstOrDefault(x => x.Key == uIElement.Name);
+            var localizationTemplate = LOCALIZATION_KEYS?.FirstOrDefault(x => x.Key == uIElement.Name);
 
             if (localizationTemplate is not null)
             {
@@ -92,7 +92,7 @@ namespace SkyWay
 
         public static bool HasLocalizationKey(string resourceKey)
         {
-            return !resourceKey.IsNullOrBlank() && LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
+            return !resourceKey.IsNullOrBlank() && LOCALIZATION_KEYS is not null && LOCALIZATION_KEYS.Any(x => x.Key == resourceKey);
         }
 
         #endregion        

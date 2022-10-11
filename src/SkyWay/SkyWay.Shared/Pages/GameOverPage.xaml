@@ -117,6 +117,7 @@
                             x:Name="YourScoreText"
                             FontSize="15"
                             FontWeight="SemiBold"
+                            Text="Your Score"
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords" />
 
@@ -149,6 +150,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="15"
                                 FontWeight="Bold"
+                                Text="Collectibles"
                                 TextAlignment="Center"
                                 TextWrapping="WrapWholeWords" />
 
