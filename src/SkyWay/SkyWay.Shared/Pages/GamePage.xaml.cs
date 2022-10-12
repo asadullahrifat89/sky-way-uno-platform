@@ -39,7 +39,7 @@ namespace SkyWay
         private readonly int _powerModeDelay = 500;
 
         private int _lives;
-        private readonly int _maxLives = 5;
+        private readonly int _maxLives = 3;
         private int _healthSpawnCounter = 500;
         private int _damageRecoveryOpacityFrameSkip;
 
@@ -106,8 +106,7 @@ namespace SkyWay
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged += GamePage_SizeChanged;
-            StartGame();
+            SizeChanged += GamePage_SizeChanged;            
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
@@ -132,15 +131,15 @@ namespace SkyWay
 
         private void InputView_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            //if (_isGameOver)
-            //{
-            //    InputView.Focus(FocusState.Programmatic);
-            //    StartGame();
-            //}
-            //else
-            //{
-            _isPointerActivated = true;
-            //}
+            if (_isGameOver)
+            {
+                InputView.Focus(FocusState.Programmatic);
+                StartGame();
+            }
+            else
+            {
+                _isPointerActivated = true;
+            }
         }
 
         private void InputView_PointerMoved(object sender, PointerRoutedEventArgs e)
