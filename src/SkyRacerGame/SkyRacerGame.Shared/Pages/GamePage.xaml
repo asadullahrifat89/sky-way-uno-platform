@@ -110,6 +110,26 @@
         </Border>
         <!--#endregion-->
 
+        <!--#region In game message-->
+        <StackPanel
+            x:Name="InGameMessagePanel"
+            Margin="10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="Collapsed">
+            <TextBlock
+                x:Name="InGameMessageText"
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="30"
+                FontWeight="Bold"
+                Foreground="White"
+                TextAlignment="Center"
+                TextWrapping="WrapWholeWords" />
+        </StackPanel>
+        <!--#endregion-->
+
         <!--#region Input Border-->
         <Border
             x:Name="InputView"
