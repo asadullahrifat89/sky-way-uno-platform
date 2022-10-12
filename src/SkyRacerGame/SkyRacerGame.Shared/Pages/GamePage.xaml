@@ -118,8 +118,8 @@
             VerticalAlignment="Center"
             Visibility="Collapsed">
             <Border
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Background="Gray"
                 CornerRadius="15"
                 Opacity="0.5" />
