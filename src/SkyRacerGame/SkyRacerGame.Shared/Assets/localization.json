@@ -907,7 +907,7 @@
       {
         "Culture": "en",
         "Value": "Passwords didn't match"
-      },     
+      },
       {
         "Culture": "de",
         "Value": "Passwörter stimmten nicht überein"
@@ -1068,6 +1068,40 @@
       {
         "Culture": "fr",
         "Value": "Caractères non valides dans le nom complet"
+      }
+    ]
+  },
+  {
+    "Key": "TAP_ON_SCREEN_TO_BEGIN",
+    "CultureValues": [
+      {
+        "Culture": "en",
+        "Value": "TAP ON THE SCREEN TO BEGIN"
+      },
+      {
+        "Culture": "de",
+        "Value": "TIPPEN SIE AUF DEN BILDSCHIRM, UM ZU BEGINNEN"
+      },
+      {
+        "Culture": "fr",
+        "Value": "APPUYEZ SUR L'ÉCRAN POUR COMMENCER"
+      }
+    ]
+  },
+  {
+    "Key": "GAME_PAUSED",
+    "CultureValues": [
+      {
+        "Culture": "en",
+        "Value": "GAME PAUSED"
+      },
+      {
+        "Culture": "de",
+        "Value": "SPIEL PAUSIERT"
+      },
+      {
+        "Culture": "fr",
+        "Value": "JEU PAUSÉ"
       }
     ]
   }

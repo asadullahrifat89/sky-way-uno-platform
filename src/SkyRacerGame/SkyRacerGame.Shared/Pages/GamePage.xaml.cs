@@ -87,6 +87,7 @@ namespace SkyRacerGame
             InitializeComponent();
 
             _isGameOver = true;
+            ShowInGameTextMessage("TAP_ON_SCREEN_TO_BEGIN");
 
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
@@ -360,6 +361,7 @@ namespace SkyRacerGame
 #if DEBUG
             Console.WriteLine("GAME STARTED");
 #endif
+            HideInGameTextMessage();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
 
             _lives = _maxLives;
@@ -643,14 +645,15 @@ namespace SkyRacerGame
 
         private void PauseGame()
         {
+            InputView.Focus(FocusState.Programmatic);
+            ShowInGameTextMessage("GAME_PAUSED");
+
             _gameViewTimer?.Dispose();
 
             ResetControls();
 
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             PauseGameSounds();
-
-            InputView.Focus(FocusState.Programmatic);
         }
 
         private void ResumeGame()
@@ -1363,6 +1366,21 @@ namespace SkyRacerGame
         {
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
+        }
+
+        #endregion
+
+        #region In Game Message
+
+        private void ShowInGameTextMessage(string resourceKey)
+        {
+            InGameMessageText.Text = LocalizationHelper.GetLocalizedResource(resourceKey);
+            InGameMessagePanel.Visibility = Visibility.Visible;
+        }
+        private void HideInGameTextMessage()
+        {
+            InGameMessageText.Text = "";
+            InGameMessagePanel.Visibility = Visibility.Collapsed;
         }
 
         #endregion
