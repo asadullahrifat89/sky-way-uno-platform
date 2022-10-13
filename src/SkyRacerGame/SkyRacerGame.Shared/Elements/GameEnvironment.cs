@@ -1,7 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SkyRacerGame
 {

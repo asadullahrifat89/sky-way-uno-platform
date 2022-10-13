@@ -1,11 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 
 namespace SkyRacerGame
 {
