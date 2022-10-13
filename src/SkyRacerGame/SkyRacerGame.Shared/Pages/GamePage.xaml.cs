@@ -1,14 +1,10 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Input;
+﻿using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -659,6 +655,7 @@ namespace SkyRacerGame
         private void ResumeGame()
         {
             InputView.Focus(FocusState.Programmatic);
+            HideInGameTextMessage();
 
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             SoundHelper.ResumeSound(SoundType.BACKGROUND);
@@ -1377,6 +1374,7 @@ namespace SkyRacerGame
             InGameMessageText.Text = LocalizationHelper.GetLocalizedResource(resourceKey);
             InGameMessagePanel.Visibility = Visibility.Visible;
         }
+
         private void HideInGameTextMessage()
         {
             InGameMessageText.Text = "";

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace SkyRacerGame
+﻿namespace SkyRacerGame
 {
     public class PowerUp : GameObject
     {

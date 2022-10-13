@@ -1,9 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.Runtime.ConstrainedExecution;
-
-namespace SkyRacerGame
+﻿namespace SkyRacerGame
 {
     public class Car : GameObject
     {

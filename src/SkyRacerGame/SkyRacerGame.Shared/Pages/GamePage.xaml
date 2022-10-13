@@ -158,7 +158,7 @@
                 Checked="QuitGameButton_Checked"
                 CornerRadius="100"
                 Unchecked="QuitGameButton_Unchecked">
-                <SymbolIcon Symbol="Undo" />
+                <SymbolIcon Symbol="Pause" />
             </ToggleButton>
 
             <!--  Confirm quit game  -->
