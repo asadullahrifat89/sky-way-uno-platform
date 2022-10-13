@@ -742,8 +742,7 @@ namespace SkyRacerGame
 
         private void RecyleCar(GameObject car)
         {
-            var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = DecreaseSpeed(speed);
+            var speed = (double)_gameSpeed - (double)_random.Next(1, 4);            
 
             _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
@@ -780,7 +779,6 @@ namespace SkyRacerGame
         private void RecyleCloud(GameObject cloud)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _clouds.Length);
 
