@@ -17,6 +17,7 @@ namespace SkyRacerGame
         #region Fields
 
         private PeriodicTimer _gameViewTimer;
+        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private readonly Random _random = new();
 
@@ -55,7 +56,6 @@ namespace SkyRacerGame
 
         private bool _isRecoveringFromDamage;
         private bool _isPointerActivated;
-        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private int _accelerationCounter;
 
@@ -103,7 +103,7 @@ namespace SkyRacerGame
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged += GamePage_SizeChanged;            
+            SizeChanged += GamePage_SizeChanged;
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
@@ -200,12 +200,6 @@ namespace SkyRacerGame
 
             if (!_moveLeft && !_moveRight && !_moveUp && !_moveDown)
                 _accelerationCounter = 0;
-
-            // in this case we will listen for the enter key aswell but for this to execute we will need the game over boolean to be true
-            //if (e.Key == VirtualKey.Enter && _isGameOver == true)
-            //{
-            //    StartGame();
-            //}
         }
 
         #endregion
@@ -239,7 +233,9 @@ namespace SkyRacerGame
 
         private void PopulateGameViews()
         {
+#if DEBUG
             Console.WriteLine("INITIALIZING GAME");
+#endif
 
             SetViewSize();
 
@@ -393,6 +389,16 @@ namespace SkyRacerGame
             RunGame();
         }
 
+        private async void RunGame()
+        {
+            _gameViewTimer = new PeriodicTimer(_frameTime);
+
+            while (await _gameViewTimer.WaitForNextTickAsync())
+            {
+                GameViewLoop();
+            }
+        }
+
         private void RecycleGameObjects()
         {
             foreach (GameObject x in UnderView.Children.OfType<GameObject>())
@@ -465,16 +471,6 @@ namespace SkyRacerGame
             _isPointerActivated = false;
         }
 
-        private async void RunGame()
-        {
-            _gameViewTimer = new PeriodicTimer(_frameTime);
-
-            while (await _gameViewTimer.WaitForNextTickAsync())
-            {
-                GameViewLoop();
-            }
-        }
-
         private void GameViewLoop()
         {
             AddScore(0.05d); // increase the score by .5 each tick of the timer
@@ -494,9 +490,7 @@ namespace SkyRacerGame
                 PowerUpCoolDown();
 
                 if (_powerModeCounter <= 0)
-                {
                     PowerDown();
-                }
             }
 
             // as you progress in the game you will score higher and game speed will go up
@@ -625,20 +619,6 @@ namespace SkyRacerGame
             OverView.RemoveDestroyableGameObjects();
         }
 
-        private void GameOver()
-        {
-            _isGameOver = true;
-
-            PlayerScoreHelper.PlayerScore = new SkyRacerGameScore()
-            {
-                Score = Math.Ceiling(_score),
-                CollectiblesCollected = _collectiblesCollected
-            };
-
-            SoundHelper.PlaySound(SoundType.GAME_OVER);
-            NavigateToPage(typeof(GameOverPage));
-        }
-
         private void PauseGame()
         {
             InputView.Focus(FocusState.Programmatic);
@@ -668,6 +648,20 @@ namespace SkyRacerGame
         {
             _gameViewTimer?.Dispose();
             StopGameSounds();
+        }
+
+        private void GameOver()
+        {
+            _isGameOver = true;
+
+            PlayerScoreHelper.PlayerScore = new SkyRacerGameScore()
+            {
+                Score = Math.Ceiling(_score),
+                CollectiblesCollected = _collectiblesCollected
+            };
+
+            SoundHelper.PlaySound(SoundType.GAME_OVER);
+            NavigateToPage(typeof(GameOverPage));
         }
 
         private double DecreaseSpeed(double speed)
@@ -743,7 +737,6 @@ namespace SkyRacerGame
         private void RecyleCar(GameObject car)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
@@ -780,7 +773,6 @@ namespace SkyRacerGame
         private void RecyleCloud(GameObject cloud)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _clouds.Length);
 
@@ -1080,44 +1072,34 @@ namespace SkyRacerGame
             {
                 // move up
                 if (_pointerPosition.Y < playerMiddleY - _playerSpeed)
-                {
                     _player.SetTop(top - effectiveSpeed);
-                }
+
                 // move left
                 if (_pointerPosition.X < playerMiddleX - _playerSpeed && left > 0)
-                {
                     _player.SetLeft(left - effectiveSpeed);
-                }
 
                 // move down
                 if (_pointerPosition.Y > playerMiddleY + _playerSpeed)
-                {
                     _player.SetTop(top + effectiveSpeed);
-                }
+
                 // move right
                 if (_pointerPosition.X > playerMiddleX + _playerSpeed && left + _player.Width < GameView.Width)
-                {
                     _player.SetLeft(left + effectiveSpeed);
-                }
             }
             else
             {
                 if (_moveLeft && left > 0)
-                {
                     _player.SetLeft(left - effectiveSpeed);
-                }
+
                 if (_moveRight && left + _player.Width < GameView.Width)
-                {
                     _player.SetLeft(left + effectiveSpeed);
-                }
+
                 if (_moveUp && top > 0 + (50 * _scale))
-                {
                     _player.SetTop(top - effectiveSpeed);
-                }
+
                 if (_moveDown && top < GameView.Height - (100 * _scale))
-                {
                     _player.SetTop(top + effectiveSpeed);
-                }
+
             }
         }
 
@@ -1322,7 +1304,7 @@ namespace SkyRacerGame
 
             SoundHelper.PlaySound(SoundType.CAR_ENGINE);
 
-            SoundHelper.RandomizeBackgroundSound();
+            SoundHelper.RandomizeSound(SoundType.BACKGROUND);
             SoundHelper.PlaySound(SoundType.BACKGROUND);
         }
 

@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SkyRacerGame"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource SeaBackgroundColor}"
+    Background="{ThemeResource GameBackgroundColor}"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -18,7 +18,7 @@
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
-            Background="{StaticResource SeaBackgroundColor}"
+            Background="{StaticResource GameBackgroundColor}"
             Opacity="0.5" />
 
         <!--  This hosts players that do not collide  -->
@@ -105,13 +105,7 @@
                     FontSize="14"
                     Unchecked="ConfirmCheckBox_Unchecked" />
 
-                <!--  Subscribe to newsletters  -->
-                <!--<CheckBox
-                    x:Name="ConfirmNewsLettersCheckBox"
-                    Margin="5"
-                    Content="Yes, I would like to subscribe to newsletters."
-                    FontSize="14" />-->
-
+               
                 <!--  Signup button  -->
                 <Button
                     x:Name="SignupButton"

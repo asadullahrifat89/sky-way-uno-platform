@@ -6,7 +6,7 @@
     xmlns:local="using:SkyRacerGame"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    Background="{ThemeResource SeaBackgroundColor}"
+    Background="{ThemeResource GameBackgroundColor}"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -22,7 +22,7 @@
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
-            Background="{StaticResource SeaBackgroundColor}"
+            Background="{StaticResource GameBackgroundColor}"
             Opacity="0.5" />
 
         <!--  This hosts the player and game elements  -->

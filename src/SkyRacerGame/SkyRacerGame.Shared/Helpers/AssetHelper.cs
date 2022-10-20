@@ -41,7 +41,7 @@ namespace SkyRacerGame
                 progressBar.ShowPaused = false;
                 progressBar.Value = 0;
                 progressBar.Minimum = 0;
-                progressBar.Maximum = Constants.ELEMENT_TEMPLATES.Length/* + Constants.SOUND_TEMPLATES.Length*/;
+                progressBar.Maximum = Constants.ELEMENT_TEMPLATES.Length /*+ Constants.SOUND_TEMPLATES.Length*/;
 
                 foreach (var uri in Constants.ELEMENT_TEMPLATES.Select(x => x.Value).ToArray())
                 {

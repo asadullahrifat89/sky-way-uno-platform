@@ -53,22 +53,7 @@ namespace SkyRacerGame
 
         private void HowToPlayPage_Loaded(object sender, RoutedEventArgs e)
         {
-            this.SetLocalization();
-
-            LocalizationHelper.SetLocalizedResource(PlayerInstructionsHeader);
-            LocalizationHelper.SetLocalizedResource(PlayerInstructionsDetail);
-
-            LocalizationHelper.SetLocalizedResource(CarsInstructionsHeader);
-            LocalizationHelper.SetLocalizedResource(CarsInstructionsDetail);
-
-            LocalizationHelper.SetLocalizedResource(CollectiblesInstructionsHeader);
-            LocalizationHelper.SetLocalizedResource(CollectiblesInstructionsDetail);
-
-            LocalizationHelper.SetLocalizedResource(PowerUpsInstructionsHeader);
-            LocalizationHelper.SetLocalizedResource(PowerUpsInstructionsDetail);
-
-            LocalizationHelper.SetLocalizedResource(HealthsInstructionsHeader);
-            LocalizationHelper.SetLocalizedResource(HealthsInstructionsDetail);
+            SetLocalization();
 
             SizeChanged += GamePage_SizeChanged;
             StartAnimation();
@@ -155,6 +140,26 @@ namespace SkyRacerGame
             App.NavigateToPage(pageType);
         }
 
+        private void SetLocalization()
+        {
+            PageExtensions.SetLocalization(this);
+
+            LocalizationHelper.SetLocalizedResource(PlayerInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(PlayerInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(CarsInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(CarsInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(CollectiblesInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(CollectiblesInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(PowerUpsInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(PowerUpsInstructionsDetail);
+
+            LocalizationHelper.SetLocalizedResource(HealthsInstructionsHeader);
+            LocalizationHelper.SetLocalizedResource(HealthsInstructionsDetail);
+        }
+
         #endregion
 
         #region Animation
@@ -216,9 +221,6 @@ namespace SkyRacerGame
 
         private void StartAnimation()
         {
-#if DEBUG
-            Console.WriteLine("GAME STARTED");
-#endif            
             RecycleGameObjects();
             RunGame();
         }
