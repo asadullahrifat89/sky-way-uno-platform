@@ -31,6 +31,7 @@ namespace SkyRacerGame
             {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
                 _localizationJson = await FileIO.ReadTextAsync(file);
+
                 LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
 
                 if (LOCALIZATION_KEYS is null || LOCALIZATION_KEYS.Length == 0)
@@ -42,7 +43,7 @@ namespace SkyRacerGame
                 localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
                 Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS?.Length);
 #endif
-                completed?.Invoke();
+                completed?.Invoke();                
             }
             else
             {

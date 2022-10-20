@@ -73,33 +73,19 @@ namespace SkyRacerGame
 #if DEBUG
             Console.WriteLine("LOADED SOUNDS: " + _playingSounds.Count);
 #endif
-        }
+        }       
 
-        public static void RandomizeBackgroundSound()
+        public static void RandomizeSound(SoundType soundType)
         {
-            foreach (var sound in _playingSounds.Where(x => x.SoundType == SoundType.BACKGROUND))
+            foreach (var sound in _playingSounds.Where(x => x.SoundType == soundType))
             {
                 sound.Stop();
             }
 
-            var backgroundSounds = _sounds.Where(x => x.SoundType == SoundType.BACKGROUND).ToArray();
-            var backgroundSound = backgroundSounds[_random.Next(0, backgroundSounds.Length)];
-
-            _playingSounds.RemoveAll(x => x.SoundType == SoundType.BACKGROUND);
-            _playingSounds.Add(backgroundSound);
-        }
-
-        public static void RandomizeIntroSound()
-        {
-            foreach (var sound in _playingSounds.Where(x => x.SoundType == SoundType.INTRO))
-            {
-                sound.Stop();
-            }
-
-            var introSounds = _sounds.Where(x => x.SoundType == SoundType.INTRO).ToArray();
+            var introSounds = _sounds.Where(x => x.SoundType == soundType).ToArray();
             var introSound = introSounds[_random.Next(0, introSounds.Length)];
 
-            _playingSounds.RemoveAll(x => x.SoundType == SoundType.INTRO);
+            _playingSounds.RemoveAll(x => x.SoundType == soundType);
             _playingSounds.Add(introSound);
         }
 

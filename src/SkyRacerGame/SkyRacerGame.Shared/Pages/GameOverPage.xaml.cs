@@ -148,8 +148,8 @@ namespace SkyRacerGame
         }
 
         private void SetGameResults()
-        {            
-            ScoreNumberText.Text = PlayerScoreHelper.PlayerScore.Score.ToString("#");         
+        {
+            ScoreNumberText.Text = PlayerScoreHelper.PlayerScore.Score.ToString("#");
             CollectiblesCollectedText.Text = $"{LocalizationHelper.GetLocalizedResource("CollectiblesCollectedText")} x " + PlayerScoreHelper.PlayerScore.CollectiblesCollected;
         }
 
@@ -269,9 +269,6 @@ namespace SkyRacerGame
 
         private void StartAnimation()
         {
-#if DEBUG
-            Console.WriteLine("GAME STARTED");
-#endif
             StartGameSounds();
             RecycleGameObjects();
             RunGame();
@@ -410,7 +407,7 @@ namespace SkyRacerGame
 
         private void StartGameSounds()
         {
-            SoundHelper.RandomizeIntroSound();
+            SoundHelper.RandomizeSound(SoundType.INTRO);
             SoundHelper.PlaySound(SoundType.INTRO);
         }
 

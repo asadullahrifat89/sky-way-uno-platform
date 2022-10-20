@@ -72,7 +72,7 @@ namespace SkyRacerGame
             {
                 this.SetLocalization();
             });
-            
+
             await CheckUserSession();
         }
 
@@ -497,7 +497,7 @@ namespace SkyRacerGame
 
         private void StartGameSounds()
         {
-            SoundHelper.RandomizeIntroSound();
+            SoundHelper.RandomizeSound(SoundType.INTRO);
             SoundHelper.PlaySound(SoundType.INTRO);
         }
 
