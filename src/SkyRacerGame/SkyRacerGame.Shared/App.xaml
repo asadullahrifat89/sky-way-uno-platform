@@ -13,7 +13,9 @@
                 <!--  Add resource dictionaries here  -->
             </ResourceDictionary.MergedDictionaries>
 
-            <!--  Add resources here  -->
+            <Style BasedOn="{StaticResource DefaultTextBlockStyle}" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Frutiger" />
+            </Style>
 
             <!--#region Buttons-->
             <Style
@@ -23,6 +25,7 @@
                 <Setter Property="CornerRadius" Value="50" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
+                <Setter Property="FontFamily" Value="Frutiger" />
             </Style>
 
             <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
@@ -35,6 +38,7 @@
                 <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
+                <Setter Property="FontFamily" Value="Frutiger" />
             </Style>
 
             <Style BasedOn="{StaticResource DefaultToggleButtonStyle}" TargetType="ToggleButton">
@@ -42,11 +46,13 @@
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
+                <Setter Property="FontFamily" Value="Frutiger" />
             </Style>
 
             <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="IsFocusEngagementEnabled" Value="False" />
+                <Setter Property="FontFamily" Value="Frutiger" />
             </Style>
             <!--#endregion-->
 
@@ -54,10 +60,12 @@
             <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontFamily" Value="Frutiger" />
             </Style>
 
             <Style BasedOn="{StaticResource DefaultPasswordBoxStyle}" TargetType="PasswordBox">
                 <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="FontFamily" Value="Frutiger" />
             </Style>
             <!--#endregion-->
 
