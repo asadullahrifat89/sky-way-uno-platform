@@ -221,7 +221,7 @@
                 <!--  Next button  -->
                 <Button
                     x:Name="NextButton"
-                    Height="50"
+                    Height="45"
                     Margin="30,0,30,10"
                     HorizontalAlignment="Stretch"
                     Click="NextButton_Click"
@@ -231,7 +231,7 @@
                 <!--  Start game button  -->
                 <Button
                     x:Name="PlayButton"
-                    Height="50"
+                    Height="45"
                     Margin="30,0,30,10"
                     HorizontalAlignment="Stretch"
                     Click="PlayButton_Click"

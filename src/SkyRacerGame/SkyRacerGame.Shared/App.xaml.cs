@@ -21,7 +21,7 @@ namespace SkyRacerGame
     public sealed partial class App : Application
     {
         #region Fields
-              
+
         private readonly SystemNavigationManager _systemNavigationManager;
         private readonly List<Type> _goBackNotAllowedToPages;
         private readonly List<(Type IfGoingBackTo, Type RouteTo)> _goBackPageRoutes;
@@ -32,7 +32,7 @@ namespace SkyRacerGame
 
         #region Properties
 
-        public IHost Host { get; }          
+        public IHost Host { get; }
 
         #endregion
 
@@ -60,12 +60,12 @@ namespace SkyRacerGame
 #endif
             UnhandledException += App_UnhandledException;
 
-            Uno.UI.FeatureConfiguration.Page.IsPoolingEnabled = true;            
+            Uno.UI.FeatureConfiguration.Page.IsPoolingEnabled = true;
 
             _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
 
             _goBackNotAllowedToPages = new List<Type>() { typeof(GamePage) };
-            _goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { /*(IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(GamePage))*/ };
+            _goBackPageRoutes = new List<(Type IfGoingBackTo, Type RouteTo)>() { (IfGoingBackTo: typeof(GameOverPage), RouteTo: typeof(StartPage)) };
 
             LocalizationHelper.CurrentCulture = "en";
         }
@@ -107,9 +107,7 @@ namespace SkyRacerGame
 #endif
             {
                 if (rootFrame.Content == null)
-                {
                     rootFrame.Navigate(typeof(StartPage), args.Arguments);
-                }
 
                 _window.Activate();
             }
@@ -154,9 +152,7 @@ namespace SkyRacerGame
 
         private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-#if DEBUG
             Console.WriteLine(e.Message);
-#endif
             e.Handled = true;
         }
 
@@ -187,7 +183,7 @@ namespace SkyRacerGame
         {
             var rootFrame = _window.Content as Frame;
             rootFrame.Navigate(pageType, parameter);
-        }    
+        }
 
         #endregion
 
@@ -214,7 +210,6 @@ namespace SkyRacerGame
                 builder.AddFilter("Uno", LogLevel.Warning);
                 builder.AddFilter("Windows", LogLevel.Warning);
                 builder.AddFilter("Microsoft", LogLevel.Warning);
-
 
                 // Generic Xaml events
                 //builder.AddFilter("Microsoft.UI.Xaml", LogLevel.Debug);

@@ -38,11 +38,11 @@ namespace SkyRacerGame
                     Console.WriteLine("LOCALIZATION NOT LOADED.");
                 else
                     Console.WriteLine("LOCALIZATION LOADED.");
-#if DEBUG
+
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
                 Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS?.Length);
-#endif
+
                 completed?.Invoke();                
             }
             else

@@ -44,13 +44,7 @@ namespace SkyRacerGame
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            PopulateGameViews();
-
-            SoundHelper.LoadGameSounds(() =>
-            {
-                StartGameSounds();
-                AssetHelper.PreloadAssets(ProgressBar);
-            });
+            PopulateGameViews();         
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -71,6 +65,12 @@ namespace SkyRacerGame
             await LocalizationHelper.LoadLocalizationKeys(() =>
             {
                 this.SetLocalization();
+
+                SoundHelper.LoadGameSounds(() =>
+                {
+                    StartGameSounds();
+                    AssetHelper.PreloadAssets(progressBar: ProgressBar, messageBlock: ProgressBarMessageBlock);
+                });
             });
 
             await CheckUserSession();

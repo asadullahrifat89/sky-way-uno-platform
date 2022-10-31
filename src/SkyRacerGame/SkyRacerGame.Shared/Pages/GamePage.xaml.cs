@@ -54,6 +54,7 @@ namespace SkyRacerGame
         private bool _moveRight;
         private bool _moveUp;
         private bool _moveDown;
+
         private bool _isGameOver;
         private bool _isPowerMode;
 
@@ -404,69 +405,6 @@ namespace SkyRacerGame
             }
         }
 
-        private void RecycleGameObjects()
-        {
-            foreach (GameObject x in UnderView.Children.OfType<GameObject>())
-            {
-                switch ((ElementType)x.Tag)
-                {
-                    case ElementType.CLOUD:
-                        {
-                            RecyleCloud(x);
-                        }
-                        break;
-                    case ElementType.CAR:
-                        {
-                            RecyleCar(x);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            // remove health and power ups, recylce cars
-            foreach (GameObject x in GameView.Children.OfType<GameObject>())
-            {
-                switch ((ElementType)x.Tag)
-                {
-                    case ElementType.CLOUD:
-                        {
-                            RecyleCloud(x);
-                        }
-                        break;
-                    case ElementType.CAR:
-                        {
-                            RecyleCar(x);
-                        }
-                        break;
-                    case ElementType.COLLECTIBLE:
-                    case ElementType.HEALTH:
-                    case ElementType.POWERUP:
-                        {
-                            GameView.AddDestroyableGameObject(x);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            foreach (GameObject x in OverView.Children.OfType<GameObject>())
-            {
-                switch ((ElementType)x.Tag)
-                {
-                    case ElementType.CLOUD:
-                        {
-                            RecyleCloud(x);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
         private void ResetControls()
         {
             _moveLeft = false;
@@ -501,6 +439,55 @@ namespace SkyRacerGame
             // as you progress in the game you will score higher and game speed will go up
             ScaleDifficulty();
         }
+
+        private void PauseGame()
+        {
+            InputView.Focus(FocusState.Programmatic);
+            ShowInGameTextMessage("GAME_PAUSED");
+
+            _gameViewTimer?.Dispose();
+
+            ResetControls();
+
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            PauseGameSounds();
+        }
+
+        private void ResumeGame()
+        {
+            InputView.Focus(FocusState.Programmatic);
+            HideInGameTextMessage();
+
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            SoundHelper.ResumeSound(SoundType.BACKGROUND);
+            SoundHelper.ResumeSound(SoundType.CAR_ENGINE);
+
+            RunGame();
+        }
+
+        private void StopGame()
+        {
+            _gameViewTimer?.Dispose();
+            StopGameSounds();
+        }
+
+        private void GameOver()
+        {
+            _isGameOver = true;
+
+            PlayerScoreHelper.PlayerScore = new SkyRacerGameScore()
+            {
+                Score = Math.Ceiling(_score),
+                CollectiblesCollected = _collectiblesCollected
+            };
+
+            SoundHelper.PlaySound(SoundType.GAME_OVER);
+            NavigateToPage(typeof(GameOverPage));
+        }
+
+        #endregion
+
+        #region GameObject
 
         private void SpawnGameObjects()
         {
@@ -591,9 +578,7 @@ namespace SkyRacerGame
                     case ElementType.PLAYER:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
-                            {
                                 UpdatePlayer();
-                            }
                         }
                         break;
                     default:
@@ -624,49 +609,67 @@ namespace SkyRacerGame
             OverView.RemoveDestroyableGameObjects();
         }
 
-        private void PauseGame()
+        private void RecycleGameObjects()
         {
-            InputView.Focus(FocusState.Programmatic);
-            ShowInGameTextMessage("GAME_PAUSED");
-
-            _gameViewTimer?.Dispose();
-
-            ResetControls();
-
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            PauseGameSounds();
-        }
-
-        private void ResumeGame()
-        {
-            InputView.Focus(FocusState.Programmatic);
-            HideInGameTextMessage();
-
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            SoundHelper.ResumeSound(SoundType.BACKGROUND);
-            SoundHelper.ResumeSound(SoundType.CAR_ENGINE);
-
-            RunGame();
-        }
-
-        private void StopGame()
-        {
-            _gameViewTimer?.Dispose();
-            StopGameSounds();
-        }
-
-        private void GameOver()
-        {
-            _isGameOver = true;
-
-            PlayerScoreHelper.PlayerScore = new SkyRacerGameScore()
+            foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                Score = Math.Ceiling(_score),
-                CollectiblesCollected = _collectiblesCollected
-            };
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.CLOUD:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    case ElementType.CAR:
+                        {
+                            RecyleCar(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            SoundHelper.PlaySound(SoundType.GAME_OVER);
-            NavigateToPage(typeof(GameOverPage));
+            // remove health and power ups, recylce cars
+            foreach (GameObject x in GameView.Children.OfType<GameObject>())
+            {
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.CLOUD:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    case ElementType.CAR:
+                        {
+                            RecyleCar(x);
+                        }
+                        break;
+                    case ElementType.COLLECTIBLE:
+                    case ElementType.HEALTH:
+                    case ElementType.POWERUP:
+                        {
+                            GameView.AddDestroyableGameObject(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (GameObject x in OverView.Children.OfType<GameObject>())
+            {
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.CLOUD:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private double DecreaseSpeed(double speed)
@@ -1104,7 +1107,6 @@ namespace SkyRacerGame
 
                 if (_moveDown && top < GameView.Height - (100 * _scale))
                     _player.SetTop(top + effectiveSpeed);
-
             }
         }
 
