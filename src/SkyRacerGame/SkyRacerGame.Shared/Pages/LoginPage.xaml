@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SkyRacerGame"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource SeaBackgroundColor}"
+    Background="{ThemeResource GameBackgroundColor}"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -18,7 +18,7 @@
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
-            Background="{StaticResource SeaBackgroundColor}"
+            Background="{StaticResource GameBackgroundColor}"
             Opacity="0.5" />
         <!--#endregion-->
 
@@ -42,7 +42,7 @@
                     Margin="0,0,0,15"
                     FontSize="30"
                     FontWeight="Bold"
-                    Text="Sky Way"
+                    Text="Sky Racer"
                     TextAlignment="Center"
                     TextWrapping="WrapWholeWords" />
 
@@ -62,7 +62,7 @@
                 <!--  Login button  -->
                 <Button
                     x:Name="LoginButton"
-                    Height="50"
+                    Height="45"
                     Margin="30,25,30,5"
                     HorizontalAlignment="Stretch"
                     Click="LoginButton_Click"
@@ -74,7 +74,7 @@
                 <Button
                     x:Name="RegisterButton"
                     Height="40"
-                    Margin="5,0,5,5"
+                    Margin="5,0,5,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
@@ -83,17 +83,17 @@
                     Content="No account yet?"
                     FontSize="18"
                     FontWeight="SemiBold"
-                    Foreground="White"
+                    Foreground="{StaticResource ProgressBarForegroundColor}"
                     Tag="ActionButton" />
 
                 <!--  Brand logo  -->
-                <!--<HyperlinkButton
-                    Height="80"
+                <HyperlinkButton
+                    Height="45"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    NavigateUri="https://www.spiga-ristorante.ch/">
-                    <Image Source="ms-appx:///Assets/Images/logo_brand.png" />
-                </HyperlinkButton>-->
+                    NavigateUri="https://www.linkedin.com/in/asadullah-rifat/">
+                    Asadullah Rifat
+                </HyperlinkButton>
 
                 <!--  Message text  -->
                 <TextBlock

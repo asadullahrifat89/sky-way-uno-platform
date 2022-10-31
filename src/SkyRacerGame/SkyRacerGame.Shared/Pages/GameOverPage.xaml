@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SkyRacerGame"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource SeaBackgroundColor}"
+    Background="{ThemeResource GameBackgroundColor}"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -18,7 +18,7 @@
         <Border
             Width="{x:Bind Path=UnderView.Width, Mode=OneWay}"
             Height="{x:Bind Path=UnderView.Height, Mode=OneWay}"
-            Background="{StaticResource SeaBackgroundColor}"
+            Background="{StaticResource GameBackgroundColor}"
             Opacity="0.5" />
         <!--#endregion-->
 
@@ -63,7 +63,7 @@
                     <!--  Login button  -->
                     <Button
                         x:Name="LoginButton"
-                        Height="50"
+                        Height="45"
                         Margin="10,0,10,5"
                         HorizontalAlignment="Stretch"
                         Click="LoginButton_Click"
@@ -84,14 +84,8 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
 
-                    <!--<TextBlock
-                        FontSize="45"
-                        FontWeight="Bold"
-                        Text="☠️"
-                        TextAlignment="Center" />-->
-
                     <!--  Game over logo  -->
-                    <Image Height="100" Source="ms-appx:///Assets/Images/game-over.png" />
+                    <Image Height="100" Source="ms-appx:///Assets/Images/game_over.png" />
 
                     <!--  Tagline  -->
                     <TextBlock
@@ -109,7 +103,6 @@
                             x:Name="ScoreNumberText"
                             FontSize="30"
                             FontWeight="Bold"
-                            Foreground="White"
                             TextAlignment="Center" />
 
                         <!--  Your score  -->
@@ -164,7 +157,7 @@
                         <!--  Play Again button  -->
                         <Button
                             x:Name="PlayAgainButton"
-                            Height="50"
+                            Height="45"
                             Margin="0,5"
                             HorizontalAlignment="Stretch"
                             Click="PlayAgainButton_Click"
@@ -174,7 +167,7 @@
                         <!--  Leaderboard button  -->
                         <Button
                             x:Name="LeaderboardButton"
-                            Height="50"
+                            Height="45"
                             Margin="0,5"
                             HorizontalAlignment="Stretch"
                             Click="LeaderboardButton_Click"
@@ -184,13 +177,13 @@
                     </StackPanel>
 
                     <!--  Brand logo  -->
-                    <!--<HyperlinkButton
-                        Height="80"
+                    <HyperlinkButton
+                        Height="45"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        NavigateUri="https://www.spiga-ristorante.ch/">
-                        <Image Source="ms-appx:///Assets/Images/logo_brand.png" />
-                    </HyperlinkButton>-->
+                        NavigateUri="https://www.linkedin.com/in/asadullah-rifat/">
+                        Asadullah Rifat
+                    </HyperlinkButton>
 
                     <!--  Message text  -->
                     <TextBlock

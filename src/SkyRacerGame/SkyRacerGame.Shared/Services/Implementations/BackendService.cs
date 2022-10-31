@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -33,13 +32,15 @@ namespace SkyRacerGame
             string fullName,
             string userName,
             string email,
-            string password)
+            string password,
+            bool subscribedNewsletters)
         {
             ServiceResponse response = await Signup(
                    fullName: fullName,
                    userName: userName,
                    email: email,
-                   password: password);
+                   password: password,
+                   subscribedNewsletters: subscribedNewsletters);
 
             if (response is null || response.HttpStatusCode != HttpStatusCode.OK)
             {
@@ -182,6 +183,23 @@ namespace SkyRacerGame
             return count > 0 ? (true, "OK", result.Records) : (true, "OK", Array.Empty<GameScore>());
         }
 
+        public async Task<(bool IsSuccess, string Message)> CheckUserIdentityAvailability(
+            string userName,
+            string email)
+        {
+            var recordResponse = await CheckIdentityAvailability(
+                userName: userName,
+                email: email);
+
+            if (!recordResponse.IsSuccess)
+            {
+                var error = recordResponse.Errors.Errors;
+                return (false, string.Join("\n", error));
+            }
+
+            return (true, "OK");
+        }
+
         #endregion
 
         #region Private
@@ -310,7 +328,8 @@ namespace SkyRacerGame
             string fullName,
             string userName,
             string email,
-            string password)
+            string password,
+            bool subscribedNewsletters)
         {
             var response = await _httpRequestService.SendRequest<ServiceResponse, ServiceResponse>(
                  baseUrl: Constants.GAME_API_BASEURL,
@@ -324,6 +343,10 @@ namespace SkyRacerGame
                      UserName = userName,
                      Password = password,
                      GameId = Constants.GAME_ID,
+                     MetaData = new Dictionary<string, string>()
+                     {
+                         { "SubscribedNewsletters", subscribedNewsletters.ToString() }
+                     },
                  });
 
             return response.StatusCode == HttpStatusCode.OK
@@ -427,7 +450,28 @@ namespace SkyRacerGame
                 : response.ErrorResponse ?? new QueryRecordsResponse<GameScore>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
         }
 
-        #endregion      
+        private async Task<QueryRecordResponse<bool>> CheckIdentityAvailability(
+            string userName,
+            string email)
+        {
+            var response = await _httpRequestService.SendRequest<QueryRecordResponse<bool>, QueryRecordResponse<bool>>(
+                 baseUrl: Constants.GAME_API_BASEURL,
+                 path: Constants.Action_CheckIdentityAvailability,
+                 httpHeaders: new Dictionary<string, string>(),
+                 httpMethod: HttpMethod.Get,
+                 payload: new
+                 {
+                     Email = email,
+                     UserName = userName,
+                     GameId = Constants.GAME_ID,
+                 });
+
+            return response.StatusCode == HttpStatusCode.OK
+                ? response.SuccessResponse ?? new QueryRecordResponse<bool>()
+                : response.ErrorResponse ?? new QueryRecordResponse<bool>().BuildErrorResponse(new ErrorResponse() { Errors = new string[] { "No data found." } });
+        }
+
+        #endregion
 
         #endregion
     }

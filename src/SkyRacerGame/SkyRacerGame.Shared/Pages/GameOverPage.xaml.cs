@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using System.Threading;
@@ -156,8 +148,8 @@ namespace SkyRacerGame
         }
 
         private void SetGameResults()
-        {            
-            ScoreNumberText.Text = PlayerScoreHelper.PlayerScore.Score.ToString("#");         
+        {
+            ScoreNumberText.Text = PlayerScoreHelper.PlayerScore.Score.ToString("#");
             CollectiblesCollectedText.Text = $"{LocalizationHelper.GetLocalizedResource("CollectiblesCollectedText")} x " + PlayerScoreHelper.PlayerScore.CollectiblesCollected;
         }
 
@@ -277,9 +269,6 @@ namespace SkyRacerGame
 
         private void StartAnimation()
         {
-#if DEBUG
-            Console.WriteLine("GAME STARTED");
-#endif
             StartGameSounds();
             RecycleGameObjects();
             RunGame();
@@ -418,7 +407,7 @@ namespace SkyRacerGame
 
         private void StartGameSounds()
         {
-            SoundHelper.RandomizeIntroSound();
+            SoundHelper.RandomizeSound(SoundType.INTRO);
             SoundHelper.PlaySound(SoundType.INTRO);
         }
 

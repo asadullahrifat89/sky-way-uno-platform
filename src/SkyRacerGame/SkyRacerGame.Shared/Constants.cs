@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SkyRacerGame
 {
     public static class Constants
     {
-        public const string GAME_ID = "sky-way";
+        public const string GAME_ID = "sky-racer";
 
         #region Measurements
 
@@ -25,18 +24,13 @@ namespace SkyRacerGame
         public const double COLLECTIBLE_HEIGHT = 60;
 
         public const double HEALTH_WIDTH = 80;
-        public const double HEALTH_HEIGHT = 80;
-
-        public const double ROADMARK_WIDTH = 30;
-        public const double ROADMARK_HEIGHT = 80;
+        public const double HEALTH_HEIGHT = 80;       
 
         public const double CLOUD_WIDTH = 100;
         public const double CLOUD_HEIGHT = 100;
 
         public const double ISLAND_WIDTH = 600;
         public const double ISLAND_HEIGHT = 600;
-
-        public const double ROADDIVIDER_WIDTH = 30;
 
         #endregion
 
@@ -103,13 +97,11 @@ namespace SkyRacerGame
         #endregion
 
         #region Web Api Base Urls
-
 #if DEBUG
         public const string GAME_API_BASEURL = "https://localhost:7238";
 #else
         public const string GAME_API_BASEURL = "https://astro-odyssey-web-api.herokuapp.com";
 #endif
-
         #endregion
 
         #region Web Api Endpoints
@@ -126,11 +118,12 @@ namespace SkyRacerGame
         public const string Action_GetGameProfiles = "/api/Query/GetGameProfiles";
         public const string Action_GetGameScores = "/api/Query/GetGameScores";
         public const string Action_GetUser = "/api/Query/GetUser";
+        public const string Action_CheckIdentityAvailability = "/api/Query/CheckIdentityAvailability";
 
         #endregion
 
         #region Session Keys
-        
+
         public const string CACHE_SESSION_KEY = "Session";
         public const string CACHE_LANGUAGE_KEY = "Language";
 

@@ -1,14 +1,10 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Input;
+﻿using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -21,6 +17,7 @@ namespace SkyRacerGame
         #region Fields
 
         private PeriodicTimer _gameViewTimer;
+        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private readonly Random _random = new();
 
@@ -46,6 +43,9 @@ namespace SkyRacerGame
         private int _collectibleSpawnCounter = 200;
 
         private double _score;
+        private double _scoreCap;
+        private int _difficultyMultiplier;
+
         private int _collectiblesCollected;
 
         private int _islandSpawnCounter;
@@ -54,12 +54,12 @@ namespace SkyRacerGame
         private bool _moveRight;
         private bool _moveUp;
         private bool _moveDown;
+
         private bool _isGameOver;
         private bool _isPowerMode;
 
         private bool _isRecoveringFromDamage;
         private bool _isPointerActivated;
-        private readonly TimeSpan _frameTime = TimeSpan.FromMilliseconds(Constants.DEFAULT_FRAME_TIME);
 
         private int _accelerationCounter;
 
@@ -87,6 +87,7 @@ namespace SkyRacerGame
             InitializeComponent();
 
             _isGameOver = true;
+            ShowInGameTextMessage("TAP_ON_SCREEN_TO_BEGIN");
 
             _windowHeight = Window.Current.Bounds.Height;
             _windowWidth = Window.Current.Bounds.Width;
@@ -106,7 +107,7 @@ namespace SkyRacerGame
 
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            SizeChanged += GamePage_SizeChanged;            
+            SizeChanged += GamePage_SizeChanged;
         }
 
         private void GamePage_Unloaded(object sender, RoutedEventArgs e)
@@ -203,12 +204,6 @@ namespace SkyRacerGame
 
             if (!_moveLeft && !_moveRight && !_moveUp && !_moveDown)
                 _accelerationCounter = 0;
-
-            // in this case we will listen for the enter key aswell but for this to execute we will need the game over boolean to be true
-            //if (e.Key == VirtualKey.Enter && _isGameOver == true)
-            //{
-            //    StartGame();
-            //}
         }
 
         #endregion
@@ -242,7 +237,9 @@ namespace SkyRacerGame
 
         private void PopulateGameViews()
         {
+#if DEBUG
             Console.WriteLine("INITIALIZING GAME");
+#endif
 
             SetViewSize();
 
@@ -360,6 +357,7 @@ namespace SkyRacerGame
 #if DEBUG
             Console.WriteLine("GAME STARTED");
 #endif
+            HideInGameTextMessage();
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
 
             _lives = _maxLives;
@@ -380,6 +378,8 @@ namespace SkyRacerGame
             _damageRecoveryCounter = _damageRecoveryDelay;
 
             _score = 0;
+            _scoreCap = 20;
+            _difficultyMultiplier = 1;
             _collectiblesCollected = 0;
             scoreText.Text = "0";
 
@@ -395,66 +395,13 @@ namespace SkyRacerGame
             RunGame();
         }
 
-        private void RecycleGameObjects()
+        private async void RunGame()
         {
-            foreach (GameObject x in UnderView.Children.OfType<GameObject>())
-            {
-                switch ((ElementType)x.Tag)
-                {
-                    case ElementType.CLOUD:
-                        {
-                            RecyleCloud(x);
-                        }
-                        break;
-                    case ElementType.CAR:
-                        {
-                            RecyleCar(x);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
+            _gameViewTimer = new PeriodicTimer(_frameTime);
 
-            // remove health and power ups, recylce cars
-            foreach (GameObject x in GameView.Children.OfType<GameObject>())
+            while (await _gameViewTimer.WaitForNextTickAsync())
             {
-                switch ((ElementType)x.Tag)
-                {
-                    case ElementType.CLOUD:
-                        {
-                            RecyleCloud(x);
-                        }
-                        break;
-                    case ElementType.CAR:
-                        {
-                            RecyleCar(x);
-                        }
-                        break;
-                    case ElementType.COLLECTIBLE:
-                    case ElementType.HEALTH:
-                    case ElementType.POWERUP:
-                        {
-                            GameView.AddDestroyableGameObject(x);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            foreach (GameObject x in OverView.Children.OfType<GameObject>())
-            {
-                switch ((ElementType)x.Tag)
-                {
-                    case ElementType.CLOUD:
-                        {
-                            RecyleCloud(x);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                GameViewLoop();
             }
         }
 
@@ -465,16 +412,6 @@ namespace SkyRacerGame
             _moveUp = false;
             _moveDown = false;
             _isPointerActivated = false;
-        }
-
-        private async void RunGame()
-        {
-            _gameViewTimer = new PeriodicTimer(_frameTime);
-
-            while (await _gameViewTimer.WaitForNextTickAsync())
-            {
-                GameViewLoop();
-            }
         }
 
         private void GameViewLoop()
@@ -496,14 +433,61 @@ namespace SkyRacerGame
                 PowerUpCoolDown();
 
                 if (_powerModeCounter <= 0)
-                {
                     PowerDown();
-                }
             }
 
             // as you progress in the game you will score higher and game speed will go up
             ScaleDifficulty();
         }
+
+        private void PauseGame()
+        {
+            InputView.Focus(FocusState.Programmatic);
+            ShowInGameTextMessage("GAME_PAUSED");
+
+            _gameViewTimer?.Dispose();
+
+            ResetControls();
+
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            PauseGameSounds();
+        }
+
+        private void ResumeGame()
+        {
+            InputView.Focus(FocusState.Programmatic);
+            HideInGameTextMessage();
+
+            SoundHelper.PlaySound(SoundType.MENU_SELECT);
+            SoundHelper.ResumeSound(SoundType.BACKGROUND);
+            SoundHelper.ResumeSound(SoundType.CAR_ENGINE);
+
+            RunGame();
+        }
+
+        private void StopGame()
+        {
+            _gameViewTimer?.Dispose();
+            StopGameSounds();
+        }
+
+        private void GameOver()
+        {
+            _isGameOver = true;
+
+            PlayerScoreHelper.PlayerScore = new SkyRacerGameScore()
+            {
+                Score = Math.Ceiling(_score),
+                CollectiblesCollected = _collectiblesCollected
+            };
+
+            SoundHelper.PlaySound(SoundType.GAME_OVER);
+            NavigateToPage(typeof(GameOverPage));
+        }
+
+        #endregion
+
+        #region GameObject
 
         private void SpawnGameObjects()
         {
@@ -594,9 +578,7 @@ namespace SkyRacerGame
                     case ElementType.PLAYER:
                         {
                             if (_moveLeft || _moveRight || _moveUp || _moveDown || _isPointerActivated)
-                            {
                                 UpdatePlayer();
-                            }
                         }
                         break;
                     default:
@@ -627,47 +609,67 @@ namespace SkyRacerGame
             OverView.RemoveDestroyableGameObjects();
         }
 
-        private void GameOver()
+        private void RecycleGameObjects()
         {
-            _isGameOver = true;
-
-            PlayerScoreHelper.PlayerScore = new SkyRacerGameScore()
+            foreach (GameObject x in UnderView.Children.OfType<GameObject>())
             {
-                Score = Math.Ceiling(_score),
-                CollectiblesCollected = _collectiblesCollected
-            };
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.CLOUD:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    case ElementType.CAR:
+                        {
+                            RecyleCar(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            SoundHelper.PlaySound(SoundType.GAME_OVER);
-            NavigateToPage(typeof(GameOverPage));
-        }
+            // remove health and power ups, recylce cars
+            foreach (GameObject x in GameView.Children.OfType<GameObject>())
+            {
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.CLOUD:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    case ElementType.CAR:
+                        {
+                            RecyleCar(x);
+                        }
+                        break;
+                    case ElementType.COLLECTIBLE:
+                    case ElementType.HEALTH:
+                    case ElementType.POWERUP:
+                        {
+                            GameView.AddDestroyableGameObject(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-        private void PauseGame()
-        {
-            _gameViewTimer?.Dispose();
-
-            ResetControls();
-
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            PauseGameSounds();
-
-            InputView.Focus(FocusState.Programmatic);
-        }
-
-        private void ResumeGame()
-        {
-            InputView.Focus(FocusState.Programmatic);
-
-            SoundHelper.PlaySound(SoundType.MENU_SELECT);
-            SoundHelper.ResumeSound(SoundType.BACKGROUND);
-            SoundHelper.ResumeSound(SoundType.CAR_ENGINE);
-
-            RunGame();
-        }
-
-        private void StopGame()
-        {
-            _gameViewTimer?.Dispose();
-            StopGameSounds();
+            foreach (GameObject x in OverView.Children.OfType<GameObject>())
+            {
+                switch ((ElementType)x.Tag)
+                {
+                    case ElementType.CLOUD:
+                        {
+                            RecyleCloud(x);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private double DecreaseSpeed(double speed)
@@ -743,7 +745,6 @@ namespace SkyRacerGame
         private void RecyleCar(GameObject car)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _cars.Length);
             car.SetContent(_cars[_markNum]);
@@ -780,7 +781,6 @@ namespace SkyRacerGame
         private void RecyleCloud(GameObject cloud)
         {
             var speed = (double)_gameSpeed - (double)_random.Next(1, 4);
-            speed = DecreaseSpeed(speed);
 
             _markNum = _random.Next(0, _clouds.Length);
 
@@ -1080,44 +1080,33 @@ namespace SkyRacerGame
             {
                 // move up
                 if (_pointerPosition.Y < playerMiddleY - _playerSpeed)
-                {
                     _player.SetTop(top - effectiveSpeed);
-                }
+
                 // move left
                 if (_pointerPosition.X < playerMiddleX - _playerSpeed && left > 0)
-                {
                     _player.SetLeft(left - effectiveSpeed);
-                }
 
                 // move down
                 if (_pointerPosition.Y > playerMiddleY + _playerSpeed)
-                {
                     _player.SetTop(top + effectiveSpeed);
-                }
+
                 // move right
                 if (_pointerPosition.X > playerMiddleX + _playerSpeed && left + _player.Width < GameView.Width)
-                {
                     _player.SetLeft(left + effectiveSpeed);
-                }
             }
             else
             {
                 if (_moveLeft && left > 0)
-                {
                     _player.SetLeft(left - effectiveSpeed);
-                }
+
                 if (_moveRight && left + _player.Width < GameView.Width)
-                {
                     _player.SetLeft(left + effectiveSpeed);
-                }
+
                 if (_moveUp && top > 0 + (50 * _scale))
-                {
                     _player.SetTop(top - effectiveSpeed);
-                }
+
                 if (_moveDown && top < GameView.Height - (100 * _scale))
-                {
                     _player.SetTop(top + effectiveSpeed);
-                }
             }
         }
 
@@ -1153,160 +1142,12 @@ namespace SkyRacerGame
 
         private void ScaleDifficulty()
         {
-            if (_score >= 10 && _score < 20)
+            if (_score > _scoreCap)
             {
-                _gameSpeed = _defaultGameSpeed + 1 * 1;
-                _playerSpeed = _defaultPlayerSpeed + (1 / 2);
-            }
-            if (_score >= 20 && _score < 30)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 2;
-                _playerSpeed = _defaultPlayerSpeed + (2 / 2);
-            }
-            if (_score >= 30 && _score < 40)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 3;
-                _playerSpeed = _defaultPlayerSpeed + (3 / 2);
-            }
-            if (_score >= 40 && _score < 50)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 4;
-                _playerSpeed = _defaultPlayerSpeed + (4 / 2);
-            }
-            if (_score >= 50 && _score < 80)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 5;
-                _playerSpeed = _defaultPlayerSpeed + (5 / 2);
-            }
-            if (_score >= 80 && _score < 100)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 6;
-                _playerSpeed = _defaultPlayerSpeed + (6 / 2);
-            }
-            if (_score >= 100 && _score < 130)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 7;
-                _playerSpeed = _defaultPlayerSpeed + (7 / 2);
-            }
-            if (_score >= 130 && _score < 150)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 8;
-                _playerSpeed = _defaultPlayerSpeed + (8 / 2);
-            }
-            if (_score >= 150 && _score < 180)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 9;
-                _playerSpeed = _defaultPlayerSpeed + (9 / 2);
-            }
-            if (_score >= 180 && _score < 200)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 10;
-                _playerSpeed = _defaultPlayerSpeed + (10 / 2);
-            }
-            if (_score >= 200 && _score < 220)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 11;
-                _playerSpeed = _defaultPlayerSpeed + (11 / 2);
-            }
-            if (_score >= 220 && _score < 250)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 12;
-                _playerSpeed = _defaultPlayerSpeed + (12 / 2);
-            }
-            if (_score >= 250 && _score < 300)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 13;
-                _playerSpeed = _defaultPlayerSpeed + (13 / 2);
-            }
-            if (_score >= 300 && _score < 350)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 14;
-                _playerSpeed = _defaultPlayerSpeed + (14 / 2);
-            }
-            if (_score >= 350 && _score < 400)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 15;
-                _playerSpeed = _defaultPlayerSpeed + (15 / 2);
-            }
-            if (_score >= 400 && _score < 500)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 16;
-                _playerSpeed = _defaultPlayerSpeed + (16 / 2);
-            }
-            if (_score >= 500 && _score < 600)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 17;
-                _playerSpeed = _defaultPlayerSpeed + (17 / 2);
-            }
-            if (_score >= 600 && _score < 700)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 18;
-                _playerSpeed = _defaultPlayerSpeed + (18 / 2);
-            }
-            if (_score >= 700 && _score < 800)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 19;
-                _playerSpeed = _defaultPlayerSpeed + (19 / 2);
-            }
-            if (_score >= 800 && _score < 900)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 20;
-                _playerSpeed = _defaultPlayerSpeed + (20 / 2);
-            }
-            if (_score >= 900 && _score < 1000)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 21;
-                _playerSpeed = _defaultPlayerSpeed + (21 / 2);
-            }
-            if (_score >= 1000 && _score < 1200)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 22;
-                _playerSpeed = _defaultPlayerSpeed + (22 / 2);
-            }
-            if (_score >= 1200 && _score < 1400)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 23;
-                _playerSpeed = _defaultPlayerSpeed + (23 / 2);
-            }
-            if (_score >= 1400 && _score < 1600)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 24;
-                _playerSpeed = _defaultPlayerSpeed + (24 / 2);
-            }
-            if (_score >= 1600 && _score < 1800)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 25;
-                _playerSpeed = _defaultPlayerSpeed + (25 / 2);
-            }
-            if (_score >= 1800 && _score < 2000)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 26;
-                _playerSpeed = _defaultPlayerSpeed + (26 / 2);
-            }
-            if (_score >= 2000 && _score < 2200)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 27;
-                _playerSpeed = _defaultPlayerSpeed + (27 / 2);
-            }
-            if (_score >= 2200 && _score < 2400)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 28;
-                _playerSpeed = _defaultPlayerSpeed + (28 / 2);
-            }
-            if (_score >= 2400 && _score < 2600)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 29;
-                _playerSpeed = _defaultPlayerSpeed + (29 / 2);
-            }
-            if (_score >= 2600 && _score < 2800)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 30;
-                _playerSpeed = _defaultPlayerSpeed + (30 / 2);
-            }
-            if (_score >= 2800 && _score < 3000)
-            {
-                _gameSpeed = _defaultGameSpeed + 1 * 31;
-                _playerSpeed = _defaultPlayerSpeed + (31 / 2);
+                _gameSpeed = _defaultGameSpeed + 1 * _difficultyMultiplier;
+                _playerSpeed = _defaultPlayerSpeed + (_difficultyMultiplier / 2);
+                _scoreCap += 50;
+                _difficultyMultiplier++;
             }
         }
 
@@ -1322,7 +1163,8 @@ namespace SkyRacerGame
 
             SoundHelper.PlaySound(SoundType.CAR_ENGINE);
 
-            SoundHelper.RandomizeBackgroundSound();
+            //SoundHelper.RandomizeBackgroundSound();
+            SoundHelper.RandomizeSound(SoundType.BACKGROUND);
             SoundHelper.PlaySound(SoundType.BACKGROUND);
         }
 
@@ -1363,6 +1205,22 @@ namespace SkyRacerGame
         {
             SoundHelper.PlaySound(SoundType.MENU_SELECT);
             App.NavigateToPage(pageType);
+        }
+
+        #endregion
+
+        #region In Game Message
+
+        private void ShowInGameTextMessage(string resourceKey)
+        {
+            InGameMessageText.Text = LocalizationHelper.GetLocalizedResource(resourceKey);
+            InGameMessagePanel.Visibility = Visibility.Visible;
+        }
+
+        private void HideInGameTextMessage()
+        {
+            InGameMessageText.Text = "";
+            InGameMessagePanel.Visibility = Visibility.Collapsed;
         }
 
         #endregion

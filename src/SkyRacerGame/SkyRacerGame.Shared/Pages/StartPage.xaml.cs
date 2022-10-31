@@ -1,20 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 namespace SkyRacerGame
 {
@@ -52,13 +44,7 @@ namespace SkyRacerGame
             _windowWidth = Window.Current.Bounds.Width;
 
             LoadGameElements();
-            PopulateGameViews();
-
-            SoundHelper.LoadGameSounds(() =>
-            {
-                StartGameSounds();
-                AssetHelper.PreloadAssets(ProgressBar);
-            });
+            PopulateGameViews();         
 
             Loaded += GamePage_Loaded;
             Unloaded += GamePage_Unloaded;
@@ -79,8 +65,14 @@ namespace SkyRacerGame
             await LocalizationHelper.LoadLocalizationKeys(() =>
             {
                 this.SetLocalization();
+
+                SoundHelper.LoadGameSounds(() =>
+                {
+                    StartGameSounds();
+                    AssetHelper.PreloadAssets(progressBar: ProgressBar, messageBlock: ProgressBarMessageBlock);
+                });
             });
-            
+
             await CheckUserSession();
         }
 
@@ -505,7 +497,7 @@ namespace SkyRacerGame
 
         private void StartGameSounds()
         {
-            SoundHelper.RandomizeIntroSound();
+            SoundHelper.RandomizeSound(SoundType.INTRO);
             SoundHelper.PlaySound(SoundType.INTRO);
         }
 

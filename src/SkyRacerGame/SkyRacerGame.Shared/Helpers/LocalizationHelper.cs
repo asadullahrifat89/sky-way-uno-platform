@@ -4,7 +4,6 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -32,18 +31,19 @@ namespace SkyRacerGame
             {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/localization.json"));
                 _localizationJson = await FileIO.ReadTextAsync(file);
+
                 LOCALIZATION_KEYS = JsonConvert.DeserializeObject<LocalizationKey[]>(_localizationJson);
 
                 if (LOCALIZATION_KEYS is null || LOCALIZATION_KEYS.Length == 0)
                     Console.WriteLine("LOCALIZATION NOT LOADED.");
                 else
                     Console.WriteLine("LOCALIZATION LOADED.");
-#if DEBUG
+
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 localSettings.Values["LOCALIZATION_KEYS"] = _localizationJson;
                 Console.WriteLine("Localization Keys Count:" + LOCALIZATION_KEYS?.Length);
-#endif
-                completed?.Invoke();
+
+                completed?.Invoke();                
             }
             else
             {

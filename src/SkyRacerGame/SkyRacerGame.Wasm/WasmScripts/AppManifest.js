@@ -1,7 +1,6 @@
 ﻿var UnoAppManifest = {
-
     splashScreenImage: "Assets/Images/splash_screen.gif",
-    splashScreenColor: "transparent",
+    splashScreenColor: "White",
     displayName: "Sky Way"
 
 }
