@@ -32,7 +32,7 @@
                 CornerRadius="10"
                 Visibility="Collapsed">
 
-                <StackPanel>
+                <StackPanel Width="325">
 
                     <!--  login up prompt  -->
                     <Grid Margin="5">
@@ -120,7 +120,7 @@
                             Background="{StaticResource FrameBackgroundColor}"
                             BorderBrush="{StaticResource FrameBackgroundColor}"
                             BorderThickness="3"
-                            CornerRadius="50" />
+                            CornerRadius="3" />
 
                     </StackPanel>
 
