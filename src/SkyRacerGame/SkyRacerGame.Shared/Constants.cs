@@ -11,11 +11,11 @@ namespace SkyRacerGame
 
         public const double DEFAULT_FRAME_TIME = 18;
 
-        public const double CAR_WIDTH = 60 * 1.5;
-        public const double CAR_HEIGHT = 120 * 1.5;
+        public const double CAR_WIDTH = 50 * 1.5;
+        public const double CAR_HEIGHT = 110 * 1.5;
 
-        public const double PLAYER_WIDTH = 60 * 1.5;
-        public const double PLAYER_HEIGHT = 120 * 1.5;
+        public const double PLAYER_WIDTH = 55 * 1.5;
+        public const double PLAYER_HEIGHT = 115 * 1.5;
 
         public const double POWERUP_WIDTH = 80;
         public const double POWERUP_HEIGHT = 80;
@@ -24,7 +24,7 @@ namespace SkyRacerGame
         public const double COLLECTIBLE_HEIGHT = 60;
 
         public const double HEALTH_WIDTH = 80;
-        public const double HEALTH_HEIGHT = 80;       
+        public const double HEALTH_HEIGHT = 80;
 
         public const double CLOUD_WIDTH = 100;
         public const double CLOUD_HEIGHT = 100;
@@ -55,7 +55,7 @@ namespace SkyRacerGame
             new KeyValuePair<ElementType, Uri>(ElementType.ISLAND, new Uri("ms-appx:///Assets/Images/island2.png")),
             new KeyValuePair<ElementType, Uri>(ElementType.ISLAND, new Uri("ms-appx:///Assets/Images/island3.png")),
             new KeyValuePair<ElementType, Uri>(ElementType.PLAYER, new Uri("ms-appx:///Assets/Images/player.png")),
-            new KeyValuePair<ElementType, Uri>(ElementType.PLAYER_POWER_MODE, new Uri("ms-appx:///Assets/Images/player-power-mode.png")),            
+            new KeyValuePair<ElementType, Uri>(ElementType.PLAYER_POWER_MODE, new Uri("ms-appx:///Assets/Images/player-power-mode.png")),
             new KeyValuePair<ElementType, Uri>(ElementType.POWERUP, new Uri("ms-appx:///Assets/Images/powerup1.png")),
             new KeyValuePair<ElementType, Uri>(ElementType.POWERUP, new Uri("ms-appx:///Assets/Images/powerup2.png")),
             new KeyValuePair<ElementType, Uri>(ElementType.POWERUP, new Uri("ms-appx:///Assets/Images/powerup3.png")),
@@ -130,9 +130,9 @@ namespace SkyRacerGame
         #endregion
 
         #region Cookie Keys
-        
+
         public const string COOKIE_KEY = "Cookie";
-        public const string COOKIE_ACCEPTED_KEY = "Accepted"; 
+        public const string COOKIE_ACCEPTED_KEY = "Accepted";
 
         #endregion
     }
