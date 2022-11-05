@@ -29,7 +29,7 @@
             </Style>
 
             <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-                <Setter Property="Background" Value="#ff6852" />
+                <Setter Property="Background" Value="#763fa4" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="BorderBrush" Value="White" />
                 <Setter Property="BorderThickness" Value="3" />
@@ -71,8 +71,8 @@
 
             <!--#region Game UI Container Style-->
             <Style x:Key="GameUIContainer" TargetType="Border">
-                <Setter Property="Background" Value="#763fa4" />
-                <Setter Property="BorderBrush" Value="White" />
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderBrush" Value="#763fa4" />
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="BorderThickness" Value="0,3,0,3" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -82,20 +82,20 @@
 
             <!--#region Leaderboard Style-->
             <Style x:Key="LeaderboardRecordContainer" TargetType="Border">
-                <Setter Property="Background" Value="#ff6852" />
+                <Setter Property="Background" Value="#763fa4" />
                 <Setter Property="BorderBrush" Value="White" />
                 <Setter Property="CornerRadius" Value="10" />
             </Style>
             <!--#endregion-->
 
             <!--#region Colors-->
-            <SolidColorBrush x:Key="SystemAccentColorLight2" Color="#ff6852" />
-            <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#ff6852" />
+            <SolidColorBrush x:Key="SystemAccentColorLight2" Color="#763fa4" />
+            <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#763fa4" />
 
-            <SolidColorBrush x:Key="FrameBackgroundColor" Color="#ff6852" />
+            <SolidColorBrush x:Key="FrameBackgroundColor" Color="#763fa4" />
             <SolidColorBrush x:Key="ProgressBarErrorColor" Color="Yellow" />
-            <SolidColorBrush x:Key="ProgressBarForegroundColor" Color="#ff6852" />
-            <SolidColorBrush x:Key="ProgressBarOkColor" Color="LightGreen" />
+            <SolidColorBrush x:Key="ProgressBarForegroundColor" Color="#763fa4" />
+            <SolidColorBrush x:Key="ProgressBarOkColor" Color="Green" />
 
             <SolidColorBrush x:Key="GameBackgroundColor" Color="LightSkyBlue" />
             <!--#endregion-->
