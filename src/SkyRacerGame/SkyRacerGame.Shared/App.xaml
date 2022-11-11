@@ -93,9 +93,9 @@
             <SolidColorBrush x:Key="SystemAccentColorDark1" Color="#763fa4" />
 
             <SolidColorBrush x:Key="FrameBackgroundColor" Color="#763fa4" />
-            <SolidColorBrush x:Key="ProgressBarErrorColor" Color="Yellow" />
+            <SolidColorBrush x:Key="ProgressBarErrorColor" Color="Red" />
             <SolidColorBrush x:Key="ProgressBarForegroundColor" Color="#763fa4" />
-            <SolidColorBrush x:Key="ProgressBarOkColor" Color="Green" />
+            <SolidColorBrush x:Key="ProgressBarOkColor" Color="#763fa4" />
 
             <SolidColorBrush x:Key="GameBackgroundColor" Color="LightSkyBlue" />
             <!--#endregion-->
